@@ -1,27 +1,22 @@
 /**
- * User Model
+ * Permission Model
  */
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
+  const Permission = sequelize.define('Permission', {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true
     },
-    firstName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      field: 'first_name'
-    },
-    lastName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      field: 'last_name'
-    },
     roleId: {
       type: DataTypes.UUID,
       allowNull: false,
       field: 'role_id'
+    },
+    privilegeId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      field: 'privilege_id'
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -35,13 +30,5 @@ module.exports = (sequelize, DataTypes) => {
     freezeTableName: true,
     timestamps: true
   });
-  User.associate = (models) => {
-    User.belongsTo(models.Role, {
-      as: 'role',
-      foreignKey: 'roleId',
-      targetKey: 'id',
-      onDelete: 'SET NULL'
-    });
-  };
-  return User;
+  return Permission;
 };

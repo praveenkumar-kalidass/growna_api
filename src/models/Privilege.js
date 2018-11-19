@@ -1,17 +1,21 @@
 /**
- * Role Model
+ * Privilege Model
  */
 module.exports = (sequelize, DataTypes) => {
-  const Role = sequelize.define('Role', {
+  const Privilege = sequelize.define('Privilege', {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true
     },
-    name: {
+    description: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true
+    },
+    type: {
+      type: DataTypes.STRING,
+      allowNull: false
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -25,18 +29,12 @@ module.exports = (sequelize, DataTypes) => {
     freezeTableName: true,
     timestamps: true
   });
-  Role.associate = (models) => {
-    Role.hasOne(models.User, {
-      as: 'role',
-      foreignKey: 'roleId',
-      sourceKey: 'id',
-      onDelete: 'SET NULL'
-    });
-    Role.belongsToMany(models.Privilege, {
+  Privilege.associate = (models) => {
+    Privilege.belongsToMany(models.Role, {
       as: 'privileges',
       through: models.Permission,
-      foreignKey: 'roleId'
+      foreignKey: 'privilegeId'
     });
   };
-  return Role;
+  return Privilege;
 };

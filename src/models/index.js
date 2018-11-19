@@ -2,6 +2,7 @@
  * Index file for Sequelize Models
  *  - Opens Connection to the database
  *  - Synchronize and Associate Models
+ * @exports {Object} db
  */
 const fs = require('fs');
 const path = require('path');
