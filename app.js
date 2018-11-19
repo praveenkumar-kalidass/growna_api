@@ -1,3 +1,9 @@
+/**
+ * Base file - Insurance Service
+ *  - Initializes "express" with server and client routes
+ *  - Creates a http server to listen requests
+ *  - Listens to port "3000" by default
+ */
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -7,6 +13,7 @@ const debug = require('debug')('insurance-api:server');
 const http = require('http');
 
 const clientRouter = require('./routes/index');
+const serverRouter = require('./src/controller');
 
 const app = express();
 
@@ -20,6 +27,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/api', serverRouter);
 app.use('/', clientRouter);
 
 // catch 404 and forward to error handler

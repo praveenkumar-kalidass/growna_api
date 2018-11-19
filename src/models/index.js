@@ -1,11 +1,21 @@
+/**
+ * Index file for Sequelize Models
+ *  - Opens Connection to the database
+ *  - Synchronize and Associate Models
+ */
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
+// Defaults to "development" when no environment is defined
 const env = process.env.NODE_ENV || 'development';
 const config = require('../../config/config.json')[env];
 const db = {};
 
+/**
+ * Sequelize Connection
+ * Enables "logging" for development environment
+ */
 let sequelize = new Sequelize(
   config.database,
   config.username,
@@ -18,6 +28,7 @@ let sequelize = new Sequelize(
   }
 );
 
+// Read all models from this directory except "index.js"
 fs
   .readdirSync(__dirname)
   .filter(file => {
@@ -28,12 +39,14 @@ fs
     db[model.name] = model;
   });
 
+// Associate models
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
     db[modelName].associate(db);
   }
 });
 
+// Generates "db" object with all synchronized models
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
