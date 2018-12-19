@@ -13,9 +13,7 @@ module.exports = {
           0x34, 0xe7, 0xef, 0xc2, 0x39, 0x0b, 0x58, 0x27
         ]
       }),
-      name: 'GIS_ADMIN',
-      created_at: new Date(),
-      updated_at: new Date()
+      name: 'GIS_ADMIN'
     }, {
       id: uuidv4({
         random: [
@@ -23,9 +21,7 @@ module.exports = {
           0x63, 0xe7, 0xaa, 0xa4, 0x72, 0x1e, 0x56, 0x40
         ]
       }),
-      name: 'GIS_USER',
-      created_at: new Date(),
-      updated_at: new Date()
+      name: 'GIS_USER'
     }], {});
   },
   down: (queryInterface, Sequelize) => {

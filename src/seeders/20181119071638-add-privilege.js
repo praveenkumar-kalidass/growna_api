@@ -14,9 +14,7 @@ module.exports = {
         ]
       }),
       description: 'ADMIN',
-      type: 'ROUTE',
-      created_at: new Date(),
-      updated_at: new Date()
+      type: 'ROUTE'
     }, {
       id: uuidv4({
         random: [
@@ -25,9 +23,7 @@ module.exports = {
         ]
       }),
       description: 'USER',
-      type: 'ROUTE',
-      created_at: new Date(),
-      updated_at: new Date()
+      type: 'ROUTE'
     }], {});
   },
   down: (queryInterface, Sequelize) => {
