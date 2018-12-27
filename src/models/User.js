@@ -18,6 +18,16 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       field: 'last_name'
     },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      field: 'email'
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      field: 'password'
+    },
     roleId: {
       type: DataTypes.UUID,
       allowNull: false,
@@ -40,6 +50,12 @@ module.exports = (sequelize, DataTypes) => {
       as: 'role',
       foreignKey: 'roleId',
       targetKey: 'id',
+      onDelete: 'SET NULL'
+    });
+    User.hasOne(models.OAuthToken, {
+      as: 'user',
+      foreignKey: 'userId',
+      sourceKey: 'id',
       onDelete: 'SET NULL'
     });
   };

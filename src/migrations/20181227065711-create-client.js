@@ -1,45 +1,22 @@
 'use strict';
 
-/**
- * Create User Table
- */
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable(
-      'User', {
+      'Client', {
         id: {
-          type: Sequelize.UUID,
-          defaultValue: Sequelize.UUIDV4,
+          type: Sequelize.STRING,
           primaryKey: true
         },
-        firstName: {
+        clientSecret: {
           type: Sequelize.STRING,
-          allowNull: false,
-          field: 'first_name'
+          field: 'client_secret',
+          allowNull: false
         },
-        lastName: {
+        redirectUri: {
           type: Sequelize.STRING,
-          allowNull: false,
-          field: 'last_name'
-        },
-        email: {
-          type: Sequelize.STRING,
-          allowNull: false,
-          field: 'email'
-        },
-        password: {
-          type: Sequelize.STRING,
-          allowNull: false,
-          field: 'password'
-        },
-        roleId: {
-          type: Sequelize.UUID,
-          field: 'role_id',
-          references: {
-            model: {
-              tableName: 'Role'
-            }
-          }
+          field: 'redirect_uri',
+          allowNull: false
         },
         createdAt: {
           type: Sequelize.DATE,
@@ -58,7 +35,7 @@ module.exports = {
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable(
-      'User'
+      'Client'
     );
   }
 };

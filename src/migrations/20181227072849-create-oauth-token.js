@@ -1,43 +1,49 @@
 'use strict';
 
-/**
- * Create User Table
- */
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable(
-      'User', {
+      'OAuthToken', {
         id: {
           type: Sequelize.UUID,
           defaultValue: Sequelize.UUIDV4,
           primaryKey: true
         },
-        firstName: {
+        accessToken: {
           type: Sequelize.STRING,
-          allowNull: false,
-          field: 'first_name'
+          field: 'access_token',
+          allowNull: false
         },
-        lastName: {
+        accessTokenExpiresOn: {
+          type: Sequelize.DATE,
+          field: 'access_token_expires_on',
+          allowNull: false
+        },
+        clientId: {
           type: Sequelize.STRING,
-          allowNull: false,
-          field: 'last_name'
-        },
-        email: {
-          type: Sequelize.STRING,
-          allowNull: false,
-          field: 'email'
-        },
-        password: {
-          type: Sequelize.STRING,
-          allowNull: false,
-          field: 'password'
-        },
-        roleId: {
-          type: Sequelize.UUID,
-          field: 'role_id',
+          field: 'client_id',
           references: {
             model: {
-              tableName: 'Role'
+              tableName: 'Client'
+            }
+          }
+        },
+        refreshToken: {
+          type: Sequelize.STRING,
+          field: 'refresh_token',
+          allowNull: false
+        },
+        refreshTokenExpiresOn: {
+          type: Sequelize.DATE,
+          field: 'refresh_token_expires_on',
+          allowNull: false
+        },
+        userId: {
+          type: Sequelize.UUID,
+          field: 'user_id',
+          references: {
+            model: {
+              tableName: 'User'
             }
           }
         },
@@ -54,11 +60,11 @@ module.exports = {
           defaultValue: Sequelize.fn('NOW')
         }
       }
-    );
+    )
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable(
-      'User'
+      'OAuthToken'
     );
   }
 };
