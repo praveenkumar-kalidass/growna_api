@@ -4,6 +4,7 @@
  * @exports {Class} UserDao
  */
 const models = require('../models');
+const passwordHash = require('password-hash');
 
 /**
  * UserDao class
@@ -29,6 +30,20 @@ class UserDao {
       return getCB(null, user);
     }, (getError) => {
       return getCB(getError);
+    });
+  }
+  getUserByCredentials(email, password, getUserCB) {
+    models.User.find({
+      where: {
+        email: email
+      }
+    }).then((user) => {
+      if (passwordHash.verify(password, user.password)) {
+        return getUserCB(null, user);
+      }
+      return getUserCB(null, new Error('Check your credentials'));
+    }, (getError) => {
+      return getUserCB(getError);
     });
   }
 }

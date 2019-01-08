@@ -5,8 +5,10 @@
  */
 const express = require('express');
 const router = express.Router();
+const authController = require('./Auth');
 const userController = require('./User');
 
+router.use('/auth', authController);
 router.use('/user', userController);
 
 module.exports = router;

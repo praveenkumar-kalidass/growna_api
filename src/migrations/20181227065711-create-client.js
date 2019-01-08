@@ -8,11 +8,6 @@ module.exports = {
           type: Sequelize.STRING,
           primaryKey: true
         },
-        clientSecret: {
-          type: Sequelize.STRING,
-          field: 'client_secret',
-          allowNull: false
-        },
         redirectUri: {
           type: Sequelize.STRING,
           field: 'redirect_uri',

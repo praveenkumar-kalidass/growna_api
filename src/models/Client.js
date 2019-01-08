@@ -8,11 +8,6 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true
     },
-    clientSecret: {
-      type: DataTypes.STRING,
-      field: 'client_secret',
-      allowNull: false
-    },
     redirectUri: {
       type: DataTypes.STRING,
       field: 'redirect_uri',
@@ -30,11 +25,13 @@ module.exports = (sequelize, DataTypes) => {
     freezeTableName: true,
     timestamps: true
   });
-  Client.hasOne(models.OAuthToken, {
-    as: 'client',
-    foreignKey: 'clientId',
-    sourceKey: 'id',
-    onDelete: 'SET NULL'
-  });
+  Client.associate = (models) => {
+    Client.hasOne(models.OAuthToken, {
+      as: 'client',
+      foreignKey: 'clientId',
+      sourceKey: 'id',
+      onDelete: 'SET NULL'
+    });
+  };
   return Client;
 };
