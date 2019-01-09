@@ -9,10 +9,10 @@ const UserService = require('../service/User');
 const userService = new UserService();
 
 /**
- * Controller to router "/api/privileges"
+ * Controller to route "/api/privileges"
  *
- * @type {GET}
- * @params {UUID} userId
+ * @param {UUID} userId
+ * @type  {GET}
  */
 router.get('/privileges/:userId', (request, response) => {
   userService.getUserPrivileges(request.params.userId, (privilegeErr, user) => {

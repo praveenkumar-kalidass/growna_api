@@ -10,6 +10,7 @@ const passwordHash = require('password-hash');
  * UserDao class
  *
  * @method {public} findUserById
+ * @method {public} getUserByCredentials
  */
 class UserDao {
   /**
@@ -32,16 +33,24 @@ class UserDao {
       return getCB(getError);
     });
   }
+  /**
+   * Method to find User object by email
+   *
+   * @param  {String} email
+   * @param  {String} password
+   * @param  {Function} getUserCB
+   */
   getUserByCredentials(email, password, getUserCB) {
     models.User.find({
       where: {
         email: email
       }
     }).then((user) => {
+      // Validate password
       if (passwordHash.verify(password, user.password)) {
         return getUserCB(null, user);
       }
-      return getUserCB(null, new Error('Check your credentials'));
+      return getUserCB(Error({name: 'Invalid Credentials'}));
     }, (getError) => {
       return getUserCB(getError);
     });

@@ -14,9 +14,9 @@ module.exports = {
           field: 'access_token',
           allowNull: false
         },
-        accessTokenExpiresOn: {
+        accessTokenExpiresAt: {
           type: Sequelize.DATE,
-          field: 'access_token_expires_on',
+          field: 'access_token_expires_at',
           allowNull: false
         },
         clientId: {
@@ -33,9 +33,9 @@ module.exports = {
           field: 'refresh_token',
           allowNull: false
         },
-        refreshTokenExpiresOn: {
+        refreshTokenExpiresAt: {
           type: Sequelize.DATE,
-          field: 'refresh_token_expires_on',
+          field: 'refresh_token_expires_at',
           allowNull: false
         },
         userId: {

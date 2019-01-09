@@ -16,8 +16,8 @@ class RoleService {
   /**
    * Method to get all privileges associated with the roleid
    *
-   * @param  {UUID} roleId          [description]
-   * @param  {Function} getPrivilegesCB [description]
+   * @param  {UUID} roleId
+   * @param  {Function} getPrivilegesCB
    */
   getRolePrivileges(roleId, getPrivilegesCB) {
     roleDao.findPrivilegesByRole(roleId, (roleErr, role) => {

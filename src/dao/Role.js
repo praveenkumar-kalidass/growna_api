@@ -14,8 +14,8 @@ class RoleDao {
   /**
    * Method to get role data with privileges associated
    *
-   * @param {UUID} roleId
-   * @param {Function} getCB
+   * @param  {UUID} roleId
+   * @param  {Function} getCB
    */
   findPrivilegesByRole(roleId, getCB) {
     models.Role.find({

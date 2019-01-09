@@ -13,9 +13,9 @@ module.exports = (sequelize, DataTypes) => {
       field: 'access_token',
       allowNull: false
     },
-    accessTokenExpiresOn: {
+    accessTokenExpiresAt: {
       type: DataTypes.DATE,
-      field: 'access_token_expires_on',
+      field: 'access_token_expires_at',
       allowNull: false
     },
     refreshToken: {
@@ -23,9 +23,9 @@ module.exports = (sequelize, DataTypes) => {
       field: 'refresh_token',
       allowNull: false
     },
-    refreshTokenExpiresOn: {
+    refreshTokenExpiresAt: {
       type: DataTypes.DATE,
-      field: 'refresh_token_expires_on',
+      field: 'refresh_token_expires_at',
       allowNull: false
     },
     clientId: {

@@ -1,3 +1,8 @@
+/**
+ * Service to implement OAuth Server functions
+ *
+ * @exports {Class} OAuthServer
+ */
 const ClientDao  = require('../dao/Client');
 const OAuthTokenDao = require('../dao/OAuthToken');
 const UserDao = require('../dao/User');
@@ -5,7 +10,23 @@ const clientDao = new ClientDao();
 const oAuthTokenDao = new OAuthTokenDao();
 const userDao = new UserDao();
 
+/**
+ * OAuthServer class
+ *
+ * @method {public} getAccessToken
+ * @method {public} getClient
+ * @method {public} getRefreshToken
+ * @method {public} saveAccessToken
+ * @method {public} saveAuthorizationCode
+ * @method {public} getUser
+ */
 class OAuthServer {
+  /**
+   * OAuth Service to get Access token
+   *
+   * @param  {String} bearerToken
+   * @param  {Function} getAccessTokenCB
+   */
   getAccessToken(bearerToken, getAccessTokenCB) {
     oAuthTokenDao.getAccessToken(bearerToken, (accessTokenErr, token) => {
       if (accessTokenErr) {
@@ -23,6 +44,13 @@ class OAuthServer {
       });
     });
   }
+  /**
+   * OAuth Service to get client details
+   *
+   * @param  {String} clientId
+   * @param  {String} clientSecret
+   * @param  {Function} getClientCB
+   */
   getClient(clientId, clientSecret, getClientCB) {
     clientDao.getClient(clientId, (clientErr, client) => {
       if (clientErr) {
@@ -35,6 +63,12 @@ class OAuthServer {
       });
     });
   }
+  /**
+   * OAuth Service to get refresh token
+   *
+   * @param  {String} bearerToken
+   * @param  {Function} getRefreshTokenCB
+   */
   getRefreshToken(bearerToken, getRefreshTokenCB) {
     oAuthTokenDao.getRefreshToken(bearerToken, (refreshTokenErr, token) => {
       if (refreshTokenErr) {
@@ -52,27 +86,43 @@ class OAuthServer {
       });
     });
   }
+  /**
+   * OAuth Service to save access token
+   *
+   * @param  {String} token
+   * @param  {Object} client
+   * @param  {Object} user
+   * @param  {Function} saveTokenCB
+   */
   saveToken(token, client, user, saveTokenCB) {
-    const accessToken = {
-      accessToken: token.accessToken,
-      accessTokenExpiresOn: token.accessTokenExpiresAt,
-      refreshToken: token.refreshToken,
-      refreshTokenExpiresOn: token.refreshTokenExpiresAt,
-      clientId: token.client.id,
-      userId: token.user.id
-    };
-    oAuthTokenDao.saveToken(accessToken, (saveErr, saveToken) => {
+    token.clientId = client.id;
+    token.userId = user.id;
+    oAuthTokenDao.saveAccessToken(token, (saveErr, saveToken) => {
       if (saveErr) {
         return saveTokenCB(saveErr);
       }
+      saveToken.client = client;
+      saveToken.user = user;
       return saveTokenCB(null, saveToken);
     });
   }
+  /**
+   * OAuth Service to save authorization code
+   * @param  {String} code
+   * @param  {Object} client
+   * @param  {Object} user
+   * @param  {Function} saveAuthCB
+   */
   saveAuthorizationCode(code, client, user, saveAuthCB) {
-    return saveAuthCB(null, {
-      authorizationCode: code
-    });
+    return saveAuthCB(null, code);
   }
+  /**
+   * OAuth Service to get user details
+   *
+   * @param  {String} email
+   * @param  {String} password
+   * @param  {Function} getUserCB
+   */
   getUser(email, password, getUserCB) {
     userDao.getUserByCredentials(email, password, (getErr, user) => {
       if (getErr) {
