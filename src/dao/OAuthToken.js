@@ -23,7 +23,7 @@ class OAuthTokenDao {
     models.OAuthToken.find({
       attributes: [
         'accessToken',
-        'accessTokenExpiresOn',
+        'accessTokenExpiresAt',
         'clientId',
         'userId'
       ],

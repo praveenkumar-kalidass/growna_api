@@ -34,7 +34,7 @@ class OAuthServer {
       }
       return getAccessTokenCB(null, {
         accessToken: token.accessToken,
-        accessTokenExpiresAt: token.accessTokenExpiresOn,
+        accessTokenExpiresAt: token.accessTokenExpiresAt,
         client: {
           id: token.clientId
         },

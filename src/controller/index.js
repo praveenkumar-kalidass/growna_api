@@ -4,21 +4,58 @@
  * @exports {express} router
  */
 const express = require('express');
-const router = express.Router();
+const OAuthServer = require('oauth2-server');
+const OAuthService = require('../service/OAuthServer');
 const authController = require('./Auth');
 const userController = require('./User');
+const oAuthService = new OAuthService();
+const router = express.Router();
 
 /**
- * Route - "/api/auth/*"
+ * OAuth2.0 Server
  *
- * @params {Class} authController
+ */
+const oAuth = new OAuthServer({
+  model: oAuthService,
+  allowEmptyState: true,
+  requireClientAuthentication: {
+    password: false
+  }
+});
+
+/**
+ * Middleware - "/api/auth/*"
+ *
+ * @param {String} route
+ * @param {Class} authController
  */
 router.use('/auth', authController);
 
 /**
- * Route - "/api/user/*"
+ * Auth Middleware - Throw 401 for No Authorization
  *
- * @params {Class} userController
+ * @header {String} Authorization ["Bearer XXXXXX"]
+ * @param  {Function} middleware
+ */
+router.use((request, response, next) => {
+  let Request = new OAuthServer.Request(request);
+  let Response = new OAuthServer.Response(request);
+  oAuth.authenticate(
+    Request, Response, {},
+    (authErr) => {
+      if (authErr) {
+        response.status(401).send(authErr);
+      }
+      next();
+    }
+  );
+});
+
+/**
+ * Middleware - "/api/user/*"
+ *
+ * @param {String} route
+ * @param {Class} userController
  */
 router.use('/user', userController);
 
