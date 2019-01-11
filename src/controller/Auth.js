@@ -6,7 +6,9 @@
 const express = require('express');
 const OAuthServer = require('oauth2-server');
 const OAuthService = require('../service/OAuthServer');
+const UserService = require('../service/User');
 const oAuthService = new OAuthService();
+const userService = new UserService();
 const router = express.Router();
 
 /**
@@ -51,7 +53,6 @@ router.post('/login', (request, response) => {
       }
     },
     (authErr, code) => {
-      console.log(authErr);
       if (authErr) {
         response.status(401).send('Authorization failed');
       } else {
@@ -65,7 +66,8 @@ router.post('/login', (request, response) => {
 /**
  * Redirect - Controller to route "/api/auth/authenticate"
  *
- * @type {POST}
+ * @query {String} code [Authentication code]
+ * @type  {POST}
  */
 router.post('/authenticate', (request, response) => {
   let Request = new OAuthServer.Request(request);
@@ -76,7 +78,15 @@ router.post('/authenticate', (request, response) => {
       if (tokenErr) {
         response.status(401).send(tokenErr);
       } else {
-        response.status(200).send(token);
+        userService.getUserPrivileges(token.userId, (privilegeErr, role) => {
+          if (privilegeErr) {
+            response.status(500).send(privilegeErr);
+          }
+          response.status(200).send({
+            ...role.dataValues,
+            auth: token
+          });
+        });
       }
     }
   );

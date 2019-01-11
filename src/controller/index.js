@@ -45,8 +45,9 @@ router.use((request, response, next) => {
     (authErr) => {
       if (authErr) {
         response.status(401).send(authErr);
+      } else {
+        next();
       }
-      next();
     }
   );
 });

@@ -15,12 +15,12 @@ const userService = new UserService();
  * @type  {GET}
  */
 router.get('/privileges/:userId', (request, response) => {
-  userService.getUserPrivileges(request.params.userId, (privilegeErr, user) => {
+  userService.getUserPrivileges(request.params.userId, (privilegeErr, role) => {
     if (privilegeErr) {
       console.error(privilegeErr);
       response.status(500).send(privilegeErr);
     }
-    response.send(user);
+    response.send(role);
   });
 });
 
