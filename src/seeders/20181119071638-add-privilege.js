@@ -5,7 +5,7 @@ const uuidv4 = require('uuid/v4');
  * Add privileges
  */
 module.exports = {
-  up: (queryInterface, Sequelize) => {
+  up: (queryInterface) => {
     return queryInterface.bulkInsert('Privilege', [{
       id: uuidv4({
         random: [
@@ -26,7 +26,7 @@ module.exports = {
       type: 'ROUTE'
     }], {});
   },
-  down: (queryInterface, Sequelize) => {
+  down: (queryInterface) => {
     return queryInterface.bulkDelete('Privilege', null, {});
   }
 };

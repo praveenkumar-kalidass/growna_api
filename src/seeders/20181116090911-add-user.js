@@ -6,7 +6,7 @@ const passwordHash = require('password-hash');
  * Add sample Users - Admin, User
  */
 module.exports = {
-  up: (queryInterface, Sequelize) => {
+  up: (queryInterface) => {
     return queryInterface.bulkInsert('User', [{
       id: uuidv4(),
       first_name: 'Admin',
@@ -23,7 +23,7 @@ module.exports = {
       role_id: '543529bf-f5dc-44ec-a3e7-aaa4721e5640'
     }], {});
   },
-  down: (queryInterface, Sequelize) => {
+  down: (queryInterface) => {
     return queryInterface.bulkDelete('User', null, {});
   }
 };

@@ -23,20 +23,18 @@ module.exports = {
         },
         createdAt: {
           type: Sequelize.DATE,
-          defaultValue: Sequelize.NOW,
           field: 'created_at',
           defaultValue: Sequelize.fn('NOW')
         },
         updatedAt: {
           type: Sequelize.DATE,
-          defaultValue: Sequelize.NOW,
           field: 'updated_at',
           defaultValue: Sequelize.fn('NOW')
         }
       }
     );
   },
-  down: (queryInterface, Sequelize) => {
+  down: (queryInterface) => {
     return queryInterface.dropTable(
       'Privilege'
     );

@@ -6,7 +6,7 @@ const passwordHash = require('password-hash');
  * Add GIS Client
  */
 module.exports = {
-  up: (queryInterface, Sequelize) => {
+  up: (queryInterface) => {
     return queryInterface.bulkInsert('Client', [{
       id: uuidv4({
         random: [
@@ -18,7 +18,7 @@ module.exports = {
       redirect_uri: 'authenticate'
     }], {});
   },
-  down: (queryInterface, Sequelize) => {
+  down: (queryInterface) => {
     return queryInterface.bulkDelete('Client', null, {});
   }
 };

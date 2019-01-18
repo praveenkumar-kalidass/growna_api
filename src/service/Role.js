@@ -3,7 +3,6 @@
  *
  * @exports {Class} RoleService
  */
-const async = require('async');
 const RoleDao = require('../dao/Role');
 const roleDao = new RoleDao();
 

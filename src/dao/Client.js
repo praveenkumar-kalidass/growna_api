@@ -37,7 +37,7 @@ class ClientDao {
       return getCB(null, client);
     }, (getError) => {
       return getCB(getError);
-    })
+    });
   }
 }
 

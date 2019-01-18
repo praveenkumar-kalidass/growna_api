@@ -41,15 +41,15 @@ router.post('/login', (request, response) => {
         handle: (request, response, handleCB) => {
           oAuthService.getUser(request.body.username, request.body.password,
             (authErr, user) => {
-            if (authErr) {
-              return handleCB(authErr);
-            }
-            return handleCB(null, user);
-          });
+              if (authErr) {
+                return handleCB(authErr);
+              }
+              return handleCB(null, user);
+            });
         }
       }
     },
-    (authErr, code) => {
+    (authErr) => {
       if (authErr) {
         response.status(401).send('Authorization failed');
       } else {

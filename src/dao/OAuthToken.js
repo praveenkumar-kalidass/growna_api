@@ -70,7 +70,7 @@ class OAuthTokenDao {
       return saveTokenCB(null, accessToken);
     }, (createErr) => {
       return saveTokenCB(createErr);
-    })
+    });
   }
 }
 

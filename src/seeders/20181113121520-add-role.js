@@ -5,7 +5,7 @@ const uuidv4 = require('uuid/v4');
  * Add new roles - Admin, User
  */
 module.exports = {
-  up: (queryInterface, Sequelize) => {
+  up: (queryInterface) => {
     return queryInterface.bulkInsert('Role', [{
       id: uuidv4({
         random: [
@@ -24,7 +24,7 @@ module.exports = {
       name: 'GIS_USER'
     }], {});
   },
-  down: (queryInterface, Sequelize) => {
+  down: (queryInterface) => {
     return queryInterface.bulkDelete('Role', null, {});
   }
 };

@@ -5,7 +5,7 @@ const uuidv4 = require('uuid/v4');
  * Add permissions for sample users
  */
 module.exports = {
-  up: (queryInterface, Sequelize) => {
+  up: (queryInterface) => {
     return queryInterface.bulkInsert('Permission', [{
       id: uuidv4(),
       role_id: '108243ae-d3ff-40db-b4e7-efc2390b5827',
@@ -16,7 +16,7 @@ module.exports = {
       privilege_id: '689702ca-e9bc-49ca-a4f5-afa8560e6732'
     }], {});
   },
-  down: (queryInterface, Sequelize) => {
+  down: (queryInterface) => {
     return queryInterface.bulkDelete('Permission', null, {});
   }
 };

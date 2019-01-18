@@ -17,7 +17,6 @@ const userService = new UserService();
 router.get('/privileges/:userId', (request, response) => {
   userService.getUserPrivileges(request.params.userId, (privilegeErr, role) => {
     if (privilegeErr) {
-      console.error(privilegeErr);
       response.status(500).send(privilegeErr);
     }
     response.send(role);
