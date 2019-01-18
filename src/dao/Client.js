@@ -4,6 +4,7 @@
  * @exports {Class} ClientDao
  */
 const models = require('../models');
+const passwordHash = require('password-hash');
 
 /**
  * ClientDao class
@@ -15,14 +16,24 @@ class ClientDao {
    * Method to get client by id
    *
    * @param  {UUID} clientId
+   * @param  {String} clientSecret
    * @param  {Function} getCB
    */
-  getClient(clientId, getCB) {
+  getClient(clientId, clientSecret, getCB) {
     models.Client.find({
       where: {
         id: clientId
       }
     }).then((client) => {
+      if (!client) {
+        return getCB(Error('No Client found'));
+      }
+      if (clientSecret) {
+        if (passwordHash.verify(clientSecret, client.clientSecret)) {
+          return getCB(null, client);
+        }
+        return getCB(Error('Client Secret does not match'));
+      }
       return getCB(null, client);
     }, (getError) => {
       return getCB(getError);

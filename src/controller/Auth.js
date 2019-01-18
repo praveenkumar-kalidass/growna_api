@@ -17,10 +17,7 @@ const router = express.Router();
  */
 const oAuth = new OAuthServer({
   model: oAuthService,
-  allowEmptyState: true,
-  requireClientAuthentication: {
-    password: false
-  }
+  allowEmptyState: true
 });
 
 /**

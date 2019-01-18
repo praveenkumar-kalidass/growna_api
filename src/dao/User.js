@@ -26,7 +26,7 @@ class UserDao {
       }
     }).then((user) => {
       if (!user) {
-        return getCB(new Error("No User found").toString());
+        return getCB(Error('No User found'));
       }
       return getCB(null, user);
     }, (getError) => {
@@ -46,11 +46,14 @@ class UserDao {
         email: email
       }
     }).then((user) => {
+      if (!user) {
+        return getUserCB(Error('User not found'));
+      }
       // Validate password
       if (passwordHash.verify(password, user.password)) {
         return getUserCB(null, user);
       }
-      return getUserCB(Error({name: 'Invalid Credentials'}));
+      return getUserCB(Error('Invalid Credentials'));
     }, (getError) => {
       return getUserCB(getError);
     });

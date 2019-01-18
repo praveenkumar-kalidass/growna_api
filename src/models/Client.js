@@ -8,6 +8,11 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true
     },
+    clientSecret: {
+      type: DataTypes.STRING,
+      field: 'client_secret',
+      allowNull: false
+    },
     redirectUri: {
       type: DataTypes.STRING,
       field: 'redirect_uri',

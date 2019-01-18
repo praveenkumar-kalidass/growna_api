@@ -14,6 +14,7 @@ module.exports = {
           0x39, 0xe5, 0x69, 0xa4, 0x37, 0x0b, 0x58, 0x27
         ]
       }),
+      client_secret: passwordHash.generate('gis_web_client'),
       redirect_uri: 'authenticate'
     }], {});
   },

@@ -52,7 +52,7 @@ class OAuthServer {
    * @param  {Function} getClientCB
    */
   getClient(clientId, clientSecret, getClientCB) {
-    clientDao.getClient(clientId, (clientErr, client) => {
+    clientDao.getClient(clientId, clientSecret, (clientErr, client) => {
       if (clientErr) {
         return getClientCB(clientErr);
       }
