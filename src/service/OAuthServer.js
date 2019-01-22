@@ -58,7 +58,7 @@ class OAuthServer {
       }
       return getClientCB(null, {
         id: client.id,
-        grants: ['password', 'authorization_code'],
+        grants: ['password', 'authorization_code', 'refresh_token'],
         redirectUris: [client.redirectUri]
       });
     });
@@ -76,7 +76,7 @@ class OAuthServer {
       }
       return getRefreshTokenCB(null, {
         refreshToken: token.refreshToken,
-        refreshTokenExpiresAt: token.refreshTokenExpiresOn,
+        refreshTokenExpiresAt: token.refreshTokenExpiresAt,
         client: {
           id: token.clientId
         },
@@ -104,6 +104,19 @@ class OAuthServer {
       saveToken.client = client;
       saveToken.user = user;
       return saveTokenCB(null, saveToken);
+    });
+  }
+  /**
+   * OAuth Service to revoke the expired accesstoken
+   * @param  {Object} token
+   * @param  {Function} revokeCB
+   */
+  revokeToken(token, revokeCB) {
+    oAuthTokenDao.deleteAccessToken(token, (deleteErr, isDeleted) => {
+      if (deleteErr) {
+        return revokeCB(deleteErr);
+      }
+      return revokeCB(null, isDeleted);
     });
   }
   /**

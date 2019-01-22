@@ -11,6 +11,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const debug = require('debug')('insurance-api:server');
 const http = require('http');
+const cors = require('cors');
 
 const clientRouter = require('./routes/index');
 const serverRouter = require('./src/controller');
@@ -26,6 +27,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors());
 
 app.use('/api', serverRouter);
 app.use('/', clientRouter);

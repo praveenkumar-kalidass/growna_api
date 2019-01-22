@@ -31,6 +31,9 @@ class OAuthTokenDao {
         accessToken: bearerToken
       }
     }).then((token) => {
+      if (!token) {
+        return getTokenCB(Error('Accesstoken not found'));
+      }
       return getTokenCB(null, token);
     }, (getError) => {
       return getTokenCB(getError);
@@ -46,7 +49,7 @@ class OAuthTokenDao {
     models.OAuthToken.find({
       attributes: [
         'refreshToken',
-        'refreshTokenExpiresOn',
+        'refreshTokenExpiresAt',
         'clientId',
         'userId'
       ],
@@ -70,6 +73,27 @@ class OAuthTokenDao {
       return saveTokenCB(null, accessToken);
     }, (createErr) => {
       return saveTokenCB(createErr);
+    });
+  }
+  /**
+   * Dao to delete AccessToken based on refreshToken
+   * @param  {Object} token
+   * @param  {Function} deleteCB
+   */
+  deleteAccessToken(token, deleteCB) {
+    models.OAuthToken.destroy({
+      where: {
+        refreshToken: token.refreshToken,
+        clientId: token.client.id,
+        userId: token.user.id
+      }
+    }).then((token) => {
+      if (!token) {
+        return deleteCB(null, false);
+      }
+      return deleteCB(null, true);
+    }, (deleteErr) => {
+      return deleteCB(deleteErr);
     });
   }
 }
