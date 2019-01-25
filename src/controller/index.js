@@ -8,6 +8,7 @@ const OAuthServer = require('oauth2-server');
 const OAuthService = require('../service/OAuthServer');
 const authController = require('./Auth');
 const roleController = require('./Role');
+const userController = require('./User');
 const oAuthService = new OAuthService();
 const router = express.Router();
 
@@ -59,5 +60,13 @@ router.use((request, response, next) => {
  * @param {Class} roleController
  */
 router.use('/role', roleController);
+
+/**
+ * Middleware - "/api/user/*"
+ *
+ * @param {String} route
+ * @param {Class} userController
+ */
+router.use('/user', userController);
 
 module.exports = router;

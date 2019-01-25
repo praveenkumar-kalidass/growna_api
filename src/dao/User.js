@@ -62,6 +62,22 @@ class UserDao {
       return getUserCB(getError);
     });
   }
+  /**
+   * Method to create new user
+   *
+   * @param  {Object} user
+   * @param  {Function} createCB
+   */
+  createUser(user, createCB) {
+    models.User.find({
+      ...user,
+      password: passwordHash.generate(user.password)
+    }).then((user) => {
+      return createCB(null, user.id);
+    }, (createErr) => {
+      return createCB(createErr);
+    });
+  }
 }
 
 module.exports = UserDao;
