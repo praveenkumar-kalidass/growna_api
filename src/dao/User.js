@@ -23,6 +23,10 @@ class UserDao {
     models.User.find({
       where: {
         id: userId
+      },
+      include: {
+        model: models.Role,
+        as: 'role'
       }
     }).then((user) => {
       if (!user) {

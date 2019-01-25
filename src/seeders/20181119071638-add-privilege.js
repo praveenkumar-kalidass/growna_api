@@ -13,8 +13,8 @@ module.exports = {
           0x21, 0xc5, 0xcd, 0xb9, 0x82, 0x0c, 0x47, 0x51
         ]
       }),
-      description: 'ADMIN',
-      type: 'ROUTE'
+      description: 'USER_FORM',
+      type: 'VIEW'
     }, {
       id: uuidv4({
         random: [
@@ -23,7 +23,7 @@ module.exports = {
         ]
       }),
       description: 'USER',
-      type: 'ROUTE'
+      type: 'VIEW'
     }], {});
   },
   down: (queryInterface) => {

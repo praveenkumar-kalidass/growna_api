@@ -14,13 +14,13 @@ class RoleDao {
   /**
    * Method to get role data with privileges associated
    *
-   * @param  {UUID} roleId
+   * @param  {String} role
    * @param  {Function} getCB
    */
-  findPrivilegesByRole(roleId, getCB) {
+  findPrivilegesByRole(role, getCB) {
     models.Role.find({
       where: {
-        id: roleId
+        name: role
       },
       include: {
         model: models.Privilege,
@@ -29,8 +29,8 @@ class RoleDao {
           attributes: ['id']
         }
       }
-    }).then((role) => {
-      return getCB(null, role);
+    }).then((roleDetail) => {
+      return getCB(null, roleDetail.privileges);
     }, (getError) => {
       return getCB(getError);
     });

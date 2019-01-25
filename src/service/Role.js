@@ -13,17 +13,17 @@ const roleDao = new RoleDao();
  */
 class RoleService {
   /**
-   * Method to get all privileges associated with the roleid
+   * Method to get all privileges associated with the role
    *
-   * @param  {UUID} roleId
+   * @param  {String} role
    * @param  {Function} getPrivilegesCB
    */
-  getRolePrivileges(roleId, getPrivilegesCB) {
-    roleDao.findPrivilegesByRole(roleId, (roleErr, role) => {
+  getRolePrivileges(role, getPrivilegesCB) {
+    roleDao.findPrivilegesByRole(role, (roleErr, privileges) => {
       if (roleErr) {
         return getPrivilegesCB(roleErr);
       }
-      return getPrivilegesCB(null, role);
+      return getPrivilegesCB(null, privileges);
     });
   }
 }

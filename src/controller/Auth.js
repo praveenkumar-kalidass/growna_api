@@ -75,12 +75,12 @@ router.post('/authenticate', (request, response) => {
       if (tokenErr) {
         response.status(401).send(tokenErr);
       } else {
-        userService.getUserPrivileges(token.userId, (privilegeErr, role) => {
-          if (privilegeErr) {
-            response.status(500).send(privilegeErr);
+        userService.getUserDetails(token.userId, (userErr, user) => {
+          if (userErr) {
+            response.status(500).send(userErr);
           }
           response.status(200).send({
-            ...role.dataValues,
+            ...user.dataValues,
             auth: token
           });
         });

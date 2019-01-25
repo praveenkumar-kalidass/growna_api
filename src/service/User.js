@@ -16,23 +16,17 @@ const roleService = new RoleService();
  */
 class UserService {
   /**
-   * Method to get all privileges associated with the user role
+   * Method to get details of a user
    *
    * @param  {UUID} userId
-   * @param  {Function} getPrivilegesCB
+   * @param  {Function} getDetailsCB
    */
-  getUserPrivileges(userId, getPrivilegesCB) {
-    async.waterfall([
-      async.apply(userDao.findUserById, userId),
-      (user, passRoleCB) => {
-        return passRoleCB(null, user.dataValues.roleId);
-      },
-      roleService.getRolePrivileges
-    ], (waterfallErr, result) => {
-      if (waterfallErr) {
-        return getPrivilegesCB(waterfallErr);
+  getUserDetails(userId, getDetailsCB) {
+    userDao.findUserById(userId, (findErr, user) => {
+      if (findErr) {
+        return getDetailsCB(findErr);
       }
-      return getPrivilegesCB(null, result);
+      return getDetailsCB(null, user);
     });
   }
 }
