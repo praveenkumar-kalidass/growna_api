@@ -23,4 +23,19 @@ router.post('/add', (request, response) => {
   });
 });
 
+/**
+ * Controller to route "/api/user"
+ *
+ * @param {String} userId
+ * @type  {GET}
+ */
+router.get('/:userId', (request, response) => {
+  userService.getUserDetails(request.params.userId, (userErr, user) => {
+    if (userErr) {
+      response.status(500).send(userErr);
+    }
+    response.send(user);
+  });
+});
+
 module.exports = router;

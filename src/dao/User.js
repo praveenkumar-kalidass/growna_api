@@ -5,6 +5,7 @@
  */
 const models = require('../models');
 const passwordHash = require('password-hash');
+const ServerError = require('oauth2-server/lib/errors/server-error');
 
 /**
  * UserDao class
@@ -30,7 +31,7 @@ class UserDao {
       }
     }).then((user) => {
       if (!user) {
-        return getCB(Error('No User found'));
+        return getCB(new ServerError('No User found'));
       }
       return getCB(null, user);
     }, (getError) => {
@@ -51,13 +52,13 @@ class UserDao {
       }
     }).then((user) => {
       if (!user) {
-        return getUserCB(Error('User not found'));
+        return getUserCB(new ServerError('User not found'));
       }
       // Validate password
       if (passwordHash.verify(password, user.password)) {
         return getUserCB(null, user);
       }
-      return getUserCB(Error('Invalid Credentials'));
+      return getUserCB(new ServerError('Invalid Credentials'));
     }, (getError) => {
       return getUserCB(getError);
     });
@@ -69,7 +70,7 @@ class UserDao {
    * @param  {Function} createCB
    */
   createUser(user, createCB) {
-    models.User.find({
+    models.User.create({
       ...user,
       password: passwordHash.generate(user.password)
     }).then((user) => {

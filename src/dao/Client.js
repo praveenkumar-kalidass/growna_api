@@ -5,6 +5,7 @@
  */
 const models = require('../models');
 const passwordHash = require('password-hash');
+const ServerError = require('oauth2-server/lib/errors/server-error');
 
 /**
  * ClientDao class
@@ -26,13 +27,13 @@ class ClientDao {
       }
     }).then((client) => {
       if (!client) {
-        return getCB(Error('No Client found'));
+        return getCB(new ServerError('No Client found'));
       }
       if (clientSecret) {
         if (passwordHash.verify(clientSecret, client.clientSecret)) {
           return getCB(null, client);
         }
-        return getCB(Error('Client Secret does not match'));
+        return getCB(new ServerError('Client Secret does not match'));
       }
       return getCB(null, client);
     }, (getError) => {

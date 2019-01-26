@@ -22,7 +22,7 @@ module.exports = {
           0x24, 0xf5, 0xaf, 0xa8, 0x56, 0x0e, 0x67, 0x32
         ]
       }),
-      description: 'USER',
+      description: 'INSURANCE',
       type: 'VIEW'
     }], {});
   },

@@ -4,6 +4,7 @@
  * @exports {Class} OAuthTokenDao
  */
 const models = require('../models');
+const ServerError = require('oauth2-server/lib/errors/server-error');
 
 /**
  * OAuthTokenDao class
@@ -32,7 +33,7 @@ class OAuthTokenDao {
       }
     }).then((token) => {
       if (!token) {
-        return getTokenCB(Error('Accesstoken not found'));
+        return getTokenCB(new ServerError('Accesstoken not found'));
       }
       return getTokenCB(null, token);
     }, (getError) => {

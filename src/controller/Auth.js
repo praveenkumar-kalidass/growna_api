@@ -51,7 +51,7 @@ router.post('/login', (request, response) => {
     },
     (authErr) => {
       if (authErr) {
-        response.status(401).send('Authorization failed');
+        response.status(401).send(authErr);
       } else {
         response.set(Response.headers);
         response.redirect(307, Response.headers.location);
