@@ -3,11 +3,8 @@
  *
  * @exports {Class} UserService
  */
-const async = require('async');
 const UserDao = require('../dao/User');
-const RoleService = require('../service/Role');
 const userDao = new UserDao();
-const roleService = new RoleService();
 
 /**
  * UserService class

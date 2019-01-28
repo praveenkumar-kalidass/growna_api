@@ -23,4 +23,21 @@ router.get('/privileges/:role', (request, response) => {
   });
 });
 
+/**
+ * Controller to route "/api/role/validate"
+ *
+ * @param {String} role
+ * @param {String} privilege
+ * @type  {GET}
+ */
+router.get('/validate/:role/:privilege', (request, response) => {
+  roleService.validateRoute(request.params.role, request.params.privilege,
+    (validateErr, valid) => {
+      if (validateErr) {
+        response.status(500).send(validateErr);
+      }
+      response.send(valid);
+    });
+});
+
 module.exports = router;
