@@ -9,7 +9,9 @@ const userDao = new UserDao();
 /**
  * UserService class
  *
- * @method {public} getUserPrivileges
+ * @method {public} getUserDetails
+ * @method {public} getUser
+ * @method {public} addUser
  */
 class UserService {
   /**
@@ -24,6 +26,21 @@ class UserService {
         return getDetailsCB(findErr);
       }
       return getDetailsCB(null, user);
+    });
+  }
+  /**
+   * Method to get user for Authentication
+   *
+   * @param  {String} email
+   * @param  {String} password
+   * @param  {Function} getUserCB
+   */
+  getUser(email, password, getUserCB) {
+    userDao.getUserByCredentials(email, password, (getErr, user) => {
+      if (getErr) {
+        return getUserCB(getErr);
+      }
+      return getUserCB(null, user);
     });
   }
   /**

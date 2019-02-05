@@ -3,12 +3,12 @@
  *
  * @exports {Class} OAuthServer
  */
-const ClientDao  = require('../dao/Client');
-const OAuthTokenDao = require('../dao/OAuthToken');
-const UserDao = require('../dao/User');
-const clientDao = new ClientDao();
-const oAuthTokenDao = new OAuthTokenDao();
-const userDao = new UserDao();
+const ClientService  = require('../service/Client');
+const OAuthTokenService = require('../service/OAuthToken');
+const UserService = require('../service/User');
+const clientService = new ClientService();
+const oAuthTokenService = new OAuthTokenService();
+const userService = new UserService();
 
 /**
  * OAuthServer class
@@ -28,20 +28,11 @@ class OAuthServer {
    * @param  {Function} getAccessTokenCB
    */
   getAccessToken(bearerToken, getAccessTokenCB) {
-    oAuthTokenDao.getAccessToken(bearerToken, (accessTokenErr, token) => {
+    oAuthTokenService.getAccessToken(bearerToken, (accessTokenErr, token) => {
       if (accessTokenErr) {
         return getAccessTokenCB(accessTokenErr);
       }
-      return getAccessTokenCB(null, {
-        accessToken: token.accessToken,
-        accessTokenExpiresAt: token.accessTokenExpiresAt,
-        client: {
-          id: token.clientId
-        },
-        user: {
-          id: token.userId
-        }
-      });
+      return getAccessTokenCB(null, token);
     });
   }
   /**
@@ -52,15 +43,11 @@ class OAuthServer {
    * @param  {Function} getClientCB
    */
   getClient(clientId, clientSecret, getClientCB) {
-    clientDao.getClient(clientId, clientSecret, (clientErr, client) => {
+    clientService.getClient(clientId, clientSecret, (clientErr, client) => {
       if (clientErr) {
         return getClientCB(clientErr);
       }
-      return getClientCB(null, {
-        id: client.id,
-        grants: ['password', 'authorization_code', 'refresh_token'],
-        redirectUris: [client.redirectUri]
-      });
+      return getClientCB(null, client);
     });
   }
   /**
@@ -70,20 +57,11 @@ class OAuthServer {
    * @param  {Function} getRefreshTokenCB
    */
   getRefreshToken(bearerToken, getRefreshTokenCB) {
-    oAuthTokenDao.getRefreshToken(bearerToken, (refreshTokenErr, token) => {
+    oAuthTokenService.getRefreshToken(bearerToken, (refreshTokenErr, token) => {
       if (refreshTokenErr) {
         return getRefreshTokenCB(refreshTokenErr);
       }
-      return getRefreshTokenCB(null, {
-        refreshToken: token.refreshToken,
-        refreshTokenExpiresAt: token.refreshTokenExpiresAt,
-        client: {
-          id: token.clientId
-        },
-        user: {
-          id: token.userId
-        }
-      });
+      return getRefreshTokenCB(null, token);
     });
   }
   /**
@@ -95,14 +73,10 @@ class OAuthServer {
    * @param  {Function} saveTokenCB
    */
   saveToken(token, client, user, saveTokenCB) {
-    token.clientId = client.id;
-    token.userId = user.id;
-    oAuthTokenDao.saveAccessToken(token, (saveErr, saveToken) => {
+    oAuthTokenService.saveToken(token, client, user, (saveErr, saveToken) => {
       if (saveErr) {
         return saveTokenCB(saveErr);
       }
-      saveToken.client = client;
-      saveToken.user = user;
       return saveTokenCB(null, saveToken);
     });
   }
@@ -112,7 +86,7 @@ class OAuthServer {
    * @param  {Function} revokeCB
    */
   revokeToken(token, revokeCB) {
-    oAuthTokenDao.deleteAccessToken(token, (deleteErr, isDeleted) => {
+    oAuthTokenService.revokeToken(token, (deleteErr, isDeleted) => {
       if (deleteErr) {
         return revokeCB(deleteErr);
       }
@@ -137,7 +111,7 @@ class OAuthServer {
    * @param  {Function} getUserCB
    */
   getUser(email, password, getUserCB) {
-    userDao.getUserByCredentials(email, password, (getErr, user) => {
+    userService.getUser(email, password, (getErr, user) => {
       if (getErr) {
         return getUserCB(getErr);
       }
