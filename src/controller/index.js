@@ -13,8 +13,12 @@ const oAuthService = new OAuthService();
 const router = express.Router();
 
 /**
- * OAuth2.0 Server
- *
+ * @swagger
+ * components:
+ *  securitySchemes:
+ *    bearerAuth:
+ *      type: http
+ *      scheme: bearer
  */
 const oAuth = new OAuthServer({
   model: oAuthService,

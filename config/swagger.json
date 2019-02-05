@@ -1,0 +1,16 @@
+{
+  "definition": {
+    "openapi": "3.0.0",
+    "info": {
+      "title": "GIS API",
+      "version": "1.0.0",
+      "description": "Growna Insurance Service"
+    }
+  },
+  "apis": [
+    "./src/controller/index.js",
+    "./src/controller/Auth.js",
+    "./src/controller/Role.js",
+    "./src/controller/User.js"
+  ]
+}

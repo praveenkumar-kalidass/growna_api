@@ -9,10 +9,26 @@ const RoleService = require('../service/Role');
 const roleService = new RoleService();
 
 /**
- * Controller to route "/api/role/privileges"
- *
- * @param {String} role
- * @type  {GET}
+ * @swagger
+ * /api/role/privileges/{role}:
+ *  get:
+ *    summary: Get all privileges for the Role
+ *    description: Client privileges assigned for the role
+ *    tags:
+ *      - Role
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *      - name: role
+ *        in: path
+ *        schema:
+ *          type: string
+ *        required: true
+ *    responses:
+ *      200:
+ *        description: List of Privileges for the role
+ *      500:
+ *        description: Server Error
  */
 router.get('/privileges/:role', (request, response) => {
   roleService.getRolePrivileges(request.params.role, (privilegeErr, privileges) => {
@@ -24,11 +40,31 @@ router.get('/privileges/:role', (request, response) => {
 });
 
 /**
- * Controller to route "/api/role/validate"
- *
- * @param {String} role
- * @param {String} privilege
- * @type  {GET}
+ * @swagger
+ * /api/role/validate/{role}/{privilege}:
+ *  get:
+ *    summary: Validate Privilege for the particular Role
+ *    description: Check whether the privilege is assigned for the role
+ *    tags:
+ *      - Role
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *      - name: role
+ *        in: path
+ *        schema:
+ *          type: string
+ *        required: true
+ *      - name: privilege
+ *        in: path
+ *        schema:
+ *          type: string
+ *        required: true
+ *    responses:
+ *      200:
+ *        description: Returns a flag to determine validitiy
+ *      500:
+ *        description: Server Error
  */
 router.get('/validate/:role/:privilege', (request, response) => {
   roleService.validateRoute(request.params.role, request.params.privilege,

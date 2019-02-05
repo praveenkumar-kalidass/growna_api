@@ -12,7 +12,10 @@ const logger = require('morgan');
 const debug = require('debug')('insurance-api:server');
 const http = require('http');
 const cors = require('cors');
+const swaggerUi = require('swagger-ui-express');
+const swaggerJSDoc = require('swagger-jsdoc');
 
+const swaggerOptions = require('./config/swagger');
 const clientRouter = require('./routes/index');
 const serverRouter = require('./src/controller');
 
@@ -28,6 +31,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
+
+// Swagger docs
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerJSDoc(swaggerOptions)));
 
 app.use('/api', serverRouter);
 app.use('/', clientRouter);
