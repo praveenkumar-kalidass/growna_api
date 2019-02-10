@@ -36,6 +36,15 @@ const userService = new UserService();
  *              roleId:
  *                type: string
  *                format: uuid
+ *              createdBy:
+ *                type: string
+ *                format: uuid
+ *              parentId:
+ *                type: string
+ *                format: uuid
+ *              tenantId:
+ *                type: string
+ *                format: uuid
  *            required:
  *              - firstName
  *              - lastName

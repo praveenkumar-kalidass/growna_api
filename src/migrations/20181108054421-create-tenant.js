@@ -1,12 +1,12 @@
 'use strict';
 
 /**
- * Create Role Table
+ * Create Tenant Table
  */
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable(
-      'Role', {
+      'Tenant', {
         id: {
           type: Sequelize.UUID,
           defaultValue: Sequelize.UUIDV4,
@@ -14,26 +14,7 @@ module.exports = {
         },
         name: {
           type: Sequelize.STRING,
-          allowNull: false,
-          unique: true
-        },
-        type: {
-          type: Sequelize.STRING,
           allowNull: false
-        },
-        parentId: {
-          type: Sequelize.UUID,
-          allowNull: false,
-          field: 'parent_id'
-        },
-        tenantId: {
-          type: Sequelize.UUID,
-          field: 'tenant_id',
-          references: {
-            model: {
-              tableName: 'Tenant'
-            }
-          }
         },
         createdAt: {
           type: Sequelize.DATE,
@@ -50,7 +31,7 @@ module.exports = {
   },
   down: (queryInterface) => {
     return queryInterface.dropTable(
-      'Role'
+      'Tenant'
     );
   }
 };

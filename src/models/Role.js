@@ -13,6 +13,23 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: true
     },
+    type: {
+      type: DataTypes.STRING,
+      validate: {
+        isIn: [['WEB', 'AGENCY', 'CORPORATE']]
+      },
+      allowNull: false
+    },
+    parentId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      field: 'parent_id'
+    },
+    tenantId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      field: 'tenant_id'
+    },
     createdAt: {
       type: DataTypes.DATE,
       field: 'created_at'
@@ -36,6 +53,12 @@ module.exports = (sequelize, DataTypes) => {
       as: 'privileges',
       through: models.Permission,
       foreignKey: 'roleId'
+    });
+    Role.belongsTo(models.Tenant, {
+      as: 'roleTenant',
+      foreignKey: 'tenantId',
+      targetKey: 'id',
+      onDelete: 'SET NULL'
     });
   };
   return Role;

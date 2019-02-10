@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
       field: 'email'
     },
     password: {
@@ -28,10 +29,25 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       field: 'password'
     },
+    createdBy: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      field: 'created_by'
+    },
+    parentId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      field: 'parent_id'
+    },
     roleId: {
       type: DataTypes.UUID,
       allowNull: false,
       field: 'role_id'
+    },
+    tenantId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      field: 'tenant_id'
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -49,6 +65,12 @@ module.exports = (sequelize, DataTypes) => {
     User.belongsTo(models.Role, {
       as: 'role',
       foreignKey: 'roleId',
+      targetKey: 'id',
+      onDelete: 'SET NULL'
+    });
+    User.belongsTo(models.Tenant, {
+      as: 'tenant',
+      foreignKey: 'tenantId',
       targetKey: 'id',
       onDelete: 'SET NULL'
     });

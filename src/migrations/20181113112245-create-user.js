@@ -25,6 +25,7 @@ module.exports = {
         email: {
           type: Sequelize.STRING,
           allowNull: false,
+          unique: true,
           field: 'email'
         },
         password: {
@@ -32,12 +33,31 @@ module.exports = {
           allowNull: false,
           field: 'password'
         },
+        createdBy: {
+          type: Sequelize.UUID,
+          allowNull: false,
+          field: 'created_by'
+        },
+        parentId: {
+          type: Sequelize.UUID,
+          allowNull: false,
+          field: 'parent_id'
+        },
         roleId: {
           type: Sequelize.UUID,
           field: 'role_id',
           references: {
             model: {
               tableName: 'Role'
+            }
+          }
+        },
+        tenantId: {
+          type: Sequelize.UUID,
+          field: 'tenant_id',
+          references: {
+            model: {
+              tableName: 'Tenant'
             }
           }
         },
