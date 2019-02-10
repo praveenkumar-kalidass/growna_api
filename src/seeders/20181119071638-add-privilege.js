@@ -1,5 +1,6 @@
 'use strict';
 const uuidv4 = require('uuid/v4');
+const constant = require('../utils/constant');
 
 /**
  * Add privileges
@@ -13,7 +14,7 @@ module.exports = {
           0xb8, 0xd7, 0xae, 0xc8, 0x49, 0x6d, 0x09, 0x76
         ]
       }),
-      description: 'ADD_TENANT',
+      description: constant.ADD_TENANT,
       type: 'VIEW'
     }, {
       id: uuidv4({
@@ -22,7 +23,7 @@ module.exports = {
           0xa1, 0xc5, 0xcd, 0xb9, 0x82, 0x0c, 0x47, 0x51
         ]
       }),
-      description: 'ADD_USER',
+      description: constant.ADD_USER,
       type: 'VIEW'
     }, {
       id: uuidv4({
@@ -31,7 +32,7 @@ module.exports = {
           0x24, 0xf5, 0xaf, 0xa8, 0x56, 0x0e, 0x67, 0x32
         ]
       }),
-      description: 'INSURANCE',
+      description: constant.INSURANCE,
       type: 'VIEW'
     }], {});
   },

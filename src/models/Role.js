@@ -10,13 +10,12 @@ module.exports = (sequelize, DataTypes) => {
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false,
-      unique: true
+      allowNull: false
     },
     type: {
       type: DataTypes.STRING,
       validate: {
-        isIn: [['WEB', 'AGENCY', 'CORPORATE']]
+        isIn: [['WEB', 'AGENCY']]
       },
       allowNull: false
     },

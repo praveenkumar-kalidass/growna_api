@@ -49,12 +49,12 @@ class UserService {
    * @param  {Object} user
    * @param  {Function} addCB
    */
-  addUser(userId, addCB) {
-    userDao.createUser(userId, (addErr, user) => {
+  addUser(user, addCB) {
+    userDao.createUser(user, (addErr, result) => {
       if (addErr) {
         return addCB(addErr);
       }
-      return addCB(null, user);
+      return addCB(null, result);
     });
   }
 }

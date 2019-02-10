@@ -4,11 +4,15 @@
  * @exports {Class} RoleService
  */
 const RoleDao = require('../dao/Role');
+const uuid = require('../utils/uuid');
+const constant = require('../utils/constant');
 const roleDao = new RoleDao();
 
 /**
  * RoleService class
  *
+ * @method {public} getRolePrivileges
+ * @method {public} validateRoute
  * @method {public} getRolePrivileges
  */
 class RoleService {
@@ -42,6 +46,26 @@ class RoleService {
         return validateCB(null, {valid: true});
       }
       return validateCB(null, {valid: false});
+    });
+  }
+  /**
+   * Service to add role for Tenant
+   *
+   * @param {UUID} tenantId
+   * @param {Function} addRoleCB
+   */
+  addRoleForTenant(tenantId, addRoleCB) {
+    const role = {
+      name: constant.GIS_ADMIN,
+      type: constant.AGENCY,
+      parentId: uuid.GIS_SUPER_ADMIN,
+      tenantId
+    };
+    roleDao.createRole(role, (createErr, result) => {
+      if (createErr) {
+        return addRoleCB(createErr);
+      }
+      return addRoleCB(null, result);
     });
   }
 }

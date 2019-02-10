@@ -1,6 +1,6 @@
 'use strict';
 const uuidv4 = require('uuid/v4');
-const constant = require('../utils/constant');
+const uuid = require('../utils/uuid');
 
 /**
  * Add permissions for sample users
@@ -9,16 +9,16 @@ module.exports = {
   up: (queryInterface) => {
     return queryInterface.bulkInsert('Permission', [{
       id: uuidv4(),
-      role_id: constant.GIS_SUPER_ADMIN,
-      privilege_id: constant.ADD_TENANT
+      role_id: uuid.GIS_SUPER_ADMIN,
+      privilege_id: uuid.ADD_TENANT
     }, {
       id: uuidv4(),
-      role_id: constant.GIS_ADMIN,
-      privilege_id: constant.ADD_USER
+      role_id: uuid.GIS_ADMIN,
+      privilege_id: uuid.ADD_USER
     }, {
       id: uuidv4(),
-      role_id: constant.GIS_USER,
-      privilege_id: constant.INSURANCE
+      role_id: uuid.GIS_USER,
+      privilege_id: uuid.INSURANCE
     }], {});
   },
   down: (queryInterface) => {

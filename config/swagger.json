@@ -10,6 +10,7 @@
   "apis": [
     "./src/controller/index.js",
     "./src/controller/Auth.js",
+    "./src/controller/Tenant.js",
     "./src/controller/Role.js",
     "./src/controller/User.js"
   ]

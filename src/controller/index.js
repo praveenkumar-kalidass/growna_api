@@ -7,6 +7,7 @@ const express = require('express');
 const OAuthServer = require('oauth2-server');
 const OAuthService = require('../service/OAuthServer');
 const authController = require('./Auth');
+const tenantController = require('./Tenant');
 const roleController = require('./Role');
 const userController = require('./User');
 const oAuthService = new OAuthService();
@@ -56,6 +57,14 @@ router.use((request, response, next) => {
     }
   );
 });
+
+/**
+ * Middleware - "/api/tenant/*"
+ *
+ * @param {String} route
+ * @param {Class} tenantController
+ */
+router.use('/tenant', tenantController);
 
 /**
  * Middleware - "/api/role/*"

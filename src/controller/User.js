@@ -51,6 +51,9 @@ const userService = new UserService();
  *              - email
  *              - password
  *              - roleId
+ *              - createdBy
+ *              - parentId
+ *              - tenantId
  *    responses:
  *      200:
  *        description: Returns the Created User ID

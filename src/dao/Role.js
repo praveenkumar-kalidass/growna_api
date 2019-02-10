@@ -9,6 +9,7 @@ const models = require('../models');
  * RoleDao class
  *
  * @method {public} findPrivilegesByRole
+ * @method {public} createRole
  */
 class RoleDao {
   /**
@@ -43,6 +44,19 @@ class RoleDao {
       return getCB(null, roleDetail);
     }, (getError) => {
       return getCB(getError);
+    });
+  }
+  /**
+   * Method to create new role
+   *
+   * @param  {Object} role
+   * @param  {Function} createCB
+   */
+  createRole(role, createCB) {
+    models.Role.create(role).then((result) => {
+      return createCB(null, result);
+    }, (createErr) => {
+      return createCB(createErr);
     });
   }
 }

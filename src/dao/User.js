@@ -12,6 +12,7 @@ const ServerError = require('oauth2-server/lib/errors/server-error');
  *
  * @method {public} findUserById
  * @method {public} getUserByCredentials
+ * @method {public} createUser
  */
 class UserDao {
   /**
@@ -74,7 +75,7 @@ class UserDao {
       ...user,
       password: passwordHash.generate(user.password)
     }).then((user) => {
-      return createCB(null, user.id);
+      return createCB(null, user);
     }, (createErr) => {
       return createCB(createErr);
     });
