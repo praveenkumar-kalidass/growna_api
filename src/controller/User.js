@@ -101,4 +101,36 @@ router.get('/:userId', (request, response) => {
   });
 });
 
+/**
+ * @swagger
+ * /api/user/all/{roleId}:
+ *  get:
+ *    summary: Get Users by Role
+ *    description: Get list of users by Role ID
+ *    tags:
+ *      - User
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *      - name: roleId
+ *        in: path
+ *        schema:
+ *          type: string
+ *          format: uuid
+ *        required: true
+ *    responses:
+ *      200:
+ *        description: Users List
+ *      500:
+ *        description: Server Error
+ */
+router.get('/all/:roleId', (request, response) => {
+  userService.getUsersByRole(request.params.roleId, (userErr, user) => {
+    if (userErr) {
+      response.status(500).send(userErr);
+    }
+    response.send(user);
+  });
+});
+
 module.exports = router;

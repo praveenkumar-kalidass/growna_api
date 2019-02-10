@@ -10,6 +10,7 @@ const models = require('../models');
  *
  * @method {public} findPrivilegesByRole
  * @method {public} createRole
+ * @method {public} getRolesByTenantId
  */
 class RoleDao {
   /**
@@ -42,9 +43,9 @@ class RoleDao {
         return getCB(null, roleDetail.privileges);
       }
       return getCB(null, roleDetail);
-    }, (getError) => {
-      return getCB(getError);
-    });
+    }, (getError) => (
+      getCB(getError)
+    ));
   }
   /**
    * Method to create new role
@@ -53,11 +54,26 @@ class RoleDao {
    * @param  {Function} createCB
    */
   createRole(role, createCB) {
-    models.Role.create(role).then((result) => {
-      return createCB(null, result);
-    }, (createErr) => {
-      return createCB(createErr);
-    });
+    models.Role.create(role).then((result) => (
+      createCB(null, result)
+    ), (createErr) => (
+      createCB(createErr)
+    ));
+  }
+  /**
+   * Method to get roles by tenant id
+   *
+   * @param  {UUID} tenantId
+   * @param  {Function} findRolesCB
+   */
+  getRolesByTenantId(tenantId, findRolesCB) {
+    models.Role.findAll({
+      where: { tenantId }
+    }).then((roles) => (
+      findRolesCB(null, roles)
+    ), (findErr) => (
+      findRolesCB(findErr)
+    ));
   }
 }
 

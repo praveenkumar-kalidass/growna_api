@@ -36,7 +36,8 @@ module.exports = {
       password: passwordHash.generate('gisuser@123'),
       role_id: uuid.GIS_USER,
       created_by: uuid.GIS_USER,
-      parent_id: uuid.GIS_ADMIN
+      parent_id: uuid.GIS_ADMIN,
+      tenant_id: uuid.GIS_TENANT
     }], {});
   },
   down: (queryInterface) => {

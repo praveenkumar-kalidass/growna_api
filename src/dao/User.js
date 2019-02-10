@@ -35,9 +35,9 @@ class UserDao {
         return getCB(new ServerError('No User found'));
       }
       return getCB(null, user);
-    }, (getError) => {
-      return getCB(getError);
-    });
+    }, (getError) => (
+      getCB(getError)
+    ));
   }
   /**
    * Method to find User object by email
@@ -60,9 +60,9 @@ class UserDao {
         return getUserCB(null, user);
       }
       return getUserCB(new ServerError('Invalid Credentials'));
-    }, (getError) => {
-      return getUserCB(getError);
-    });
+    }, (getError) => (
+      getUserCB(getError)
+    ));
   }
   /**
    * Method to create new user
@@ -74,11 +74,25 @@ class UserDao {
     models.User.create({
       ...user,
       password: passwordHash.generate(user.password)
-    }).then((user) => {
-      return createCB(null, user);
-    }, (createErr) => {
-      return createCB(createErr);
-    });
+    }).then((user) => (
+      createCB(null, user)
+    ), (createErr) => (
+      createCB(createErr)
+    ));
+  }
+
+  /**
+   * Method to get users by dynamic query
+   *
+   * @param  {Object} query
+   * @param  {Function} getUsersCB
+   */
+  getUsersByQuery(query, getUsersCB) {
+    models.User.findAll(query).then((users) => (
+      getUsersCB(null, users)
+    ), (findErr) => (
+      getUsersCB(findErr)
+    ));
   }
 }
 

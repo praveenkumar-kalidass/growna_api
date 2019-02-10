@@ -76,4 +76,37 @@ router.get('/validate/:role/:privilege', (request, response) => {
     });
 });
 
+/**
+ * @swagger
+ * /api/role/all/{tenantId}:
+ *  get:
+ *    summary: Get all roles for Tenant
+ *    description: Get list of roles by Tenant ID
+ *    tags:
+ *      - Role
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *      - name: tenantId
+ *        in: path
+ *        schema:
+ *          type: string
+ *          format: uuid
+ *        required: true
+ *    responses:
+ *      200:
+ *        description: Returns list of roles
+ *      500:
+ *        description: Server Error
+ */
+router.get('/all/:tenantId', (request, response) => {
+  roleService.getRolesByTenant(request.params.tenantId,
+    (tenantErr, roles) => {
+      if (tenantErr) {
+        response.status(500).send(tenantErr);
+      }
+      response.send(roles);
+    });
+});
+
 module.exports = router;

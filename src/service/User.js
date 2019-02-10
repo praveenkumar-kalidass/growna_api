@@ -57,6 +57,23 @@ class UserService {
       return addCB(null, result);
     });
   }
+
+  /**
+   * Method to get users by role id
+   * @param  {UUID} roleId
+   * @param  {Function} getUsersCB
+   */
+  getUsersByRole(roleId, getUsersCB) {
+    const query = {
+      where: { roleId }
+    };
+    userDao.getUsersByQuery(query, (userErr, users) => {
+      if (userErr) {
+        return getUsersCB(userErr);
+      }
+      return getUsersCB(null, users);
+    });
+  }
 }
 
 module.exports = UserService;
