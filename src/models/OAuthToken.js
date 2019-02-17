@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
       field: 'access_token',
       allowNull: false
     },
+    scope: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     accessTokenExpiresAt: {
       type: DataTypes.DATE,
       field: 'access_token_expires_at',

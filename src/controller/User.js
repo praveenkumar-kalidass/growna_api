@@ -6,6 +6,8 @@
 const express = require('express');
 const router = express.Router();
 const UserService = require('../service/User');
+const OAuth = require('./OAuth');
+const oAuth = new OAuth();
 const userService = new UserService();
 
 /**
@@ -60,7 +62,7 @@ const userService = new UserService();
  *      500:
  *        description: Server Error
  */
-router.post('/add', (request, response) => {
+router.post('/add', oAuth.authenticate, (request, response) => {
   userService.addUser(request.body, (userErr, user) => {
     if (userErr) {
       response.status(500).send(userErr);
@@ -92,7 +94,7 @@ router.post('/add', (request, response) => {
  *      500:
  *        description: Server Error
  */
-router.get('/:userId', (request, response) => {
+router.get('/:userId', oAuth.authenticate, (request, response) => {
   userService.getUserDetails(request.params.userId, (userErr, user) => {
     if (userErr) {
       response.status(500).send(userErr);
@@ -124,7 +126,7 @@ router.get('/:userId', (request, response) => {
  *      500:
  *        description: Server Error
  */
-router.get('/all/:roleId', (request, response) => {
+router.get('/all/:roleId', oAuth.authenticate, (request, response) => {
   userService.getUsersByRole(request.params.roleId, (userErr, user) => {
     if (userErr) {
       response.status(500).send(userErr);

@@ -26,7 +26,8 @@ class OAuthTokenDao {
         'accessToken',
         'accessTokenExpiresAt',
         'clientId',
-        'userId'
+        'userId',
+        'scope'
       ],
       where: {
         accessToken: bearerToken
@@ -52,7 +53,8 @@ class OAuthTokenDao {
         'refreshToken',
         'refreshTokenExpiresAt',
         'clientId',
-        'userId'
+        'userId',
+        'scope'
       ],
       where: {
         refreshToken: bearerToken

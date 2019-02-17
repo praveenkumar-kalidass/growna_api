@@ -4,21 +4,9 @@
  * @exports {express} router
  */
 const express = require('express');
-const OAuthServer = require('oauth2-server');
-const OAuthService = require('../service/OAuthServer');
-const UserService = require('../service/User');
-const oAuthService = new OAuthService();
-const userService = new UserService();
+const OAuth = require('./OAuth');
+const oAuth = new OAuth();
 const router = express.Router();
-
-/**
- * OAuth2.0 Server
- *
- */
-const oAuth = new OAuthServer({
-  model: oAuthService,
-  allowEmptyState: true
-});
 
 /**
  * @swagger
@@ -61,34 +49,7 @@ const oAuth = new OAuthServer({
  *      401:
  *        description: Authentication failed
  */
-router.post('/login', (request, response) => {
-  let Request = new OAuthServer.Request(request);
-  let Response = new OAuthServer.Response(request);
-  oAuth.authorize(
-    Request, Response,
-    {
-      authenticateHandler: {
-        handle: (request, response, handleCB) => {
-          oAuthService.getUser(request.body.username, request.body.password,
-            (authErr, user) => {
-              if (authErr) {
-                return handleCB(authErr);
-              }
-              return handleCB(null, user);
-            });
-        }
-      }
-    },
-    (authErr) => {
-      if (authErr) {
-        response.status(401).send(authErr);
-      } else {
-        response.set(Response.headers);
-        response.redirect(307, Response.headers.location);
-      }
-    }
-  );
-});
+router.post('/login', oAuth.authorize);
 
 /**
  * @swagger
@@ -110,27 +71,6 @@ router.post('/login', (request, response) => {
  *      401:
  *        description: Authentication failed
  */
-router.post('/authenticate', (request, response) => {
-  let Request = new OAuthServer.Request(request);
-  let Response = new OAuthServer.Response(request);
-  oAuth.token(
-    Request, Response, {},
-    (tokenErr, token) => {
-      if (tokenErr) {
-        response.status(401).send(tokenErr);
-      } else {
-        userService.getUserDetails(token.userId, (userErr, user) => {
-          if (userErr) {
-            response.status(500).send(userErr);
-          }
-          response.status(200).send({
-            ...user.dataValues,
-            auth: token
-          });
-        });
-      }
-    }
-  );
-});
+router.post('/authorize', oAuth.token);
 
 module.exports = router;

@@ -5,6 +5,7 @@
  */
 const OAuthTokenDao = require('../dao/OAuthToken');
 const oAuthTokenDao = new OAuthTokenDao();
+const constant = require('../utils/constant');
 
 /**
  * OAuthToken Service class
@@ -34,7 +35,8 @@ class OAuthTokenService {
         },
         user: {
           id: token.userId
-        }
+        },
+        scope: token.scope
       });
     });
   }
@@ -57,7 +59,8 @@ class OAuthTokenService {
         },
         user: {
           id: token.userId
-        }
+        },
+        scope: token.scope
       });
     });
   }
@@ -72,6 +75,12 @@ class OAuthTokenService {
   saveToken(token, client, user, saveTokenCB) {
     token.clientId = client.id;
     token.userId = user.id;
+    let scope = constant.USER;
+    if (user.role.name === constant.GIS_ADMIN ||
+      user.role.name === constant.GIS_SUPER_ADMIN) {
+      scope = constant.ADMIN;
+    }
+    token.scope = scope;
     oAuthTokenDao.saveAccessToken(token, (saveErr, saveToken) => {
       if (saveErr) {
         return saveTokenCB(saveErr);

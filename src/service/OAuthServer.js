@@ -5,9 +5,11 @@
  */
 const ClientService  = require('../service/Client');
 const OAuthTokenService = require('../service/OAuthToken');
+const OAuthScopeService = require('../service/OAuthScope');
 const UserService = require('../service/User');
 const clientService = new ClientService();
 const oAuthTokenService = new OAuthTokenService();
+const oAuthScopeService = new OAuthScopeService();
 const userService = new UserService();
 
 /**
@@ -116,6 +118,21 @@ class OAuthServer {
         return getUserCB(getErr);
       }
       return getUserCB(null, user);
+    });
+  }
+  /**
+   * OAuth Service to verify scope for accesstoken
+   *
+   * @param  {String} accessToken
+   * @param  {Object} scope
+   * @param  {Function} verifyCB
+   */
+  verifyScope(accessToken, scope, verifyCB) {
+    oAuthScopeService.verifyScope(accessToken, scope, (scopeErr, valid) => {
+      if (scopeErr) {
+        return verifyCB(scopeErr);
+      }
+      return verifyCB(null, valid);
     });
   }
 }

@@ -48,8 +48,10 @@ class UserDao {
    */
   getUserByCredentials(email, password, getUserCB) {
     models.User.find({
-      where: {
-        email: email
+      where: { email },
+      include: {
+        model: models.Role,
+        as: 'role'
       }
     }).then((user) => {
       if (!user) {

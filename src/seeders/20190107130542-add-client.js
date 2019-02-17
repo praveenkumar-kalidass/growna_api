@@ -15,7 +15,7 @@ module.exports = {
         ]
       }),
       client_secret: passwordHash.generate('gis_web_client'),
-      redirect_uri: 'authenticate'
+      redirect_uri: 'authorize'
     }], {});
   },
   down: (queryInterface) => {

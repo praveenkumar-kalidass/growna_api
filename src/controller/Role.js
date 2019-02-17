@@ -6,6 +6,8 @@
 const express = require('express');
 const router = express.Router();
 const RoleService = require('../service/Role');
+const OAuth = require('./OAuth');
+const oAuth = new OAuth();
 const roleService = new RoleService();
 
 /**
@@ -30,7 +32,7 @@ const roleService = new RoleService();
  *      500:
  *        description: Server Error
  */
-router.get('/privileges/:role', (request, response) => {
+router.get('/privileges/:role', oAuth.authenticate, (request, response) => {
   roleService.getRolePrivileges(request.params.role, (privilegeErr, privileges) => {
     if (privilegeErr) {
       response.status(500).send(privilegeErr);
@@ -66,7 +68,7 @@ router.get('/privileges/:role', (request, response) => {
  *      500:
  *        description: Server Error
  */
-router.get('/validate/:role/:privilege', (request, response) => {
+router.get('/validate/:role/:privilege', oAuth.authenticate, (request, response) => {
   roleService.validateRoute(request.params.role, request.params.privilege,
     (validateErr, valid) => {
       if (validateErr) {
@@ -99,7 +101,7 @@ router.get('/validate/:role/:privilege', (request, response) => {
  *      500:
  *        description: Server Error
  */
-router.get('/all/:tenantId', (request, response) => {
+router.get('/all/:tenantId', oAuth.authenticate, (request, response) => {
   roleService.getRolesByTenant(request.params.tenantId,
     (tenantErr, roles) => {
       if (tenantErr) {

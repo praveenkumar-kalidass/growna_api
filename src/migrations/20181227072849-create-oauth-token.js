@@ -14,6 +14,10 @@ module.exports = {
           field: 'access_token',
           allowNull: false
         },
+        scope: {
+          type: Sequelize.STRING,
+          allowNull: false
+        },
         accessTokenExpiresAt: {
           type: Sequelize.DATE,
           field: 'access_token_expires_at',

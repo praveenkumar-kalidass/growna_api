@@ -6,6 +6,8 @@
 const express = require('express');
 const router = express.Router();
 const TenantService = require('../service/Tenant');
+const OAuth = require('./OAuth');
+const oAuth = new OAuth();
 const tenantService = new TenantService();
 
 /**
@@ -55,7 +57,7 @@ const tenantService = new TenantService();
  *      500:
  *        description: Server Error
  */
-router.post('/register', (request, response) => {
+router.post('/register', oAuth.authenticate, (request, response) => {
   tenantService.registerTenant(request.body, (registerErr, tenant) => {
     if (registerErr) {
       response.status(500).send(registerErr);
