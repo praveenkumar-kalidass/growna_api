@@ -111,4 +111,52 @@ router.get('/all/:tenantId', oAuth.authenticate, (request, response) => {
     });
 });
 
+/**
+ * @swagger
+ * /api/role/add:
+ *  post:
+ *    summary: Create a new role
+ *    description: Add a role to the database
+ *    tags:
+ *      - Role
+ *    security:
+ *      - bearerAuth: []
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              name:
+ *                type: string
+ *              type:
+ *                type: string
+ *                enum: [WEB, AGENCY]
+ *              parentId:
+ *                type: string
+ *                format: uuid
+ *              tenantId:
+ *                type: string
+ *                format: uuid
+ *            required:
+ *              - name
+ *              - type
+ *              - parentId
+ *              - tenantId
+ *    responses:
+ *      200:
+ *        description: Returns the Created Role
+ *      500:
+ *        description: Server Error
+ */
+router.post('/add', oAuth.authenticate, (request, response) => {
+  roleService.addRole(request.body, (roleErr, role) => {
+    if (roleErr) {
+      response.status(500).send(roleErr);
+    }
+    response.send(role);
+  });
+});
+
 module.exports = router;

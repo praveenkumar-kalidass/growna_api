@@ -15,6 +15,7 @@ const roleDao = new RoleDao();
  * @method {public} validateRoute
  * @method {public} getRolePrivileges
  * @method {public} getRolesByTenant
+ * @method {public} addRole
  */
 class RoleService {
   /**
@@ -71,7 +72,7 @@ class RoleService {
   }
   /**
    * Service to get roles by Tenant ID
-   * 
+   *
    * @param  {UUID} tenantId
    * @param  {Function} getRolesCB
    */
@@ -81,6 +82,20 @@ class RoleService {
         return getRolesCB(roleErr);
       }
       return getRolesCB(null, roles);
+    });
+  }
+  /**
+   * Service to add new role
+   *
+   * @param {Object} role
+   * @param {Function} addRoleCB
+   */
+  addRole(role, addRoleCB) {
+    roleDao.createRole(role, (createErr, result) => {
+      if (createErr) {
+        return addRoleCB(createErr);
+      }
+      return addRoleCB(null, result);
     });
   }
 }

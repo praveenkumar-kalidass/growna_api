@@ -58,7 +58,7 @@ const userService = new UserService();
  *              - tenantId
  *    responses:
  *      200:
- *        description: Returns the Created User ID
+ *        description: Returns the Created User
  *      500:
  *        description: Server Error
  */

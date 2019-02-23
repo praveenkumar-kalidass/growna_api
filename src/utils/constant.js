@@ -15,5 +15,6 @@ module.exports = {
   GIS_USER: 'GIS_USER',
   ADD_TENANT: 'ADD_TENANT',
   ADD_USER: 'ADD_USER',
+  ADD_ROLE: 'ADD_ROLE',
   INSURANCE: 'INSURANCE'
 };

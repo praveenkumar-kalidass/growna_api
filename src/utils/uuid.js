@@ -10,5 +10,6 @@ module.exports = {
   GIS_USER: '543529bf-f5dc-44ec-a3e7-aaa4721e5640',
   ADD_TENANT: '322396ba-c6ab-49bb-b8d7-aec8496d0976',
   ADD_USER: '627913ed-f2bd-45ae-a1c5-cdb9820c4751',
+  ADD_ROLE: '87320543-e2f5-4e17-b6a1-6898e40da120',
   INSURANCE: '689702ca-e9bc-49ca-a4f5-afa8560e6732'
 };
