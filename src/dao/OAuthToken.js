@@ -12,6 +12,7 @@ const ServerError = require('oauth2-server/lib/errors/server-error');
  * @method {public} getAccessToken
  * @method {public} getRefreshToken
  * @method {public} saveAccessToken
+ * @method {public} deleteAccessToken
  */
 class OAuthTokenDao {
   /**

@@ -3,7 +3,10 @@
  *
  * @exports {Class} RoleDao
  */
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 const models = require('../models');
+const constant = require('../utils/constant');
 
 /**
  * RoleDao class
@@ -68,7 +71,12 @@ class RoleDao {
    */
   getRolesByTenantId(tenantId, findRolesCB) {
     models.Role.findAll({
-      where: { tenantId }
+      where: {
+        tenantId,
+        name: {
+          [Op.ne]: constant.GIS_SUPER_ADMIN
+        }
+      }
     }).then((roles) => (
       findRolesCB(null, roles)
     ), (findErr) => (

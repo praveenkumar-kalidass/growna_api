@@ -13,6 +13,7 @@ const ServerError = require('oauth2-server/lib/errors/server-error');
  * @method {public} findUserById
  * @method {public} getUserByCredentials
  * @method {public} createUser
+ * @method {public} getUsersByQuery
  */
 class UserDao {
   /**

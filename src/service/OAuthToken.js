@@ -3,8 +3,11 @@
  *
  * @exports {Class} OAuthTokenService
  */
+const async = require('async');
 const OAuthTokenDao = require('../dao/OAuthToken');
+const UserService = require('../service/User');
 const oAuthTokenDao = new OAuthTokenDao();
+const userService = new UserService();
 const constant = require('../utils/constant');
 
 /**
@@ -47,21 +50,30 @@ class OAuthTokenService {
    * @param  {Function} getRefreshTokenCB
    */
   getRefreshToken(bearerToken, getRefreshTokenCB) {
-    oAuthTokenDao.getRefreshToken(bearerToken, (refreshTokenErr, token) => {
-      if (refreshTokenErr) {
-        return getRefreshTokenCB(refreshTokenErr);
+    let accessToken = {};
+    async.waterfall([
+      async.apply(oAuthTokenDao.getRefreshToken, bearerToken),
+      (token, passTokenCB) => {
+        accessToken = {
+          refreshToken: token.refreshToken,
+          refreshTokenExpiresAt: token.refreshTokenExpiresAt,
+          client: {
+            id: token.clientId
+          },
+          scope: token.scope
+        };
+        return passTokenCB(null, token.userId);
+      },
+      userService.getUserDetails,
+      (user, passUserCB) => {
+        accessToken.user = user;
+        return passUserCB(null, accessToken);
       }
-      return getRefreshTokenCB(null, {
-        refreshToken: token.refreshToken,
-        refreshTokenExpiresAt: token.refreshTokenExpiresAt,
-        client: {
-          id: token.clientId
-        },
-        user: {
-          id: token.userId
-        },
-        scope: token.scope
-      });
+    ], (waterfallErr, token) => {
+      if (waterfallErr) {
+        return getRefreshTokenCB(waterfallErr);
+      }
+      return getRefreshTokenCB(null, token);
     });
   }
   /**
