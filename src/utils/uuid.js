@@ -4,6 +4,9 @@
  * @exports {Object}
  */
 module.exports = {
+  DEMO_SUPER_ADMIN: 'cd0db6aa-2b26-49ab-a1db-ac56cc8938c1',
+  DEMO_ADMIN: 'af459d92-09a0-43d9-b067-597580820375',
+  DEMO_USER: '7e0803cf-1143-4104-8353-850d5a6b52a4',
   GIS_TENANT: '458437ca-b8bf-48cc-85c9-abf5238e4795',
   GIS_SUPER_ADMIN: '562334db-d8af-49ee-93b4-fec0318b4818',
   GIS_ADMIN: '108243ae-d3ff-40db-b4e7-efc2390b5827',
@@ -11,5 +14,6 @@ module.exports = {
   ADD_TENANT: '322396ba-c6ab-49bb-b8d7-aec8496d0976',
   ADD_USER: '627913ed-f2bd-45ae-a1c5-cdb9820c4751',
   ADD_ROLE: '87320543-e2f5-4e17-b6a1-6898e40da120',
+  USER_LIST: 'e1eaaab3-8707-4436-b2a0-3c35d4141bd7',
   INSURANCE: '689702ca-e9bc-49ca-a4f5-afa8560e6732'
 };

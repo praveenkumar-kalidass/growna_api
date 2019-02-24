@@ -16,6 +16,7 @@ const roleDao = new RoleDao();
  * @method {public} getRolePrivileges
  * @method {public} getRolesByTenant
  * @method {public} addRole
+ * @method {public} getRoleById
  */
 class RoleService {
   /**
@@ -96,6 +97,20 @@ class RoleService {
         return addRoleCB(createErr);
       }
       return addRoleCB(null, result);
+    });
+  }
+  /**
+   * Service to get Role by ID
+   *
+   * @param  {UUID} roleId
+   * @param  {Function} getRoleCB
+   */
+  getRoleById(roleId, getRoleCB) {
+    roleDao.findRoleById(roleId, (findErr, role) => {
+      if (findErr) {
+        return getRoleCB(findErr);
+      }
+      return getRoleCB(null, role);
     });
   }
 }

@@ -3,8 +3,12 @@
  *
  * @exports {Class} UserService
  */
+const async = require('async');
+const _ = require('lodash');
 const UserDao = require('../dao/User');
+const RoleService = require('../service/Role');
 const userDao = new UserDao();
+const roleService = new RoleService();
 
 /**
  * UserService class
@@ -12,6 +16,9 @@ const userDao = new UserDao();
  * @method {public} getUserDetails
  * @method {public} getUser
  * @method {public} addUser
+ * @method {public} getUsersByRole
+ * @method {private} loadUserDetails
+ * @method {public} getUsersByTenant
  */
 class UserService {
   /**
@@ -21,10 +28,19 @@ class UserService {
    * @param  {Function} getDetailsCB
    */
   getUserDetails(userId, getDetailsCB) {
-    userDao.findUserById(userId, (findErr, user) => {
-      if (findErr) {
-        return getDetailsCB(findErr);
+    let user;
+    async.waterfall([
+      async.apply(userDao.findUserById, userId),
+      (result, passRoleCB) => {
+        user = result;
+        return passRoleCB(null, result.roleId);
+      },
+      roleService.getRoleById
+    ], (waterfallErr, role) => {
+      if (waterfallErr) {
+        return getDetailsCB(waterfallErr);
       }
+      user.role = role;
       return getDetailsCB(null, user);
     });
   }
@@ -57,9 +73,9 @@ class UserService {
       return addCB(null, result);
     });
   }
-
   /**
    * Method to get users by role id
+   *
    * @param  {UUID} roleId
    * @param  {Function} getUsersCB
    */
@@ -72,6 +88,48 @@ class UserService {
         return getUsersCB(userErr);
       }
       return getUsersCB(null, users);
+    });
+  }
+  /**
+   * Method to load User Details for the list of users
+   *
+   * @param  {Array} users
+   * @param  {Function} loadDetailsCB
+   */
+  static loadUserDetails(users, loadDetailsCB) {
+    async.map(users, (user, asyncCB) => {
+      async.parallel({
+        createdBy: userDao.findUserById.bind(null, user.createdBy),
+        parentId: userDao.findUserById.bind(null, user.parentId),
+        role: roleService.getRoleById.bind(null, user.roleId)
+      }, (parallelErr, result) => {
+        if (parallelErr) {
+          return asyncCB(parallelErr);
+        }
+        return asyncCB(null, _.extend(user.dataValues, result));
+      });
+    }, (mapErr, result) => {
+      if (mapErr) {
+        return loadDetailsCB(mapErr);
+      }
+      return loadDetailsCB(null, result);
+    });
+  }
+  /**
+   * Method to get User list by Tenant
+   *
+   * @param  {UUID} tenantId
+   * @param  {Function} getUsersCB
+   */
+  getUsersByTenant(tenantId, getUsersCB) {
+    async.waterfall([
+      async.apply(userDao.getUsersByQuery, { where: { tenantId } }),
+      UserService.loadUserDetails
+    ], (waterfallErr, result) => {
+      if (waterfallErr) {
+        return getUsersCB(waterfallErr);
+      }
+      return getUsersCB(null, result);
     });
   }
 }

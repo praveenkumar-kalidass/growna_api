@@ -18,7 +18,7 @@ module.exports = {
       name: constant.GIS_SUPER_ADMIN,
       type: constant.WEB,
       parent_id: uuid.GIS_SUPER_ADMIN,
-      tenant_id: uuid.GIS_TENANT
+      tenant_id: 'd1c3c618-eb42-4e53-906a-b6abbb861e49'
     }, {
       id: uuidv4({
         random: [

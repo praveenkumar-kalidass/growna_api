@@ -127,11 +127,43 @@ router.get('/:userId', oAuth.authenticate, (request, response) => {
  *        description: Server Error
  */
 router.get('/all/:roleId', oAuth.authenticate, (request, response) => {
-  userService.getUsersByRole(request.params.roleId, (userErr, user) => {
+  userService.getUsersByRole(request.params.roleId, (userErr, users) => {
     if (userErr) {
       response.status(500).send(userErr);
     }
-    response.send(user);
+    response.send(users);
+  });
+});
+
+/**
+ * @swagger
+ * /api/user/tenant/{tenantId}:
+ *  get:
+ *    summary: Get Users by Tenant
+ *    description: Get list of users by Tenant ID
+ *    tags:
+ *      - User
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *      - name: tenantId
+ *        in: path
+ *        schema:
+ *          type: string
+ *          format: uuid
+ *        required: true
+ *    responses:
+ *      200:
+ *        description: Users List
+ *      500:
+ *        description: Server Error
+ */
+router.get('/tenant/:tenantId', oAuth.authenticate, (request, response) => {
+  userService.getUsersByTenant(request.params.tenantId, (userErr, users) => {
+    if (userErr) {
+      response.status(500).send(userErr);
+    }
+    response.send(users);
   });
 });
 

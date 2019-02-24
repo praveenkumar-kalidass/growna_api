@@ -16,5 +16,6 @@ module.exports = {
   ADD_TENANT: 'ADD_TENANT',
   ADD_USER: 'ADD_USER',
   ADD_ROLE: 'ADD_ROLE',
+  USER_LIST: 'USER_LIST',
   INSURANCE: 'INSURANCE'
 };
