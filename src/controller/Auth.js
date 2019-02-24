@@ -5,7 +5,9 @@
  */
 const express = require('express');
 const OAuth = require('./OAuth');
+const OAuthTokenService = require('../service/OAuthtoken');
 const oAuth = new OAuth();
+const oAuthTokenService = new OAuthTokenService();
 const router = express.Router();
 
 /**
@@ -53,7 +55,7 @@ router.post('/login', oAuth.authorize);
 
 /**
  * @swagger
- * /api/auth/authenticate:
+ * /api/auth/authorize:
  *  post:
  *    summary: Authenticate Refresh token
  *    description: Regenerate Access token using Refresh token
@@ -72,5 +74,53 @@ router.post('/login', oAuth.authorize);
  *        description: Authentication failed
  */
 router.post('/authorize', oAuth.token);
+
+/**
+ * @swagger
+ * /api/auth/logout:
+ *  delete:
+ *    summary: Logout to close session
+ *    description: Logout user and delete accessToken
+ *    tags:
+ *      - Auth
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              refreshToken:
+ *                type: string
+ *              client:
+ *                type: object
+ *                properties:
+ *                  id:
+ *                    type: string
+ *                    format: uuid
+ *              user:
+ *                type: object
+ *                properties:
+ *                  id:
+ *                    type: string
+ *                    format: uuid
+ *            required:
+ *              - refreshToken
+ *              - client
+ *              - user
+ *    responses:
+ *      200:
+ *        description: Logout success
+ *      401:
+ *        description: Logout failure
+ */
+router.delete('/logout', (request, response) => {
+  oAuthTokenService.revokeToken(request.body, (revokeErr, loggedOut) => {
+    if (revokeErr) {
+      response.status(500).send(revokeErr);
+    }
+    response.send(loggedOut);
+  });
+});
 
 module.exports = router;

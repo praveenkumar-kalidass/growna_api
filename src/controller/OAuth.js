@@ -110,10 +110,8 @@ class OAuth {
             if (userErr) {
               response.status(500).send(userErr);
             }
-            response.status(200).send({
-              ...user.dataValues,
-              auth: token
-            });
+            user.dataValues.auth = token;
+            response.status(200).send(user);
           });
         }
       }

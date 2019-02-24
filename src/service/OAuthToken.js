@@ -88,8 +88,8 @@ class OAuthTokenService {
     token.clientId = client.id;
     token.userId = user.id;
     let scope = constant.USER;
-    if (user.role.name === constant.GIS_ADMIN ||
-      user.role.name === constant.GIS_SUPER_ADMIN) {
+    if (user.dataValues.role.name === constant.GIS_ADMIN ||
+      user.dataValues.role.name === constant.GIS_SUPER_ADMIN) {
       scope = constant.ADMIN;
     }
     token.scope = scope;

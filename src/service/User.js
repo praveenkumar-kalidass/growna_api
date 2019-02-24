@@ -40,7 +40,7 @@ class UserService {
       if (waterfallErr) {
         return getDetailsCB(waterfallErr);
       }
-      user.role = role;
+      user.dataValues.role = role;
       return getDetailsCB(null, user);
     });
   }
