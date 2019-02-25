@@ -105,7 +105,7 @@ router.get('/:userId', oAuth.authenticate, (request, response) => {
 
 /**
  * @swagger
- * /api/user/all/{roleId}:
+ * /api/user/role/{roleId}:
  *  get:
  *    summary: Get Users by Role
  *    description: Get list of users by Role ID
@@ -126,7 +126,7 @@ router.get('/:userId', oAuth.authenticate, (request, response) => {
  *      500:
  *        description: Server Error
  */
-router.get('/all/:roleId', oAuth.authenticate, (request, response) => {
+router.get('/role/:roleId', oAuth.authenticate, (request, response) => {
   userService.getUsersByRole(request.params.roleId, (userErr, users) => {
     if (userErr) {
       response.status(500).send(userErr);

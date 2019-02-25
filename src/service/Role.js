@@ -3,6 +3,8 @@
  *
  * @exports {Class} RoleService
  */
+const async = require('async');
+const _ = require('lodash');
 const RoleDao = require('../dao/Role');
 const uuid = require('../utils/uuid');
 const constant = require('../utils/constant');
@@ -15,6 +17,8 @@ const roleDao = new RoleDao();
  * @method {public} validateRoute
  * @method {public} getRolePrivileges
  * @method {public} getRolesByTenant
+ * @method {private} loadRoleDetails
+ * @method {public} getRoleDetailsByTenant
  * @method {public} addRole
  * @method {public} getRoleById
  */
@@ -83,6 +87,44 @@ class RoleService {
         return getRolesCB(roleErr);
       }
       return getRolesCB(null, roles);
+    });
+  }
+  /**
+   * Method to load role details for role list
+   *
+   * @param  {Array} roles
+   * @param  {Function} loadDetailsCB
+   */
+  static loadRoleDetails(roles, loadDetailsCB) {
+    async.map(roles, (role, asyncCB) => {
+      roleDao.findRoleById(role.parentId, (findErr, parentId) => {
+        if (findErr) {
+          return asyncCB(findErr);
+        }
+        return asyncCB(null, _.extend(role.dataValues, {parentId}));
+      });
+    }, (mapErr, result) => {
+      if (mapErr) {
+        return loadDetailsCB(mapErr);
+      }
+      return loadDetailsCB(null, result);
+    });
+  }
+  /**
+   * Method to get role details by tenant id
+   *
+   * @param  {UUID} tenantId
+   * @param  {Function} getDetailsCB
+   */
+  getRoleDetailsByTenant(tenantId, getDetailsCB) {
+    async.waterfall([
+      async.apply(roleDao.getRolesByTenantId, tenantId),
+      RoleService.loadRoleDetails
+    ], (waterfallErr, result) => {
+      if (waterfallErr) {
+        return getDetailsCB(waterfallErr);
+      }
+      return getDetailsCB(null, result);
     });
   }
   /**

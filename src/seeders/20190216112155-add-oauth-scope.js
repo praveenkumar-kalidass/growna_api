@@ -20,7 +20,12 @@ module.exports = {
     }, {
       id: uuidv4(),
       method: 'GET',
-      path: '/api/role/all',
+      path: '/api/role/tenant',
+      acl: constant.ADMIN
+    }, {
+      id: uuidv4(),
+      method: 'GET',
+      path: '/api/role/detail',
       acl: constant.ADMIN
     }, {
       id: uuidv4(),
@@ -40,7 +45,7 @@ module.exports = {
     }, {
       id: uuidv4(),
       method: 'GET',
-      path: '/api/user/all',
+      path: '/api/user/role',
       acl: constant.ADMIN
     }, {
       id: uuidv4(),

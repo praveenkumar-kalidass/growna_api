@@ -17,5 +17,6 @@ module.exports = {
   ADD_USER: 'ADD_USER',
   ADD_ROLE: 'ADD_ROLE',
   USER_LIST: 'USER_LIST',
+  ROLE_LIST: 'ROLE_LIST',
   INSURANCE: 'INSURANCE'
 };
