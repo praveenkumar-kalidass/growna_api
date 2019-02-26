@@ -21,7 +21,7 @@ class RoleDao {
    * @param  {String} privilege
    * @param  {Function} getCB
    */
-  findPrivilegesByRole(role, privilege, getCB) {
+  findPrivilegesByRole(roleId, privilege, getCB) {
     let include = {
       model: models.Privilege,
       as: 'privileges',
@@ -36,7 +36,7 @@ class RoleDao {
     }
     models.Role.find({
       where: {
-        name: role
+        id: roleId
       },
       include: include
     }).then((roleDetail) => {
@@ -80,7 +80,7 @@ class RoleDao {
   }
   /**
    * Dao to find role by ID
-   * 
+   *
    * @param  {UUID} roleId
    * @param  {Function} findCB
    */

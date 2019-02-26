@@ -21,10 +21,11 @@ const roleService = new RoleService();
  *    security:
  *      - bearerAuth: []
  *    parameters:
- *      - name: role
+ *      - name: roleId
  *        in: path
  *        schema:
  *          type: string
+ *          format: uuid
  *        required: true
  *    responses:
  *      200:
@@ -32,8 +33,8 @@ const roleService = new RoleService();
  *      500:
  *        description: Server Error
  */
-router.get('/privileges/:role', oAuth.authenticate, (request, response) => {
-  roleService.getRolePrivileges(request.params.role, (privilegeErr, privileges) => {
+router.get('/privileges/:roleId', oAuth.authenticate, (request, response) => {
+  roleService.getRolePrivileges(request.params.roleId, (privilegeErr, privileges) => {
     if (privilegeErr) {
       response.status(500).send(privilegeErr);
     }
@@ -43,7 +44,7 @@ router.get('/privileges/:role', oAuth.authenticate, (request, response) => {
 
 /**
  * @swagger
- * /api/role/validate/{role}/{privilege}:
+ * /api/role/validate/{roleId}/{privilege}:
  *  get:
  *    summary: Validate Privilege for the particular Role
  *    description: Check whether the privilege is assigned for the role
@@ -56,6 +57,7 @@ router.get('/privileges/:role', oAuth.authenticate, (request, response) => {
  *        in: path
  *        schema:
  *          type: string
+ *          format: uuid
  *        required: true
  *      - name: privilege
  *        in: path
@@ -68,8 +70,8 @@ router.get('/privileges/:role', oAuth.authenticate, (request, response) => {
  *      500:
  *        description: Server Error
  */
-router.get('/validate/:role/:privilege', oAuth.authenticate, (request, response) => {
-  roleService.validateRoute(request.params.role, request.params.privilege,
+router.get('/validate/:roleId/:privilege', oAuth.authenticate, (request, response) => {
+  roleService.validateRoute(request.params.roleId, request.params.privilege,
     (validateErr, valid) => {
       if (validateErr) {
         response.status(500).send(validateErr);

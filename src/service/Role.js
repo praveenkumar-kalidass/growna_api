@@ -26,11 +26,11 @@ class RoleService {
   /**
    * Method to get all privileges associated with the role
    *
-   * @param  {String} role
+   * @param  {String} roleId
    * @param  {Function} getPrivilegesCB
    */
-  getRolePrivileges(role, getPrivilegesCB) {
-    roleDao.findPrivilegesByRole(role, null, (roleErr, privileges) => {
+  getRolePrivileges(roleId, getPrivilegesCB) {
+    roleDao.findPrivilegesByRole(roleId, null, (roleErr, privileges) => {
       if (roleErr) {
         return getPrivilegesCB(roleErr);
       }
@@ -40,12 +40,12 @@ class RoleService {
   /**
    * Service to validate privilege for the corresponding role
    *
-   * @param  {String} role
+   * @param  {String} roleId
    * @param  {String} privilege
    * @param  {Function} validateCB
    */
-  validateRoute(role, privilege, validateCB) {
-    roleDao.findPrivilegesByRole(role, privilege, (roleErr, privileges) => {
+  validateRoute(roleId, privilege, validateCB) {
+    roleDao.findPrivilegesByRole(roleId, privilege, (roleErr, privileges) => {
       if (roleErr) {
         return validateCB(roleErr);
       }

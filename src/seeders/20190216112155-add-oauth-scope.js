@@ -57,6 +57,11 @@ module.exports = {
       method: 'POST',
       path: '/api/role/add',
       acl: constant.ADMIN
+    }, {
+      id: uuidv4(),
+      method: 'GET',
+      path: '/api/privilege/all',
+      acl: constant.ADMIN
     }], {});
   },
   down: (queryInterface) => {

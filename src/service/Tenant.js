@@ -8,9 +8,11 @@ const _ = require('lodash');
 const TenantDao = require('../dao/Tenant');
 const RoleService = require('../service/Role');
 const UserService = require('../service/User');
+const PermissionService = require('../service/Permission');
 const tenantDao = new TenantDao();
 const roleService = new RoleService();
 const userService = new UserService();
+const permissionService = new PermissionService();
 
 /**
  * TenantService class
@@ -33,13 +35,21 @@ class TenantService {
       roleService.addRoleForTenant,
       (role, passCB) => {
         const user = {
-          ..._.omit(data, ['tenantName']),
+          ..._.omit(data, ['tenantName', 'permissions']),
           roleId: role.id,
           tenantId: role.tenantId
         };
         return passCB(null, user);
       },
-      userService.addUser
+      userService.addUser,
+      (user, passPermissionCB) => {
+        const permissions = _.map(data.permissions, (privilegeId) => ({
+          roleId: user.roleId,
+          privilegeId
+        }));
+        return passPermissionCB(null, permissions);
+      },
+      permissionService.savePermissions
     ], (waterfallErr, result) => {
       if (waterfallErr) {
         return registerCB(waterfallErr);
