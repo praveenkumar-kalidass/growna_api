@@ -12,12 +12,15 @@ const models = require('../models');
  */
 class PrivilegeDao {
   /**
-   * Dao to get all privileges without any query
+   * Dao to get all privileges by scope
    *
+   * @param  {String} scope
    * @param  {Function} findCB
    */
-  findAllPrivileges(findCB) {
-    models.Privilege.findAll({}).then((privileges) => (
+  findAllPrivileges(scope, findCB) {
+    models.Privilege.findAll({
+      where: {scope}
+    }).then((privileges) => (
       findCB(null, privileges)
     ), (findErr) => (
       findCB(findErr)

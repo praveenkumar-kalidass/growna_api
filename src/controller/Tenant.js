@@ -43,6 +43,8 @@ const tenantService = new TenantService();
  *                format: uuid
  *              tenantName:
  *                type: string
+ *              permissions:
+ *                type: array
  *            required:
  *              - firstName
  *              - lastName
@@ -51,6 +53,7 @@ const tenantService = new TenantService();
  *              - createdBy
  *              - parentId
  *              - tenantName
+ *              - permissions
  *    responses:
  *      200:
  *        description: Success

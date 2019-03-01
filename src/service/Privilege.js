@@ -13,12 +13,13 @@ const privilegeDao = new PrivilegeDao();
  */
 class PrivilegeService {
   /**
-   * Method to get all privileges
+   * Method to get all privileges by scope
    *
+   * @param  {String} scope
    * @param  {Function} getCB
    */
-  getAllPrivileges(getCB) {
-    privilegeDao.findAllPrivileges((findErr, privileges) => {
+  getAllPrivileges(scope, getCB) {
+    privilegeDao.findAllPrivileges(scope, (findErr, privileges) => {
       if (findErr) {
         return getCB(findErr);
       }

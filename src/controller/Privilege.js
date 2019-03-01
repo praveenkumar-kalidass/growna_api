@@ -12,7 +12,7 @@ const privilegeService = new PrivilegeService();
 
 /**
  * @swagger
- * /api/privilege/all:
+ * /api/privilege/{scope}:
  *  get:
  *    summary: Get all privileges
  *    description: Get all privileges from database
@@ -20,14 +20,20 @@ const privilegeService = new PrivilegeService();
  *      - Privilege
  *    security:
  *      - bearerAuth: []
+ *    parameters:
+ *      - name: scope
+ *        in: path
+ *        schema:
+ *          type: string
+ *        required: true
  *    responses:
  *      200:
  *        description: List of Privileges
  *      500:
  *        description: Server Error
  */
-router.get('/all', oAuth.authenticate, (request, response) => {
-  privilegeService.getAllPrivileges((getErr, privileges) => {
+router.get('/:scope', oAuth.authenticate, (request, response) => {
+  privilegeService.getAllPrivileges(request.params.scope, (getErr, privileges) => {
     if (getErr) {
       response.status(500).send(getErr);
     }

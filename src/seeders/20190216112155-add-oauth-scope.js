@@ -60,7 +60,7 @@ module.exports = {
     }, {
       id: uuidv4(),
       method: 'GET',
-      path: '/api/privilege/all',
+      path: '/api/privilege',
       acl: constant.ADMIN
     }], {});
   },

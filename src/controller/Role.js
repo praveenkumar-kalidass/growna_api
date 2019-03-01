@@ -174,11 +174,14 @@ router.get('/detail/:tenantId', oAuth.authenticate, (request, response) => {
  *              tenantId:
  *                type: string
  *                format: uuid
+ *              permissions:
+ *                type: array
  *            required:
  *              - name
  *              - type
  *              - parentId
  *              - tenantId
+ *              - permissions
  *    responses:
  *      200:
  *        description: Returns the Created Role

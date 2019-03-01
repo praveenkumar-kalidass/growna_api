@@ -6,9 +6,11 @@
 const async = require('async');
 const _ = require('lodash');
 const RoleDao = require('../dao/Role');
+const PermissionService = require('../service/Permission');
 const uuid = require('../utils/uuid');
 const constant = require('../utils/constant');
 const roleDao = new RoleDao();
+const permissionService = new PermissionService();
 
 /**
  * RoleService class
@@ -130,13 +132,23 @@ class RoleService {
   /**
    * Service to add new role
    *
-   * @param {Object} role
+   * @param {Object} data
    * @param {Function} addRoleCB
    */
-  addRole(role, addRoleCB) {
-    roleDao.createRole(role, (createErr, result) => {
-      if (createErr) {
-        return addRoleCB(createErr);
+  addRole(data, addRoleCB) {
+    async.waterfall([
+      async.apply(roleDao.createRole, _.omit(data, ['permissions'])),
+      (result, passPermissionCB) => {
+        const permissions = _.map(data.permissions, (privilegeId) => ({
+          roleId: result.id,
+          privilegeId
+        }));
+        return passPermissionCB(null, permissions);
+      },
+      permissionService.savePermissions
+    ], (waterfallErr, result) => {
+      if (waterfallErr) {
+        return addRoleCB(waterfallErr);
       }
       return addRoleCB(null, result);
     });

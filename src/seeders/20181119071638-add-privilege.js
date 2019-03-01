@@ -15,7 +15,8 @@ module.exports = {
         ]
       }),
       description: constant.ADD_TENANT,
-      type: 'VIEW'
+      type: 'VIEW',
+      scope: constant.GIS_SUPER_ADMIN
     }, {
       id: uuidv4({
         random: [
@@ -24,7 +25,8 @@ module.exports = {
         ]
       }),
       description: constant.ADD_USER,
-      type: 'VIEW'
+      type: 'VIEW',
+      scope: constant.GIS_ADMIN
     }, {
       id: uuidv4({
         random: [
@@ -33,7 +35,8 @@ module.exports = {
         ]
       }),
       description: constant.ADD_ROLE,
-      type: 'VIEW'
+      type: 'VIEW',
+      scope: constant.GIS_ADMIN
     }, {
       id: uuidv4({
         random: [
@@ -42,7 +45,8 @@ module.exports = {
         ]
       }),
       description: constant.USER_LIST,
-      type: 'VIEW'
+      type: 'VIEW',
+      scope: constant.GIS_ADMIN
     }, {
       id: uuidv4({
         random: [
@@ -51,7 +55,8 @@ module.exports = {
         ]
       }),
       description: constant.ROLE_LIST,
-      type: 'VIEW'
+      type: 'VIEW',
+      scope: constant.GIS_ADMIN
     }, {
       id: uuidv4({
         random: [
@@ -60,7 +65,8 @@ module.exports = {
         ]
       }),
       description: constant.INSURANCE,
-      type: 'VIEW'
+      type: 'VIEW',
+      scope: constant.GIS_USER
     }], {});
   },
   down: (queryInterface) => {
