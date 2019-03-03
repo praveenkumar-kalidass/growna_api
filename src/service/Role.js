@@ -15,9 +15,6 @@ const permissionService = new PermissionService();
 /**
  * RoleService class
  *
- * @method {public} getRolePrivileges
- * @method {public} validateRoute
- * @method {public} getRolePrivileges
  * @method {public} getRolesByTenant
  * @method {private} loadRoleDetails
  * @method {public} getRoleDetailsByTenant
@@ -25,38 +22,6 @@ const permissionService = new PermissionService();
  * @method {public} getRoleById
  */
 class RoleService {
-  /**
-   * Method to get all privileges associated with the role
-   *
-   * @param  {String} roleId
-   * @param  {Function} getPrivilegesCB
-   */
-  getRolePrivileges(roleId, getPrivilegesCB) {
-    roleDao.findPrivilegesByRole(roleId, null, (roleErr, privileges) => {
-      if (roleErr) {
-        return getPrivilegesCB(roleErr);
-      }
-      return getPrivilegesCB(null, privileges);
-    });
-  }
-  /**
-   * Service to validate privilege for the corresponding role
-   *
-   * @param  {String} roleId
-   * @param  {String} privilege
-   * @param  {Function} validateCB
-   */
-  validateRoute(roleId, privilege, validateCB) {
-    roleDao.findPrivilegesByRole(roleId, privilege, (roleErr, privileges) => {
-      if (roleErr) {
-        return validateCB(roleErr);
-      }
-      if (privileges) {
-        return validateCB(null, {valid: true});
-      }
-      return validateCB(null, {valid: false});
-    });
-  }
   /**
    * Service to add role for Tenant
    *
@@ -99,7 +64,7 @@ class RoleService {
    */
   static loadRoleDetails(roles, loadDetailsCB) {
     async.map(roles, (role, asyncCB) => {
-      roleDao.findRoleById(role.parentId, (findErr, parentId) => {
+      roleDao.findRoleById(role.parentId, false, (findErr, parentId) => {
         if (findErr) {
           return asyncCB(findErr);
         }
@@ -160,7 +125,7 @@ class RoleService {
    * @param  {Function} getRoleCB
    */
   getRoleById(roleId, getRoleCB) {
-    roleDao.findRoleById(roleId, (findErr, role) => {
+    roleDao.findRoleById(roleId, true, (findErr, role) => {
       if (findErr) {
         return getRoleCB(findErr);
       }

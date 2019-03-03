@@ -8,6 +8,7 @@ const authController = require('./Auth');
 const tenantController = require('./Tenant');
 const roleController = require('./Role');
 const userController = require('./User');
+const permissionController = require('./Permission');
 const privilegeController = require('./Privilege');
 const router = express.Router();
 
@@ -42,6 +43,14 @@ router.use('/role', roleController);
  * @param {Class} userController
  */
 router.use('/user', userController);
+
+/**
+ * Middleware - "/api/permission/*"
+ *
+ * @param {String} route
+ * @param {Class} permissionController
+ */
+router.use('/permission', permissionController);
 
 /**
  * Middleware - "/api/privilege/*"

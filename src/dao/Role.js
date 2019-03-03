@@ -8,46 +8,11 @@ const models = require('../models');
 /**
  * RoleDao class
  *
- * @method {public} findPrivilegesByRole
  * @method {public} createRole
  * @method {public} getRolesByTenantId
  * @method {public} findRoleById
  */
 class RoleDao {
-  /**
-   * Method to get role data with privileges associated
-   *
-   * @param  {String} role
-   * @param  {String} privilege
-   * @param  {Function} getCB
-   */
-  findPrivilegesByRole(roleId, privilege, getCB) {
-    let include = {
-      model: models.Privilege,
-      as: 'privileges',
-      through: {
-        attributes: ['id']
-      }
-    };
-    if (privilege) {
-      include.where = {
-        description: privilege
-      };
-    }
-    models.Role.find({
-      where: {
-        id: roleId
-      },
-      include: include
-    }).then((roleDetail) => {
-      if (roleDetail) {
-        return getCB(null, roleDetail.privileges);
-      }
-      return getCB(null, roleDetail);
-    }, (getError) => (
-      getCB(getError)
-    ));
-  }
   /**
    * Method to create new role
    *
@@ -82,13 +47,22 @@ class RoleDao {
    * Dao to find role by ID
    *
    * @param  {UUID} roleId
+   * @param  {Boolean} privileges
    * @param  {Function} findCB
    */
-  findRoleById(roleId, findCB) {
+  findRoleById(roleId, privileges, findCB) {
+    let include;
+    if (privileges) {
+      include = {
+        model: models.Privilege,
+        as: 'privileges'
+      };
+    }
     models.Role.find({
       where: {
         id: roleId
-      }
+      },
+      include
     }).then((role) => (
       findCB(null, role)
     ), (findErr) => (

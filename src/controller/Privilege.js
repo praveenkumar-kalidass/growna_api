@@ -32,7 +32,7 @@ const privilegeService = new PrivilegeService();
  *      500:
  *        description: Server Error
  */
-router.get('/:scope', oAuth.authenticate, (request, response) => {
+router.get('/scope/:scope', oAuth.authenticate, (request, response) => {
   privilegeService.getAllPrivileges(request.params.scope, (getErr, privileges) => {
     if (getErr) {
       response.status(500).send(getErr);

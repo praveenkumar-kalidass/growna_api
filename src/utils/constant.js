@@ -18,5 +18,6 @@ module.exports = {
   ADD_ROLE: 'ADD_ROLE',
   USER_LIST: 'USER_LIST',
   ROLE_LIST: 'ROLE_LIST',
+  EDIT_ROLE: 'EDIT_ROLE',
   INSURANCE: 'INSURANCE'
 };

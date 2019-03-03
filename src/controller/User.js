@@ -12,7 +12,7 @@ const userService = new UserService();
 
 /**
  * @swagger
- * /api/user/add:
+ * /api/user:
  *  post:
  *    summary: Create a new user
  *    description: Add a user to the database
@@ -62,7 +62,7 @@ const userService = new UserService();
  *      500:
  *        description: Server Error
  */
-router.post('/add', oAuth.authenticate, (request, response) => {
+router.post('/', oAuth.authenticate, (request, response) => {
   userService.addUser(request.body, (userErr, user) => {
     if (userErr) {
       response.status(500).send(userErr);

@@ -12,16 +12,16 @@ const roleService = new RoleService();
 
 /**
  * @swagger
- * /api/role/privileges/{role}:
+ * /api/role/{id}:
  *  get:
- *    summary: Get all privileges for the Role
- *    description: Client privileges assigned for the role
+ *    summary: Get Role by ID
+ *    description: Get Role detail by ID
  *    tags:
  *      - Role
  *    security:
  *      - bearerAuth: []
  *    parameters:
- *      - name: roleId
+ *      - name: id
  *        in: path
  *        schema:
  *          type: string
@@ -29,55 +29,68 @@ const roleService = new RoleService();
  *        required: true
  *    responses:
  *      200:
- *        description: List of Privileges for the role
+ *        description: Returns role object
  *      500:
  *        description: Server Error
  */
-router.get('/privileges/:roleId', oAuth.authenticate, (request, response) => {
-  roleService.getRolePrivileges(request.params.roleId, (privilegeErr, privileges) => {
-    if (privilegeErr) {
-      response.status(500).send(privilegeErr);
+router.get('/:id', oAuth.authenticate, (request, response) => {
+  roleService.getRoleById(request.params.id, (roleErr, role) => {
+    if (roleErr) {
+      response.status(500).send(roleErr);
     }
-    response.send(privileges);
+    response.send(role);
   });
 });
 
 /**
  * @swagger
- * /api/role/validate/{roleId}/{privilege}:
- *  get:
- *    summary: Validate Privilege for the particular Role
- *    description: Check whether the privilege is assigned for the role
+ * /api/role:
+ *  post:
+ *    summary: Create a new role with permissions
+ *    description: Add a role to the database
  *    tags:
  *      - Role
  *    security:
  *      - bearerAuth: []
- *    parameters:
- *      - name: role
- *        in: path
- *        schema:
- *          type: string
- *          format: uuid
- *        required: true
- *      - name: privilege
- *        in: path
- *        schema:
- *          type: string
- *        required: true
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              name:
+ *                type: string
+ *              type:
+ *                type: string
+ *                enum: [WEB, AGENCY]
+ *              parentId:
+ *                type: string
+ *                format: uuid
+ *              tenantId:
+ *                type: string
+ *                format: uuid
+ *              permissions:
+ *                type: array
+ *            required:
+ *              - name
+ *              - type
+ *              - parentId
+ *              - tenantId
+ *              - permissions
  *    responses:
  *      200:
- *        description: Returns a flag to determine validitiy
+ *        description: Returns the Created Role
  *      500:
  *        description: Server Error
  */
-router.get('/validate/:roleId/:privilege', oAuth.authenticate, (request, response) => {
-  roleService.validateRoute(request.params.roleId, request.params.privilege,
-    (validateErr, valid) => {
-      if (validateErr) {
-        response.status(500).send(validateErr);
-      }
-      response.send(valid);
-    });
+router.post('/', oAuth.authenticate, (request, response) => {
+  roleService.addRole(request.body, (roleErr, role) => {
+    if (roleErr) {
+      response.status(500).send(roleErr);
+    }
+    response.send(role);
+  });
 });
 
 /**
@@ -144,57 +157,6 @@ router.get('/detail/:tenantId', oAuth.authenticate, (request, response) => {
       }
       response.send(roles);
     });
-});
-
-/**
- * @swagger
- * /api/role/add:
- *  post:
- *    summary: Create a new role
- *    description: Add a role to the database
- *    tags:
- *      - Role
- *    security:
- *      - bearerAuth: []
- *    requestBody:
- *      required: true
- *      content:
- *        application/json:
- *          schema:
- *            type: object
- *            properties:
- *              name:
- *                type: string
- *              type:
- *                type: string
- *                enum: [WEB, AGENCY]
- *              parentId:
- *                type: string
- *                format: uuid
- *              tenantId:
- *                type: string
- *                format: uuid
- *              permissions:
- *                type: array
- *            required:
- *              - name
- *              - type
- *              - parentId
- *              - tenantId
- *              - permissions
- *    responses:
- *      200:
- *        description: Returns the Created Role
- *      500:
- *        description: Server Error
- */
-router.post('/add', oAuth.authenticate, (request, response) => {
-  roleService.addRole(request.body, (roleErr, role) => {
-    if (roleErr) {
-      response.status(500).send(roleErr);
-    }
-    response.send(role);
-  });
 });
 
 module.exports = router;

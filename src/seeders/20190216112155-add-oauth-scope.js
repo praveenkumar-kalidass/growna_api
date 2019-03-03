@@ -10,12 +10,12 @@ module.exports = {
     return queryInterface.bulkInsert('OAuthScope', [{
       id: uuidv4(),
       method: 'GET',
-      path: '/api/role/privileges',
+      path: '/api/permission',
       acl: constant.EVERYONE
     }, {
       id: uuidv4(),
       method: 'GET',
-      path: '/api/role/validate',
+      path: '/api/permission/validate',
       acl: constant.EVERYONE
     }, {
       id: uuidv4(),
@@ -35,7 +35,7 @@ module.exports = {
     }, {
       id: uuidv4(),
       method: 'POST',
-      path: '/api/user/add',
+      path: '/api/user',
       acl: constant.ADMIN
     }, {
       id: uuidv4(),
@@ -54,13 +54,18 @@ module.exports = {
       acl: constant.ADMIN
     }, {
       id: uuidv4(),
+      method: 'GET',
+      path: '/api/role',
+      acl: constant.ADMIN
+    }, {
+      id: uuidv4(),
       method: 'POST',
-      path: '/api/role/add',
+      path: '/api/role',
       acl: constant.ADMIN
     }, {
       id: uuidv4(),
       method: 'GET',
-      path: '/api/privilege',
+      path: '/api/privilege/scope',
       acl: constant.ADMIN
     }], {});
   },

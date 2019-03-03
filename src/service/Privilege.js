@@ -10,6 +10,7 @@ const privilegeDao = new PrivilegeDao();
  * Privilege Service
  *
  * @method {public} getAllPrivileges
+ * @method {public} getPrivilegeById
  */
 class PrivilegeService {
   /**
@@ -24,6 +25,20 @@ class PrivilegeService {
         return getCB(findErr);
       }
       return getCB(null, privileges);
+    });
+  }
+  /**
+   * Method to get privilege by ID
+   *
+   * @param  {UUID} id
+   * @param  {Function} getPrivilegeCB
+   */
+  getPrivilegeById(id, getPrivilegeCB) {
+    privilegeDao.findPrivilegeById(id, (findErr, privilege) => {
+      if (findErr) {
+        return getPrivilegeCB(findErr);
+      }
+      return getPrivilegeCB(null, privilege);
     });
   }
 }

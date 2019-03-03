@@ -16,5 +16,6 @@ module.exports = {
   ADD_ROLE: '87320543-e2f5-4e17-b6a1-6898e40da120',
   USER_LIST: 'e1eaaab3-8707-4436-b2a0-3c35d4141bd7',
   ROLE_LIST: '6dca5c2e-2f5f-4003-9357-69c1a9cfd769',
+  EDIT_ROLE: '0b868383-a11c-4468-997b-279d0ef0b48b',
   INSURANCE: '689702ca-e9bc-49ca-a4f5-afa8560e6732'
 };

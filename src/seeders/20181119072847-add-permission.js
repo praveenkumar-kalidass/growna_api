@@ -29,6 +29,10 @@ module.exports = {
       privilege_id: uuid.ROLE_LIST
     }, {
       id: uuidv4(),
+      role_id: uuid.GIS_ADMIN,
+      privilege_id: uuid.EDIT_ROLE
+    }, {
+      id: uuidv4(),
       role_id: uuid.GIS_USER,
       privilege_id: uuid.INSURANCE
     }], {});

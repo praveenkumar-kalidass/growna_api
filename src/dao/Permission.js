@@ -24,6 +24,13 @@ class PermissionDao {
       addCB(findErr)
     ));
   }
+  findByRole(roleId, findCB) {
+    models.Permission.findAll({where: {roleId}}).then((result) => (
+      findCB(null, result)
+    ), (findErr) => (
+      findCB(findErr)
+    ));
+  }
 }
 
 module.exports = PermissionDao;
