@@ -11,6 +11,7 @@ module.exports = {
   GIS_SUPER_ADMIN: '562334db-d8af-49ee-93b4-fec0318b4818',
   GIS_ADMIN: '108243ae-d3ff-40db-b4e7-efc2390b5827',
   GIS_USER: '543529bf-f5dc-44ec-a3e7-aaa4721e5640',
+  DEFAULT_IMAGE: 'ea142993-f9c5-4f30-a1d4-b4ca84e79ef7',
   ADD_TENANT: '322396ba-c6ab-49bb-b8d7-aec8496d0976',
   ADD_USER: '627913ed-f2bd-45ae-a1c5-cdb9820c4751',
   ADD_ROLE: '87320543-e2f5-4e17-b6a1-6898e40da120',

@@ -7,8 +7,10 @@ const async = require('async');
 const _ = require('lodash');
 const UserDao = require('../dao/User');
 const RoleService = require('../service/Role');
+const ImageService = require('../service/Image');
 const userDao = new UserDao();
 const roleService = new RoleService();
+const imageService = new ImageService();
 
 /**
  * UserService class
@@ -28,19 +30,25 @@ class UserService {
    * @param  {Function} getDetailsCB
    */
   getUserDetails(userId, getDetailsCB) {
-    let user;
+    let user, role;
     async.waterfall([
       async.apply(userDao.findUserById, userId),
       (result, passRoleCB) => {
         user = result;
         return passRoleCB(null, result.roleId);
       },
-      roleService.getRoleById
-    ], (waterfallErr, role) => {
+      roleService.getRoleById,
+      (result, passImageCB) => {
+        role = result;
+        return passImageCB(null, user.imageId);
+      },
+      imageService.getImageById
+    ], (waterfallErr, image) => {
       if (waterfallErr) {
         return getDetailsCB(waterfallErr);
       }
       user.dataValues.role = role;
+      user.dataValues.userImage = image;
       return getDetailsCB(null, user);
     });
   }

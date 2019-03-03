@@ -73,7 +73,7 @@ router.post('/', oAuth.authenticate, (request, response) => {
 
 /**
  * @swagger
- * /api/user/{userId}:
+ * /api/user/{id}:
  *  get:
  *    summary: Get User details
  *    description: Get User details by user id
@@ -82,7 +82,7 @@ router.post('/', oAuth.authenticate, (request, response) => {
  *    security:
  *      - bearerAuth: []
  *    parameters:
- *      - name: userId
+ *      - name: id
  *        in: path
  *        schema:
  *          type: string
@@ -94,8 +94,8 @@ router.post('/', oAuth.authenticate, (request, response) => {
  *      500:
  *        description: Server Error
  */
-router.get('/:userId', oAuth.authenticate, (request, response) => {
-  userService.getUserDetails(request.params.userId, (userErr, user) => {
+router.get('/:id', oAuth.authenticate, (request, response) => {
+  userService.getUserDetails(request.params.id, (userErr, user) => {
     if (userErr) {
       response.status(500).send(userErr);
     }

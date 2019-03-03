@@ -19,15 +19,11 @@ class UserDao {
   /**
    * Method to find User object by id
    *
-   * @param  {UUID} userId
+   * @param  {UUID} id
    * @param  {Function} getCB
    */
-  findUserById(userId, getCB) {
-    models.User.find({
-      where: {
-        id: userId
-      }
-    }).then((user) => {
+  findUserById(id, getCB) {
+    models.User.findById(id).then((user) => {
       if (!user) {
         return getCB(new ServerError('No User found'));
       }

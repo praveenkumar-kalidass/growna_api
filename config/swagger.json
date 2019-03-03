@@ -9,11 +9,12 @@
   },
   "apis": [
     "./src/controller/index.js",
-    "./src/controller/OAuth.js",
     "./src/controller/Auth.js",
-    "./src/controller/Tenant.js",
+    "./src/controller/OAuth.js",
+    "./src/controller/Permission.js",
+    "./src/controller/Privilege.js",
     "./src/controller/Role.js",
-    "./src/controller/User.js",
-    "./src/controller/Privilege.js"
+    "./src/controller/Tenant.js",
+    "./src/controller/User.js"
   ]
 }

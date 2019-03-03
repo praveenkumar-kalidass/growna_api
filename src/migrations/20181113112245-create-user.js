@@ -1,4 +1,5 @@
 'use strict';
+const uuid = require('../utils/uuid');
 
 /**
  * Create User Table
@@ -42,6 +43,16 @@ module.exports = {
           type: Sequelize.UUID,
           allowNull: false,
           field: 'parent_id'
+        },
+        imageId: {
+          type: Sequelize.UUID,
+          field: 'image_id',
+          defaultValue: uuid.DEFAULT_IMAGE,
+          references: {
+            model: {
+              tableName: 'Image'
+            }
+          }
         },
         roleId: {
           type: Sequelize.UUID,

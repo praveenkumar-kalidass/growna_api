@@ -44,6 +44,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       field: 'role_id'
     },
+    imageId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      field: 'image_id'
+    },
     tenantId: {
       type: DataTypes.UUID,
       allowNull: false,
@@ -65,6 +70,12 @@ module.exports = (sequelize, DataTypes) => {
     User.belongsTo(models.Role, {
       as: 'role',
       foreignKey: 'roleId',
+      targetKey: 'id',
+      onDelete: 'SET NULL'
+    });
+    User.belongsTo(models.Image, {
+      as: 'userImage',
+      foreignKey: 'imageId',
       targetKey: 'id',
       onDelete: 'SET NULL'
     });

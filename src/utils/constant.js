@@ -4,6 +4,7 @@
  * @exports {Object}
  */
 module.exports = {
+  DEFAULT: 'DEFAULT',
   WEB: 'WEB',
   AGENCY: 'AGENCY',
   EVERYONE: 'EVERYONE',
