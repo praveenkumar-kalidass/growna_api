@@ -18,6 +18,7 @@ const imageService = new ImageService();
  * @method {public} getUserDetails
  * @method {public} getUser
  * @method {public} addUser
+ * @method {public} updateUserById
  * @method {public} getUsersByRole
  * @method {private} loadUserDetails
  * @method {public} getUsersByTenant
@@ -79,6 +80,20 @@ class UserService {
         return addCB(addErr);
       }
       return addCB(null, result);
+    });
+  }
+  /**
+   * Method to update user
+   *
+   * @param  {Object} user
+   * @param  {Function} updateCB
+   */
+  updateUserById(user, updateCB) {
+    userDao.updateUser(user, (userErr, result) => {
+      if (userErr) {
+        return updateCB(userErr);
+      }
+      return updateCB(null, result);
     });
   }
   /**

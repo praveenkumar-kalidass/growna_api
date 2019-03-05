@@ -39,6 +39,11 @@ module.exports = {
       acl: constant.ADMIN
     }, {
       id: uuidv4(),
+      method: 'PUT',
+      path: '/api/user',
+      acl: constant.EVERYONE
+    }, {
+      id: uuidv4(),
       method: 'GET',
       path: '/api/user',
       acl: constant.EVERYONE

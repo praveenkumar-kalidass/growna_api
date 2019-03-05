@@ -10,12 +10,22 @@ module.exports = {
     return queryInterface.bulkInsert('Privilege', [{
       id: uuidv4({
         random: [
+          0x91, 0xe4, 0x05, 0x91, 0x54, 0x36, 0x4d, 0x4f,
+          0xa1, 0x3e, 0xd2, 0x27, 0x82, 0x97, 0x51, 0xc0
+        ]
+      }),
+      description: constant.USER_PROFILE,
+      type: constant.ROUTE,
+      scope: constant.EVERYONE
+    }, {
+      id: uuidv4({
+        random: [
           0x32, 0x23, 0x96, 0xba, 0xc6, 0xab, 0x49, 0xbb,
           0xb8, 0xd7, 0xae, 0xc8, 0x49, 0x6d, 0x09, 0x76
         ]
       }),
       description: constant.ADD_TENANT,
-      type: 'VIEW',
+      type: constant.VIEW,
       scope: constant.GIS_SUPER_ADMIN
     }, {
       id: uuidv4({
@@ -25,7 +35,7 @@ module.exports = {
         ]
       }),
       description: constant.ADD_USER,
-      type: 'VIEW',
+      type: constant.VIEW,
       scope: constant.GIS_ADMIN
     }, {
       id: uuidv4({
@@ -35,7 +45,7 @@ module.exports = {
         ]
       }),
       description: constant.ADD_ROLE,
-      type: 'VIEW',
+      type: constant.VIEW,
       scope: constant.GIS_ADMIN
     }, {
       id: uuidv4({
@@ -45,7 +55,7 @@ module.exports = {
         ]
       }),
       description: constant.USER_LIST,
-      type: 'VIEW',
+      type: constant.VIEW,
       scope: constant.GIS_ADMIN
     }, {
       id: uuidv4({
@@ -55,7 +65,7 @@ module.exports = {
         ]
       }),
       description: constant.ROLE_LIST,
-      type: 'VIEW',
+      type: constant.VIEW,
       scope: constant.GIS_ADMIN
     }, {
       id: uuidv4({
@@ -65,7 +75,7 @@ module.exports = {
         ]
       }),
       description: constant.EDIT_ROLE,
-      type: 'ROUTE',
+      type: constant.ROUTE,
       scope: constant.GIS_ADMIN
     }, {
       id: uuidv4({
@@ -75,7 +85,7 @@ module.exports = {
         ]
       }),
       description: constant.INSURANCE,
-      type: 'VIEW',
+      type: constant.VIEW,
       scope: constant.GIS_USER
     }], {});
   },

@@ -10,7 +10,15 @@ module.exports = {
     return queryInterface.bulkInsert('Permission', [{
       id: uuidv4(),
       role_id: uuid.GIS_SUPER_ADMIN,
+      privilege_id: uuid.USER_PROFILE
+    }, {
+      id: uuidv4(),
+      role_id: uuid.GIS_SUPER_ADMIN,
       privilege_id: uuid.ADD_TENANT
+    }, {
+      id: uuidv4(),
+      role_id: uuid.GIS_ADMIN,
+      privilege_id: uuid.USER_PROFILE
     }, {
       id: uuidv4(),
       role_id: uuid.GIS_ADMIN,
@@ -31,6 +39,10 @@ module.exports = {
       id: uuidv4(),
       role_id: uuid.GIS_ADMIN,
       privilege_id: uuid.EDIT_ROLE
+    }, {
+      id: uuidv4(),
+      role_id: uuid.GIS_USER,
+      privilege_id: uuid.USER_PROFILE
     }, {
       id: uuidv4(),
       role_id: uuid.GIS_USER,

@@ -41,7 +41,7 @@ class TenantService {
         };
         return passCB(null, user);
       },
-      userService.addUser,
+      userService.saveUser,
       (user, passPermissionCB) => {
         const permissions = _.map(data.permissions, (privilegeId) => ({
           roleId: user.roleId,

@@ -13,6 +13,7 @@ const ServerError = require('oauth2-server/lib/errors/server-error');
  * @method {public} findUserById
  * @method {public} getUserByCredentials
  * @method {public} createUser
+ * @method {public} updateUser
  * @method {public} getUsersByQuery
  */
 class UserDao {
@@ -73,6 +74,29 @@ class UserDao {
       createCB(null, user)
     ), (createErr) => (
       createCB(createErr)
+    ));
+  }
+  /**
+   * Method to update user by id
+   *
+   * @param  {Object} user
+   * @param  {Function} updateCB
+   */
+  updateUser(user, updateCB) {
+    models.User.update({
+      ...user,
+      password: passwordHash.isHashed(user.password) ?
+        user.password :
+        passwordHash.generate(user.password)
+    }, {
+      where: {
+        id: user.id
+      },
+      returning: true
+    }).then((result) => (
+      updateCB(null, result[1][0])
+    ), (updateErr) => (
+      updateCB(updateErr)
     ));
   }
   /**

@@ -14,8 +14,8 @@ const userService = new UserService();
  * @swagger
  * /api/user:
  *  post:
- *    summary: Create a new user
- *    description: Add a user to the database
+ *    summary: Create new user
+ *    description: Save a user to the database
  *    tags:
  *      - User
  *    security:
@@ -58,12 +58,77 @@ const userService = new UserService();
  *              - tenantId
  *    responses:
  *      200:
- *        description: Returns the Created User
+ *        description: Returns the Saved User
  *      500:
  *        description: Server Error
  */
 router.post('/', oAuth.authenticate, (request, response) => {
-  userService.addUser(request.body, (userErr, user) => {
+  userService.saveUser(request.body, (userErr, user) => {
+    if (userErr) {
+      response.status(500).send(userErr);
+    }
+    response.send(user);
+  });
+});
+
+/**
+ * @swagger
+ * /api/user:
+ *  put:
+ *    summary: Update user
+ *    description: Update a user to the database
+ *    tags:
+ *      - User
+ *    security:
+ *      - bearerAuth: []
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              id:
+ *                type: string
+ *                format: uuid
+ *              firstName:
+ *                type: string
+ *              lastName:
+ *                type: string
+ *              email:
+ *                type: string
+ *              password:
+ *                type: string
+ *              roleId:
+ *                type: string
+ *                format: uuid
+ *              createdBy:
+ *                type: string
+ *                format: uuid
+ *              parentId:
+ *                type: string
+ *                format: uuid
+ *              tenantId:
+ *                type: string
+ *                format: uuid
+ *            required:
+ *              - id
+ *              - firstName
+ *              - lastName
+ *              - email
+ *              - password
+ *              - roleId
+ *              - createdBy
+ *              - parentId
+ *              - tenantId
+ *    responses:
+ *      200:
+ *        description: Returns the Saved User
+ *      500:
+ *        description: Server Error
+ */
+router.put('/', oAuth.authenticate, (request, response) => {
+  userService.updateUserById(request.body, (userErr, user) => {
     if (userErr) {
       response.status(500).send(userErr);
     }

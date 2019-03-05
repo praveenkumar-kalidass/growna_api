@@ -104,10 +104,13 @@ class RoleService {
     async.waterfall([
       async.apply(roleDao.createRole, _.omit(data, ['permissions'])),
       (result, passPermissionCB) => {
-        const permissions = _.map(data.permissions, (privilegeId) => ({
-          roleId: result.id,
-          privilegeId
-        }));
+        const permissions = _.map(
+          _.union(data.permissions, constant.DEFAULT_PRIVILEGES),
+          (privilegeId) => ({
+            roleId: result.id,
+            privilegeId
+          })
+        );
         return passPermissionCB(null, permissions);
       },
       permissionService.savePermissions
