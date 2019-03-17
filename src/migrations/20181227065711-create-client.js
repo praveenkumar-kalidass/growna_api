@@ -5,7 +5,8 @@ module.exports = {
     return queryInterface.createTable(
       'Client', {
         id: {
-          type: Sequelize.STRING,
+          type: Sequelize.UUID,
+          defaultValue: Sequelize.UUIDV4,
           primaryKey: true
         },
         clientSecret: {

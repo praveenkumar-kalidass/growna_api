@@ -72,6 +72,31 @@ module.exports = {
       method: 'GET',
       path: '/api/privilege/scope',
       acl: constant.ADMIN
+    }, {
+      id: uuidv4(),
+      method: 'GET',
+      path: '/api/quotation',
+      acl: constant.EVERYONE
+    }, {
+      id: uuidv4(),
+      method: 'POST',
+      path: '/api/quotation',
+      acl: constant.EVERYONE
+    }, {
+      id: uuidv4(),
+      method: 'GET',
+      path: '/api/vehicle/brand',
+      acl: constant.EVERYONE
+    }, {
+      id: uuidv4(),
+      method: 'GET',
+      path: '/api/vehicle/model',
+      acl: constant.EVERYONE
+    }, {
+      id: uuidv4(),
+      method: 'GET',
+      path: '/api/vehicle/variant',
+      acl: constant.EVERYONE
     }], {});
   },
   down: (queryInterface) => {

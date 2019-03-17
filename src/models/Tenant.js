@@ -38,6 +38,12 @@ module.exports = (sequelize, DataTypes) => {
       sourceKey: 'id',
       onDelete: 'SET NULL'
     });
+    Tenant.hasOne(models.Quotation, {
+      as: 'tenantQuotation',
+      foreignKey: 'tenantId',
+      sourceKey: 'id',
+      onDelete: 'SET NULL'
+    });
   };
   return Tenant;
 };

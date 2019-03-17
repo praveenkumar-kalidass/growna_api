@@ -46,7 +46,11 @@ module.exports = {
     }, {
       id: uuidv4(),
       role_id: uuid.GIS_USER,
-      privilege_id: uuid.INSURANCE
+      privilege_id: uuid.BIKE_INSURANCE
+    }, {
+      id: uuidv4(),
+      role_id: uuid.GIS_USER,
+      privilege_id: uuid.QUOTATION
     }], {});
   },
   down: (queryInterface) => {

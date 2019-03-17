@@ -1,3 +1,5 @@
+const uuid = require('../utils/uuid');
+
 /**
  * User Model
  */
@@ -47,7 +49,8 @@ module.exports = (sequelize, DataTypes) => {
     imageId: {
       type: DataTypes.UUID,
       allowNull: false,
-      field: 'image_id'
+      field: 'image_id',
+      defaultValue: uuid.DEFAULT_IMAGE
     },
     tenantId: {
       type: DataTypes.UUID,
@@ -87,6 +90,12 @@ module.exports = (sequelize, DataTypes) => {
     });
     User.hasOne(models.OAuthToken, {
       as: 'user',
+      foreignKey: 'userId',
+      sourceKey: 'id',
+      onDelete: 'SET NULL'
+    });
+    User.hasOne(models.Quotation, {
+      as: 'quotation',
       foreignKey: 'userId',
       sourceKey: 'id',
       onDelete: 'SET NULL'

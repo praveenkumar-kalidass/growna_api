@@ -10,6 +10,8 @@ const roleController = require('./Role');
 const userController = require('./User');
 const permissionController = require('./Permission');
 const privilegeController = require('./Privilege');
+const quotationController = require('./Quotation');
+const vehicleController = require('./Vehicle');
 const router = express.Router();
 
 /**
@@ -59,5 +61,21 @@ router.use('/permission', permissionController);
  * @param {Class} privilegeController
  */
 router.use('/privilege', privilegeController);
+
+/**
+ * Middleware - "/api/quotation/*"
+ *
+ * @param {String} route
+ * @param {Class} quotationController
+ */
+router.use('/quotation', quotationController);
+
+/**
+ * Middleware - "/api/vehicle/*"
+ *
+ * @param {String} route
+ * @param {Class} vehicleController
+ */
+router.use('/vehicle', vehicleController);
 
 module.exports = router;

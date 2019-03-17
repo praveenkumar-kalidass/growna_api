@@ -84,8 +84,18 @@ module.exports = {
           0x24, 0xf5, 0xaf, 0xa8, 0x56, 0x0e, 0x67, 0x32
         ]
       }),
-      description: constant.INSURANCE,
+      description: constant.BIKE_INSURANCE,
       type: constant.VIEW,
+      scope: constant.GIS_USER
+    }, {
+      id: uuidv4({
+        random: [
+          0xe4, 0xda, 0xbb, 0x07, 0xb3, 0x37, 0x4a, 0xf6,
+          0xa5, 0xd4, 0xe0, 0x0b, 0xa1, 0x82, 0x75, 0x2e
+        ]
+      }),
+      description: constant.QUOTATION,
+      type: constant.ROUTE,
       scope: constant.GIS_USER
     }], {});
   },

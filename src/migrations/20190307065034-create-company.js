@@ -1,53 +1,54 @@
 'use strict';
+const uuid = require('../utils/uuid');
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable(
-      'OAuthToken', {
+      'Company', {
         id: {
           type: Sequelize.UUID,
           defaultValue: Sequelize.UUIDV4,
           primaryKey: true
         },
-        accessToken: {
-          type: Sequelize.STRING,
-          field: 'access_token',
-          allowNull: false
-        },
-        scope: {
+        name: {
           type: Sequelize.STRING,
           allowNull: false
         },
-        accessTokenExpiresAt: {
-          type: Sequelize.DATE,
-          field: 'access_token_expires_at',
+        noClaimBonus: {
+          type: Sequelize.FLOAT,
+          allowNull: false,
+          field: 'no_claim_bonus'
+        },
+        thirdPartyPremium: {
+          type: Sequelize.FLOAT,
+          allowNull: false,
+          field: 'third_party_premium'
+        },
+        insuredDeclaredValue: {
+          type: Sequelize.FLOAT,
+          allowNull: false,
+          field: 'insured_declared_value'
+        },
+        discount: {
+          type: Sequelize.FLOAT,
           allowNull: false
         },
-        clientId: {
+        ownerDriver: {
+          type: Sequelize.FLOAT,
+          allowNull: false,
+          field: 'owner_driver'
+        },
+        type: {
+          type: Sequelize.STRING,
+          allowNull: false
+        },
+        imageId: {
           type: Sequelize.UUID,
-          field: 'client_id',
+          field: 'image_id',
+          defaultValue: uuid.DEFAULT_IMAGE,
           references: {
             model: {
-              tableName: 'Client'
-            }
-          }
-        },
-        refreshToken: {
-          type: Sequelize.STRING,
-          field: 'refresh_token',
-          allowNull: false
-        },
-        refreshTokenExpiresAt: {
-          type: Sequelize.DATE,
-          field: 'refresh_token_expires_at',
-          allowNull: false
-        },
-        userId: {
-          type: Sequelize.UUID,
-          field: 'user_id',
-          references: {
-            model: {
-              tableName: 'User'
+              tableName: 'Image'
             }
           }
         },
@@ -66,7 +67,7 @@ module.exports = {
   },
   down: (queryInterface) => {
     return queryInterface.dropTable(
-      'OAuthToken'
+      'Company'
     );
   }
 };

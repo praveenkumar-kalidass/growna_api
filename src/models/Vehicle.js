@@ -1,16 +1,29 @@
 /**
- * Image Model
+ * Vehicle Model
  */
 module.exports = (sequelize, DataTypes) => {
-  const Image = sequelize.define('Image', {
+  const Vehicle = sequelize.define('Vehicle', {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true
     },
-    path: {
+    brand: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    model: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    variant: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    engineCc: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'engine_cc'
     },
     type: {
       type: DataTypes.STRING,
@@ -28,19 +41,5 @@ module.exports = (sequelize, DataTypes) => {
     freezeTableName: true,
     timestamps: true
   });
-  Image.associate = (models) => {
-    Image.hasOne(models.User, {
-      as: 'userImage',
-      foreignKey: 'imageId',
-      sourceKey: 'id',
-      onDelete: 'SET NULL'
-    });
-    Image.hasOne(models.Company, {
-      as: 'companyImage',
-      foreignKey: 'imageId',
-      sourceKey: 'id',
-      onDelete: 'SET NULL'
-    });
-  };
-  return Image;
+  return Vehicle;
 };
