@@ -21,6 +21,11 @@ module.exports = {
           type: Sequelize.STRING,
           allowNull: false
         },
+        vehicleYear: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+          field: 'vehicle_year'
+        },
         type: {
           type: Sequelize.STRING,
           allowNull: false

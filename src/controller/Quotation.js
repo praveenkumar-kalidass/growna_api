@@ -65,6 +65,8 @@ router.get('/:id', oAuth.authenticate, (request, response) => {
  *                type: string
  *              variant:
  *                type: string
+ *              vehicleYear:
+ *                type: number
  *              userId:
  *                type: string
  *                format: uuid
@@ -77,6 +79,7 @@ router.get('/:id', oAuth.authenticate, (request, response) => {
  *              - brand
  *              - model
  *              - variant
+ *              - vehicleYear
  *              - userId
  *              - tenantId
  *              - type

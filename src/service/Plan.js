@@ -32,9 +32,10 @@ class PlanService {
   static getPlanByData(data, getPlanCB) {
     async.waterfall([
       async.apply(vehicleService.getVehicle, data),
-      (vehicle, passDataCB) => (
-        passDataCB(null, vehicle.engineCc, data.type)
-      ),
+      (vehicle, passDataCB) => {
+        const age = new Date().getFullYear() - data.vehicleYear;
+        return passDataCB(null, vehicle.engineCc, age, data.type);
+      },
       planDao.findPlan
     ], (waterfallErr, result) => {
       if (waterfallErr) {

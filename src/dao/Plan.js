@@ -17,17 +17,24 @@ class PlanDao {
    * Dao to find plan based on specifications
    *
    * @param  {Number} engineCc
+   * @param  {Number} age
    * @param  {String} type
    * @param  {Function} findCB
    */
-  findPlan(engineCc, type, findCB) {
+  findPlan(engineCc, age, type, findCB) {
     models.Plan.find({
       where: {
         minEngineCc: {
-          [Op.lte]: engineCc
+          [Op.lt]: engineCc
         },
         maxEngineCc: {
-          [Op.gt]: engineCc
+          [Op.gte]: engineCc
+        },
+        minAge: {
+          [Op.lt]: age
+        },
+        maxAge: {
+          [Op.gte]: age
         },
         type
       }
