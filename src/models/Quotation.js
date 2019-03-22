@@ -64,6 +64,12 @@ module.exports = (sequelize, DataTypes) => {
       targetKey: 'id',
       onDelete: 'SET NULL'
     });
+    Quotation.hasOne(models.Cart, {
+      as: 'cartQuotation',
+      foreignKey: 'quotationId',
+      sourceKey: 'id',
+      onDelete: 'SET NULL'
+    });
   };
   return Quotation;
 };

@@ -96,7 +96,17 @@ module.exports = {
       }),
       description: constant.QUOTATION,
       type: constant.ROUTE,
-      scope: constant.GIS_USER
+      scope: constant.EVERYONE
+    }, {
+      id: uuidv4({
+        random: [
+          0x67, 0xe7, 0xa4, 0x0a, 0xed, 0x78, 0x43, 0xb0,
+          0xac, 0x35, 0x1d, 0x1f, 0x86, 0x47, 0x4c, 0xb4
+        ]
+      }),
+      description: constant.CART,
+      type: constant.ROUTE,
+      scope: constant.EVERYONE
     }], {});
   },
   down: (queryInterface) => {

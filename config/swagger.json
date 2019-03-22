@@ -9,14 +9,19 @@
   },
   "apis": [
     "./src/controller/index.js",
+    "./src/controller/Address.js",
     "./src/controller/Auth.js",
+    "./src/controller/Cart.js",
     "./src/controller/OAuth.js",
+    "./src/controller/PastPolicy.js",
     "./src/controller/Permission.js",
     "./src/controller/Privilege.js",
     "./src/controller/Quotation.js",
     "./src/controller/Role.js",
     "./src/controller/Tenant.js",
     "./src/controller/User.js",
-    "./src/controller/Vehicle.js"
+    "./src/controller/Vehicle.js",
+    "./src/controller/VehicleDetail.js",
+    "./src/controller/VehicleOwner.js"
   ]
 }

@@ -42,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: true
   });
   Role.associate = (models) => {
-    Role.hasOne(models.User, {
+    Role.hasMany(models.User, {
       as: 'role',
       foreignKey: 'roleId',
       sourceKey: 'id',

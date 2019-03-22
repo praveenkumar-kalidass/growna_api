@@ -20,5 +20,6 @@ module.exports = {
   ROLE_LIST: '6dca5c2e-2f5f-4003-9357-69c1a9cfd769',
   EDIT_ROLE: '0b868383-a11c-4468-997b-279d0ef0b48b',
   BIKE_INSURANCE: '689702ca-e9bc-49ca-a4f5-afa8560e6732',
-  QUOTATION: 'e4dabb07-b337-4af6-a5d4-e00ba182752e'
+  QUOTATION: 'e4dabb07-b337-4af6-a5d4-e00ba182752e',
+  CART: '67e7a40a-ed78-43b0-ac35-1d1f86474cb4'
 };

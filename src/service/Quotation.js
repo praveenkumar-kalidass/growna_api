@@ -14,6 +14,7 @@ const planService = new PlanService();
  *
  * @method {public} saveQuotation
  * @method {public} getPlansByQuotation
+ * @method {public} getQuotation
  */
 class QuotationService {
   /**
@@ -54,6 +55,20 @@ class QuotationService {
         plans
       };
       return getPlansCB(null, result);
+    });
+  }
+  /**
+   * Method to get quotation by ID
+   *
+   * @param  {UUID} id
+   * @param  {Function} getCB
+   */
+  getQuotation(id, getCB) {
+    quotationDao.findQuotationById(id, (quotationErr, quotation) => {
+      if (quotationErr) {
+        return getCB(quotationErr);
+      }
+      return getCB(null, quotation);
     });
   }
 }

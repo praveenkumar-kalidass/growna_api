@@ -26,21 +26,27 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: true
   });
   Tenant.associate = (models) => {
-    Tenant.hasOne(models.Role, {
+    Tenant.hasMany(models.Role, {
       as: 'roleTenant',
       foreignKey: 'tenantId',
       sourceKey: 'id',
       onDelete: 'SET NULL'
     });
-    Tenant.hasOne(models.User, {
+    Tenant.hasMany(models.User, {
       as: 'tenant',
       foreignKey: 'tenantId',
       sourceKey: 'id',
       onDelete: 'SET NULL'
     });
-    Tenant.hasOne(models.Quotation, {
+    Tenant.hasMany(models.Quotation, {
       as: 'tenantQuotation',
       foreignKey: 'tenantId',
+      sourceKey: 'id',
+      onDelete: 'SET NULL'
+    });
+    Tenant.hasMany(models.Cart, {
+      as: 'tenantCart',
+      foreignKey: 'userId',
       sourceKey: 'id',
       onDelete: 'SET NULL'
     });

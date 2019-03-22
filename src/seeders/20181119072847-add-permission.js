@@ -41,6 +41,14 @@ module.exports = {
       privilege_id: uuid.EDIT_ROLE
     }, {
       id: uuidv4(),
+      role_id: uuid.GIS_ADMIN,
+      privilege_id: uuid.QUOTATION
+    }, {
+      id: uuidv4(),
+      role_id: uuid.GIS_ADMIN,
+      privilege_id: uuid.CART
+    }, {
+      id: uuidv4(),
       role_id: uuid.GIS_USER,
       privilege_id: uuid.USER_PROFILE
     }, {
@@ -51,6 +59,10 @@ module.exports = {
       id: uuidv4(),
       role_id: uuid.GIS_USER,
       privilege_id: uuid.QUOTATION
+    }, {
+      id: uuidv4(),
+      role_id: uuid.GIS_USER,
+      privilege_id: uuid.CART
     }], {});
   },
   down: (queryInterface) => {

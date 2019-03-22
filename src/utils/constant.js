@@ -20,6 +20,7 @@ module.exports = {
   A: 'A',
   B: 'B',
   BIKE: 'BIKE',
+  QUOTE: 'QUOTE',
   USER_PROFILE: 'USER_PROFILE',
   ADD_TENANT: 'ADD_TENANT',
   ADD_USER: 'ADD_USER',
@@ -29,7 +30,10 @@ module.exports = {
   EDIT_ROLE: 'EDIT_ROLE',
   BIKE_INSURANCE: 'BIKE_INSURANCE',
   QUOTATION: 'QUOTATION',
+  CART: 'CART',
   DEFAULT_PRIVILEGES: [
-    uuid.USER_PROFILE
+    uuid.USER_PROFILE,
+    uuid.QUOTATION,
+    uuid.CART
   ]
 };

@@ -100,6 +100,12 @@ module.exports = (sequelize, DataTypes) => {
       sourceKey: 'id',
       onDelete: 'SET NULL'
     });
+    User.hasMany(models.Cart, {
+      as: 'userCart',
+      foreignKey: 'userId',
+      sourceKey: 'id',
+      onDelete: 'SET NULL'
+    });
   };
   return User;
 };

@@ -67,6 +67,18 @@ module.exports = (sequelize, DataTypes) => {
       targetKey: 'id',
       onDelete: 'SET NULL'
     });
+    Company.hasMany(models.PastPolicy, {
+      as: 'pastInsurer',
+      foreignKey: 'companyId',
+      sourceKey: 'id',
+      onDelete: 'SET NULL'
+    });
+    Company.hasMany(models.Cart, {
+      as: 'insurer',
+      foreignKey: 'companyId',
+      sourceKey: 'id',
+      onDelete: 'SET NULL'
+    });
   };
   return Company;
 };

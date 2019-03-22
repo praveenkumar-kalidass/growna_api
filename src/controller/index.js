@@ -12,6 +12,11 @@ const permissionController = require('./Permission');
 const privilegeController = require('./Privilege');
 const quotationController = require('./Quotation');
 const vehicleController = require('./Vehicle');
+const cartController = require('./Cart');
+const addressController = require('./Address');
+const vehicleOwnerController = require('./VehicleOwner');
+const vehicleDetailController = require('./VehicleDetail');
+const pastPolicyController = require('./PastPolicy');
 const router = express.Router();
 
 /**
@@ -77,5 +82,45 @@ router.use('/quotation', quotationController);
  * @param {Class} vehicleController
  */
 router.use('/vehicle', vehicleController);
+
+/**
+ * Middleware - "/api/cart/*"
+ *
+ * @param {String} route
+ * @param {Class} cartController
+ */
+router.use('/cart', cartController);
+
+/**
+ * Middleware - "/api/address/*"
+ *
+ * @param {String} route
+ * @param {Class} addressController
+ */
+router.use('/address', addressController);
+
+/**
+ * Middleware - "/api/vehile-owner/*"
+ *
+ * @param {String} route
+ * @param {Class} vehicleOwnerController
+ */
+router.use('/vehicle-owner', vehicleOwnerController);
+
+/**
+ * Middleware - "/api/vehicle-detail/*"
+ *
+ * @param {String} route
+ * @param {Class} vehicleDetailController
+ */
+router.use('/vehicle-detail', vehicleDetailController);
+
+/**
+ * Middleware - "/api/past-policy/*"
+ *
+ * @param {String} route
+ * @param {Class} pastPolicyController
+ */
+router.use('/past-policy', pastPolicyController);
 
 module.exports = router;

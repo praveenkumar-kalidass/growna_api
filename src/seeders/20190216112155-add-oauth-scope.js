@@ -9,6 +9,26 @@ module.exports = {
   up: (queryInterface) => {
     return queryInterface.bulkInsert('OAuthScope', [{
       id: uuidv4(),
+      method: 'POST',
+      path: '/api/address',
+      acl: constant.EVERYONE
+    }, {
+      id: uuidv4(),
+      method: 'GET',
+      path: '/api/cart',
+      acl: constant.EVERYONE
+    }, {
+      id: uuidv4(),
+      method: 'POST',
+      path: '/api/cart',
+      acl: constant.EVERYONE
+    }, {
+      id: uuidv4(),
+      method: 'POST',
+      path: '/api/past-policy',
+      acl: constant.EVERYONE
+    }, {
+      id: uuidv4(),
       method: 'GET',
       path: '/api/permission',
       acl: constant.EVERYONE
@@ -17,56 +37,6 @@ module.exports = {
       method: 'GET',
       path: '/api/permission/validate',
       acl: constant.EVERYONE
-    }, {
-      id: uuidv4(),
-      method: 'GET',
-      path: '/api/role/tenant',
-      acl: constant.ADMIN
-    }, {
-      id: uuidv4(),
-      method: 'GET',
-      path: '/api/role/detail',
-      acl: constant.ADMIN
-    }, {
-      id: uuidv4(),
-      method: 'POST',
-      path: '/api/tenant/register',
-      acl: constant.ADMIN
-    }, {
-      id: uuidv4(),
-      method: 'POST',
-      path: '/api/user',
-      acl: constant.ADMIN
-    }, {
-      id: uuidv4(),
-      method: 'PUT',
-      path: '/api/user',
-      acl: constant.EVERYONE
-    }, {
-      id: uuidv4(),
-      method: 'GET',
-      path: '/api/user',
-      acl: constant.EVERYONE
-    }, {
-      id: uuidv4(),
-      method: 'GET',
-      path: '/api/user/role',
-      acl: constant.ADMIN
-    }, {
-      id: uuidv4(),
-      method: 'GET',
-      path: '/api/user/tenant',
-      acl: constant.ADMIN
-    }, {
-      id: uuidv4(),
-      method: 'GET',
-      path: '/api/role',
-      acl: constant.ADMIN
-    }, {
-      id: uuidv4(),
-      method: 'POST',
-      path: '/api/role',
-      acl: constant.ADMIN
     }, {
       id: uuidv4(),
       method: 'GET',
@@ -85,6 +55,56 @@ module.exports = {
     }, {
       id: uuidv4(),
       method: 'GET',
+      path: '/api/role',
+      acl: constant.ADMIN
+    }, {
+      id: uuidv4(),
+      method: 'GET',
+      path: '/api/role/detail',
+      acl: constant.ADMIN
+    }, {
+      id: uuidv4(),
+      method: 'GET',
+      path: '/api/role/tenant',
+      acl: constant.ADMIN
+    }, {
+      id: uuidv4(),
+      method: 'POST',
+      path: '/api/role',
+      acl: constant.ADMIN
+    }, {
+      id: uuidv4(),
+      method: 'POST',
+      path: '/api/tenant/register',
+      acl: constant.ADMIN
+    }, {
+      id: uuidv4(),
+      method: 'GET',
+      path: '/api/user',
+      acl: constant.EVERYONE
+    }, {
+      id: uuidv4(),
+      method: 'GET',
+      path: '/api/user/role',
+      acl: constant.ADMIN
+    }, {
+      id: uuidv4(),
+      method: 'GET',
+      path: '/api/user/tenant',
+      acl: constant.ADMIN
+    }, {
+      id: uuidv4(),
+      method: 'POST',
+      path: '/api/user',
+      acl: constant.ADMIN
+    }, {
+      id: uuidv4(),
+      method: 'PUT',
+      path: '/api/user',
+      acl: constant.EVERYONE
+    }, {
+      id: uuidv4(),
+      method: 'GET',
       path: '/api/vehicle/brand',
       acl: constant.EVERYONE
     }, {
@@ -96,6 +116,11 @@ module.exports = {
       id: uuidv4(),
       method: 'GET',
       path: '/api/vehicle/variant',
+      acl: constant.EVERYONE
+    }, {
+      id: uuidv4(),
+      method: 'GET',
+      path: '/api/vehicle-owner',
       acl: constant.EVERYONE
     }], {});
   },
