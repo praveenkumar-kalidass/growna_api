@@ -20,6 +20,7 @@ module.exports = {
       email: 'demo_super_admin@gis.com',
       password: passwordHash.generate('gissuperadmin@123'),
       role_id: uuid.GIS_SUPER_ADMIN,
+      image_id: uuid.GIS_SUPER_ADMIN_IMAGE,
       created_by: uuid.DEMO_SUPER_ADMIN,
       parent_id: uuid.DEMO_SUPER_ADMIN,
       tenant_id: 'd1c3c618-eb42-4e53-906a-b6abbb861e49'
@@ -35,6 +36,7 @@ module.exports = {
       email: 'demo_admin@gis.com',
       password: passwordHash.generate('gisadmin@123'),
       role_id: uuid.GIS_ADMIN,
+      image_id: uuid.GIS_ADMIN_IMAGE,
       created_by: uuid.DEMO_ADMIN,
       parent_id: uuid.DEMO_SUPER_ADMIN,
       tenant_id: uuid.GIS_TENANT
@@ -50,6 +52,7 @@ module.exports = {
       email: 'demo_user@gis.com',
       password: passwordHash.generate('gisuser@123'),
       role_id: uuid.GIS_USER,
+      image_id: uuid.GIS_USER_IMAGE,
       created_by: uuid.DEMO_USER,
       parent_id: uuid.DEMO_ADMIN,
       tenant_id: uuid.GIS_TENANT

@@ -232,4 +232,46 @@ router.put('/', oAuth.authenticate, (request, response) => {
   });
 });
 
+/**
+ * @swagger
+ * /api/user/image:
+ *  put:
+ *    summary: Update user image
+ *    description: Update a user image and delete previous image
+ *    tags:
+ *      - User
+ *    security:
+ *      - bearerAuth: []
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        multipart/form-data:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              image:
+ *                type: string
+ *                format: binary
+ *              userId:
+ *                type: string
+ *                format: uuid
+ *            required:
+ *              - userId
+ *              - image
+ *    responses:
+ *      200:
+ *        description: Returns the Saved Image
+ *      500:
+ *        description: Server Error
+ */
+router.put('/image', oAuth.authenticate, (request, response) => {
+  userService.updateUserImage(request.body.userId, request.files.image,
+    (updateErr, image) => {
+      if (updateErr) {
+        response.status(500).send(updateErr);
+      }
+      response.send(image);
+    });
+});
+
 module.exports = router;

@@ -109,6 +109,11 @@ module.exports = {
       acl: constant.EVERYONE
     }, {
       id: uuidv4(),
+      method: 'PUT',
+      path: '/api/user/image',
+      acl: constant.EVERYONE
+    }, {
+      id: uuidv4(),
       method: 'GET',
       path: '/api/vehicle/brand',
       acl: constant.EVERYONE

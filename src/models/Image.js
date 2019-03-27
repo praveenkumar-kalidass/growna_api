@@ -10,7 +10,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     path: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      defaultValue: '/images/default-image.png'
     },
     type: {
       type: DataTypes.STRING,

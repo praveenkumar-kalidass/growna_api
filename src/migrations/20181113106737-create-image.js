@@ -11,7 +11,8 @@ module.exports = {
         },
         path: {
           type: Sequelize.STRING,
-          allowNull: false
+          allowNull: false,
+          defaultValue: '/images/default-image.png'
         },
         type: {
           type: Sequelize.STRING,

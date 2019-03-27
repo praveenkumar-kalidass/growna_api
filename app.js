@@ -14,6 +14,7 @@ const http = require('http');
 const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
 const swaggerJSDoc = require('swagger-jsdoc');
+const fileUpload = require('express-fileupload');
 
 const swaggerOptions = require('./config/swagger');
 const clientRouter = require('./routes/index');
@@ -31,6 +32,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
+
+// File Upload
+app.use(fileUpload());
 
 // Swagger docs
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerJSDoc(swaggerOptions)));

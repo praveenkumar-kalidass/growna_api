@@ -3,8 +3,10 @@
  *
  * @exports {Class} UserService
  */
+const fs = require('fs');
 const async = require('async');
 const _ = require('lodash');
+const constant = require('../utils/constant');
 const UserDao = require('../dao/User');
 const RoleService = require('../service/Role');
 const ImageService = require('../service/Image');
@@ -22,6 +24,7 @@ const imageService = new ImageService();
  * @method {public} getUsersByRole
  * @method {private} loadUserDetails
  * @method {public} getUsersByTenant
+ * @method {public} updateUserImage
  */
 class UserService {
   /**
@@ -69,15 +72,22 @@ class UserService {
     });
   }
   /**
-   * Method to add a new user
+   * Method to create default image and add a new user
    *
    * @param  {Object} user
    * @param  {Function} addCB
    */
   addUser(user, addCB) {
-    userDao.createUser(user, (addErr, result) => {
-      if (addErr) {
-        return addCB(addErr);
+    async.waterfall([
+      async.apply(imageService.createDefaultImage, constant.USER),
+      (image, passIdCB) => {
+        user.imageId = image.id;
+        return passIdCB(null, user);
+      },
+      userDao.createUser
+    ], (waterfallErr, result) => {
+      if (waterfallErr) {
+        return addCB(waterfallErr);
       }
       return addCB(null, result);
     });
@@ -153,6 +163,37 @@ class UserService {
         return getUsersCB(waterfallErr);
       }
       return getUsersCB(null, result);
+    });
+  }
+  /**
+   * Method to update user profile image
+   *
+   * @param  {UUID} userId
+   * @param  {File} image
+   * @param  {Function} updateUserCB
+   */
+  updateUserImage(userId, image, updateUserCB) {
+    let user;
+    async.waterfall([
+      async.apply(userDao.findUserById, userId),
+      (result, passIdCB) => {
+        user = result;
+        const dir = `public/images/user/${user.id}`;
+        if (!fs.existsSync(dir)) {
+          fs.mkdirSync(dir);
+        }
+        return passIdCB(null, `${dir}/${user.imageId}.${image.mimetype.replace('image/', '')}`);
+      },
+      image.mv,
+      (passPathCB) => (
+        passPathCB(null, user.imageId, `/images/user/${user.id}/${user.imageId}.${image.mimetype.replace('image/', '')}`)
+      ),
+      imageService.updateImagePath
+    ], (waterfallErr, result) => {
+      if (waterfallErr) {
+        return updateUserCB(waterfallErr);
+      }
+      return updateUserCB(null, result);
     });
   }
 }
