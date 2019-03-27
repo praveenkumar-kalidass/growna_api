@@ -9,9 +9,24 @@ const vehicleOwnerDao = new VehicleOwnerDao();
 /**
  * VehicleOwnerService class
  *
+ * @method {public} getVehicleOwnerForCart
  * @method {public} saveOwnerDetail
  */
 class VehicleOwnerService {
+  /**
+   * Method to get find vehicle owner by cart id
+   *
+   * @param  {UUID} cartId
+   * @param  {Function} getDetailCB
+   */
+  getVehicleOwnerForCart(cartId, getDetailCB) {
+    vehicleOwnerDao.findByCartId(cartId, (findErr, owner) => {
+      if (findErr) {
+        return getDetailCB(findErr);
+      }
+      return getDetailCB(null, owner);
+    });
+  }
   /**
    * Method to save vehicle owner detail
    *

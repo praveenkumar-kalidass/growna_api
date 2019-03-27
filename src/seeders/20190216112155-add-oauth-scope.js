@@ -24,6 +24,11 @@ module.exports = {
       acl: constant.EVERYONE
     }, {
       id: uuidv4(),
+      method: 'GET',
+      path: '/api/company',
+      acl: constant.EVERYONE
+    }, {
+      id: uuidv4(),
       method: 'POST',
       path: '/api/past-policy',
       acl: constant.EVERYONE
@@ -119,7 +124,12 @@ module.exports = {
       acl: constant.EVERYONE
     }, {
       id: uuidv4(),
-      method: 'GET',
+      method: 'POST',
+      path: '/api/vehicle-detail',
+      acl: constant.EVERYONE
+    }, {
+      id: uuidv4(),
+      method: 'POST',
       path: '/api/vehicle-owner',
       acl: constant.EVERYONE
     }], {});

@@ -159,7 +159,7 @@ router.get('/tenant/:tenantId', oAuth.authenticate, (request, response) => {
  *        description: Server Error
  */
 router.post('/', oAuth.authenticate, (request, response) => {
-  userService.saveUser(request.body, (userErr, user) => {
+  userService.addUser(request.body, (userErr, user) => {
     if (userErr) {
       response.status(500).send(userErr);
     }

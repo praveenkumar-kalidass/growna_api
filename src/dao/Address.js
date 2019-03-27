@@ -8,9 +8,25 @@ const models = require('../models');
 /**
  * AddressDao class
  *
+ * @method {public} findByCartId
  * @method {public} upsertAddress
  */
 class AddressDao {
+  /**
+   * Method to find address by cart id
+   *
+   * @param  {UUID} cartId
+   * @param  {Function} findCB
+   */
+  findByCartId(cartId, findCB) {
+    models.Address.find({
+      where: {cartId}
+    }).then((address) => (
+      findCB(null, address)
+    ), (findErr) => (
+      findCB(findErr)
+    ));
+  }
   /**
    * Method to update or insert Address
    *
@@ -20,7 +36,7 @@ class AddressDao {
   upsertAddress(data, upsertCB) {
     models.Address.upsert(data, {
       returning: true
-    }).then((address) => (
+    }).then(([address]) => (
       upsertCB(null, address)
     ), (upsertErr) => (
       upsertCB(upsertErr)

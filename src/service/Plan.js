@@ -6,17 +6,15 @@
 const async = require('async');
 const _ = require('lodash');
 const mixin = require('../utils/mixin');
-const VehicleService = require('../service/Vehicle');
 const CompanyService = require('../service/Company');
 const PlanDao = require('../dao/Plan');
-const vehicleService = new VehicleService();
 const companyService = new CompanyService();
 const planDao = new PlanDao();
 
 /**
  * PlanService class
  *
- * @method {private} getPlanByData
+ * @method {private} getPlanByQuotation
  * @method {private} getCompanies
  * @method {private} getPlanAndCompanies
  * @method {private} calculatePlans
@@ -26,22 +24,16 @@ class PlanService {
   /**
    * Method to get plan based on specifications
    *
-   * @param  {Object} data
+   * @param  {Object} quotation
    * @param  {Function} getPlanCB
    */
-  static getPlanByData(data, getPlanCB) {
-    async.waterfall([
-      async.apply(vehicleService.getVehicle, data),
-      (vehicle, passDataCB) => {
-        const age = new Date().getFullYear() - data.vehicleYear;
-        return passDataCB(null, vehicle.engineCc, age, data.type);
-      },
-      planDao.findPlan
-    ], (waterfallErr, result) => {
-      if (waterfallErr) {
-        return getPlanCB(waterfallErr);
+  static getPlanByQuotation(quotation, getPlanCB) {
+    const age = new Date().getFullYear() - quotation.vehicleYear;
+    planDao.findPlan(quotation.engineCc, age, quotation.type, (planErr, plan) => {
+      if (planErr) {
+        return getPlanCB(planErr);
       }
-      return getPlanCB(null, result);
+      return getPlanCB(null, plan);
     });
   }
   /**
@@ -51,7 +43,7 @@ class PlanService {
    * @param  {Function} getCB
    */
   static getCompanies(type, getCB) {
-    companyService.getAllCompanies(type, (getErr, companies) => {
+    companyService.getAllCompanies(type, null, (getErr, companies) => {
       if (getErr) {
         return getCB(getErr);
       }
@@ -66,7 +58,7 @@ class PlanService {
    */
   static getPlanAndCompanies(data, getCB) {
     async.parallel({
-      plan: PlanService.getPlanByData.bind(null, data),
+      plan: PlanService.getPlanByQuotation.bind(null, data),
       companies: PlanService.getCompanies.bind(null, data.type)
     }, (parallelErr, result) => {
       if (parallelErr) {

@@ -21,6 +21,11 @@ module.exports = {
           type: Sequelize.STRING,
           allowNull: false
         },
+        engineCc: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+          field: 'engine_cc'
+        },
         vehicleYear: {
           type: Sequelize.INTEGER,
           allowNull: false,
@@ -33,6 +38,7 @@ module.exports = {
         userId: {
           type: Sequelize.UUID,
           field: 'user_id',
+          allowNull: false,
           references: {
             model: {
               tableName: 'User'
@@ -42,6 +48,7 @@ module.exports = {
         tenantId: {
           type: Sequelize.UUID,
           field: 'tenant_id',
+          allowNull: false,
           references: {
             model: {
               tableName: 'Tenant'

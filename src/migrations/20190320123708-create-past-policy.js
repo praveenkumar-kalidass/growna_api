@@ -31,6 +31,7 @@ module.exports = {
         companyId: {
           type: Sequelize.UUID,
           field: 'company_id',
+          allowNull: false,
           references: {
             model: {
               tableName: 'Company'
@@ -40,6 +41,8 @@ module.exports = {
         cartId: {
           type: Sequelize.UUID,
           field: 'cart_id',
+          allowNull: false,
+          unique: true,
           references: {
             model: {
               tableName: 'Cart'
@@ -60,7 +63,7 @@ module.exports = {
     );
   },
 
-  down: (queryInterface, Sequelize) => {
+  down: (queryInterface) => {
     return queryInterface.dropTable(
       'PastPolicy'
     );

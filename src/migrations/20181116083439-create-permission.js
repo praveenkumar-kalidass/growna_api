@@ -15,6 +15,7 @@ module.exports = {
         roleId: {
           type: Sequelize.UUID,
           field: 'role_id',
+          allowNull: false,
           references: {
             model: {
               tableName: 'Role'
@@ -24,6 +25,7 @@ module.exports = {
         privilegeId: {
           type: Sequelize.UUID,
           field: 'privilege_id',
+          allowNull: false,
           references: {
             model: {
               tableName: 'Privilege'

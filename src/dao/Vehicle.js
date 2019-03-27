@@ -4,7 +4,6 @@
  * @exports {Class} VehicleDao
  */
 const models = require('../models');
-const _ = require('lodash');
 
 /**
  * VehicleDao class
@@ -40,12 +39,17 @@ class VehicleDao {
    * @param  {Function} findCB
    */
   findVehicleList(name, where, findCB) {
+    let attributes = [name], group = [name];
+    if (name === 'variant') {
+      attributes.push('engineCc');
+      group.push('engineCc');
+    }
     models.Vehicle.findAll({
-      attributes: [name],
+      attributes: attributes,
       where: where,
-      group: [name]
+      group: group
     }).then((list) => (
-      findCB(null, _.map(list, name))
+      findCB(null, list)
     ), (findErr) => (
       findCB(findErr)
     ));

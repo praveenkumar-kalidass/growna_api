@@ -22,6 +22,8 @@ module.exports = {
         quotationId: {
           type: Sequelize.UUID,
           field: 'quotation_id',
+          allowNull: false,
+          unique: true,
           references: {
             model: {
               tableName: 'Quotation'
@@ -31,6 +33,7 @@ module.exports = {
         companyId: {
           type: Sequelize.UUID,
           field: 'company_id',
+          allowNull: false,
           references: {
             model: {
               tableName: 'Company'
@@ -40,6 +43,7 @@ module.exports = {
         userId: {
           type: Sequelize.UUID,
           field: 'user_id',
+          allowNull: false,
           references: {
             model: {
               tableName: 'User'
@@ -49,6 +53,7 @@ module.exports = {
         tenantId: {
           type: Sequelize.UUID,
           field: 'tenant_id',
+          allowNull: false,
           references: {
             model: {
               tableName: 'Tenant'
@@ -69,7 +74,7 @@ module.exports = {
     );
   },
 
-  down: (queryInterface, Sequelize) => {
+  down: (queryInterface) => {
     return queryInterface.dropTable(
       'Cart'
     );

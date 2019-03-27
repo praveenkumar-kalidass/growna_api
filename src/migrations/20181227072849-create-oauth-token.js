@@ -26,6 +26,7 @@ module.exports = {
         clientId: {
           type: Sequelize.UUID,
           field: 'client_id',
+          allowNull: false,
           references: {
             model: {
               tableName: 'Client'
@@ -45,6 +46,7 @@ module.exports = {
         userId: {
           type: Sequelize.UUID,
           field: 'user_id',
+          allowNull: false,
           references: {
             model: {
               tableName: 'User'

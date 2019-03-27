@@ -48,6 +48,7 @@ module.exports = {
           type: Sequelize.UUID,
           field: 'image_id',
           defaultValue: uuid.DEFAULT_IMAGE,
+          allowNull: false,
           references: {
             model: {
               tableName: 'Image'
@@ -57,6 +58,7 @@ module.exports = {
         roleId: {
           type: Sequelize.UUID,
           field: 'role_id',
+          allowNull: false,
           references: {
             model: {
               tableName: 'Role'
@@ -66,6 +68,7 @@ module.exports = {
         tenantId: {
           type: Sequelize.UUID,
           field: 'tenant_id',
+          allowNull: false,
           references: {
             model: {
               tableName: 'Tenant'

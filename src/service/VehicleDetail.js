@@ -9,9 +9,24 @@ const vehicleDetailDao = new VehicleDetailDao();
 /**
  * VehicleDetailService class
  *
+ * @method {public} getVehicleForCart
  * @method {public} saveVehicleDetail
  */
 class VehicleDetailService {
+  /**
+   * Method to get vehicle for cart
+   *
+   * @param  {UUID} cartId
+   * @param  {Function} getVehicleCB
+   */
+  getVehicleForCart(cartId, getVehicleCB) {
+    vehicleDetailDao.findByCartId(cartId, (findErr, vehicle) => {
+      if (findErr) {
+        return getVehicleCB(findErr);
+      }
+      return getVehicleCB(null, vehicle);
+    });
+  }
   /**
    * Method to save Vehicle Detail
    *

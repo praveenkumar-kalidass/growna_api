@@ -14,6 +14,7 @@ const imageService = new ImageService();
  *
  * @method {private} loadCompanies
  * @method {public} getAllCompanies
+ * @method {public} getCompanyById
  */
 class CompanyService {
   /**
@@ -42,17 +43,41 @@ class CompanyService {
    * Method to get all companies
    *
    * @param  {String} type
+   * @param  {Array} attributes
    * @param  {Function} getCB
    */
-  getAllCompanies(type, getCB) {
+  getAllCompanies(type, attributes, getCB) {
     async.waterfall([
-      async.apply(companyDao.findAllCompanies, type),
+      async.apply(companyDao.findAllCompanies, type, attributes),
       CompanyService.loadCompanies
     ], (waterfallErr, result) => {
       if (waterfallErr) {
         return getCB(waterfallErr);
       }
       return getCB(null, result);
+    });
+  }
+  /**
+   * Method to get company by ID
+   *
+   * @param  {UUID} id
+   * @param  {Function} getCompanyCB
+   */
+  getCompanyById(id, getCompanyCB) {
+    let company;
+    async.waterfall([
+      async.apply(companyDao.findCompanyById, id),
+      (result, passIdCB) => {
+        company = result;
+        return passIdCB(null, result.imageId);
+      },
+      imageService.getImageById
+    ], (waterfallErr, result) => {
+      if (waterfallErr) {
+        return getCompanyCB(waterfallErr);
+      }
+      company.dataValues.companyImage = result;
+      return getCompanyCB(null, company);
     });
   }
 }

@@ -17,6 +17,7 @@ const addressController = require('./Address');
 const vehicleOwnerController = require('./VehicleOwner');
 const vehicleDetailController = require('./VehicleDetail');
 const pastPolicyController = require('./PastPolicy');
+const companyController = require('./Company');
 const router = express.Router();
 
 /**
@@ -122,5 +123,13 @@ router.use('/vehicle-detail', vehicleDetailController);
  * @param {Class} pastPolicyController
  */
 router.use('/past-policy', pastPolicyController);
+
+/**
+ * Middleware - "/api/company/*"
+ *
+ * @param {String} route
+ * @param {Class} companyController
+ */
+router.use('/company', companyController);
 
 module.exports = router;

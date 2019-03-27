@@ -35,7 +35,8 @@ module.exports = (sequelize, DataTypes) => {
     cartId: {
       type: DataTypes.UUID,
       field: 'cart_id',
-      allowNull: false
+      allowNull: false,
+      unique: true
     },
     createdAt: {
       type: DataTypes.DATE,

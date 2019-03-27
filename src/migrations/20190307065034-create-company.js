@@ -46,6 +46,7 @@ module.exports = {
           type: Sequelize.UUID,
           field: 'image_id',
           defaultValue: uuid.DEFAULT_IMAGE,
+          allowNull: false,
           references: {
             model: {
               tableName: 'Image'

@@ -20,6 +20,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
+    engineCc: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'engine_cc'
+    },
     vehicleYear: {
       type: DataTypes.INTEGER,
       allowNull: false,

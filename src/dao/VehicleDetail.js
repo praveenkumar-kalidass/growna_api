@@ -8,9 +8,25 @@ const models = require('../models');
 /**
  * VehicleDetailDao class
  *
+ * @method {public} findByCartId
  * @method {public} upsertVehicleDetail
  */
 class VehicleDetailDao {
+  /**
+   * Method to find vehicle detail by cart id
+   *
+   * @param  {UUID} cartId
+   * @param  {Function} findCB
+   */
+  findByCartId(cartId, findCB) {
+    models.VehicleDetail.find({
+      where: {cartId}
+    }).then((detail) => (
+      findCB(null, detail)
+    ), (findErr) => (
+      findCB(findErr)
+    ));
+  }
   /**
    * Method to update or insert Vehicle Detail
    *
@@ -20,7 +36,7 @@ class VehicleDetailDao {
   upsertVehicleDetail(data, upsertCB) {
     models.VehicleDetail.upsert(data, {
       returning: true
-    }).then((detail) => (
+    }).then(([detail]) => (
       upsertCB(null, detail)
     ), (upsertErr) => (
       upsertCB(upsertErr)

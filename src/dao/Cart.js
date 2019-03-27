@@ -19,7 +19,9 @@ class CartDao {
    * @param  {Function} createCB
    */
   createCart(data, createCB) {
-    models.Cart.create(data).then((cart) => (
+    models.Cart.upsert(data, {
+      returning: true
+    }).then(([cart]) => (
       createCB(null, cart)
     ), (createErr) => (
       createCB(createErr)

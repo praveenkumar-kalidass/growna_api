@@ -22,6 +22,8 @@ module.exports = {
         cartId: {
           type: Sequelize.UUID,
           field: 'cart_id',
+          allowNull: false,
+          unique: true,
           references: {
             model: {
               tableName: 'Cart'

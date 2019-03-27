@@ -28,6 +28,7 @@ module.exports = {
         tenantId: {
           type: Sequelize.UUID,
           field: 'tenant_id',
+          allowNull: false,
           references: {
             model: {
               tableName: 'Tenant'

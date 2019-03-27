@@ -9,9 +9,24 @@ const addressDao = new AddressDao();
 /**
  * AddressService class
  *
+ * @method {public} getAddressForCart
  * @method {public} saveAddress
  */
 class AddressService {
+  /**
+   * Method to get address for cart
+   *
+   * @param  {UUID} cartId
+   * @param  {Function} getAddressCB
+   */
+  getAddressForCart(cartId, getAddressCB) {
+    addressDao.findByCartId(cartId, (findErr, address) => {
+      if (findErr) {
+        return getAddressCB(findErr);
+      }
+      return getAddressCB(null, address);
+    });
+  }
   /**
    * Method to save address
    *
