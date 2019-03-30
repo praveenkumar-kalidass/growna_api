@@ -6,7 +6,9 @@
 const fs = require('fs');
 const async = require('async');
 const _ = require('lodash');
+const uuidv4 = require('uuid/v4');
 const constant = require('../utils/constant');
+const uuid = require('../utils/uuid');
 const UserDao = require('../dao/User');
 const RoleService = require('../service/Role');
 const ImageService = require('../service/Image');
@@ -19,6 +21,7 @@ const imageService = new ImageService();
  *
  * @method {public} getUserDetails
  * @method {public} getUser
+ * @method {public} signupUser
  * @method {public} addUser
  * @method {public} updateUserById
  * @method {public} getUsersByRole
@@ -69,6 +72,29 @@ class UserService {
         return getUserCB(getErr);
       }
       return getUserCB(null, user);
+    });
+  }
+  /**
+   * Method to signup user for web tenant
+   *
+   * @param  {Object} user
+   * @param  {Function} signupCB
+   */
+  signupUser(user, signupCB) {
+    const id = uuidv4();
+    user = {
+      id,
+      ...user,
+      roleId: uuid.GIS_USER,
+      createdBy: id,
+      parentId: uuid.GIS_ADMIN,
+      tenantId: uuid.GIS_TENANT
+    };
+    this.addUser(user, (addErr, result) => {
+      if (addErr) {
+        return signupCB(addErr);
+      }
+      return signupCB(null, result);
     });
   }
   /**

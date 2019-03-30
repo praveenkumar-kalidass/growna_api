@@ -6,8 +6,10 @@
 const express = require('express');
 const OAuth = require('./OAuth');
 const OAuthTokenService = require('../service/OAuthtoken');
+const UserService = require('../service/User');
 const oAuth = new OAuth();
 const oAuthTokenService = new OAuthTokenService();
+const userService = new UserService();
 const router = express.Router();
 
 /**
@@ -74,6 +76,49 @@ router.post('/login', oAuth.authorize);
  *        description: Authentication failed
  */
 router.post('/authorize', oAuth.token);
+
+/**
+ * @swagger
+ * /api/auth/signup:
+ *  post:
+ *    summary: Signup a web user
+ *    description: Save a user for web tenant
+ *    tags:
+ *      - Auth
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              firstName:
+ *                type: string
+ *              lastName:
+ *                type: string
+ *              email:
+ *                type: string
+ *              password:
+ *                type: string
+ *            required:
+ *              - firstName
+ *              - lastName
+ *              - email
+ *              - password
+ *    responses:
+ *      200:
+ *        description: Returns the Saved User
+ *      500:
+ *        description: Server Error
+ */
+router.post('/signup', (request, response) => {
+  userService.signupUser(request.body, (userErr, user) => {
+    if (userErr) {
+      response.status(500).send(userErr);
+    }
+    response.send(user);
+  });
+});
 
 /**
  * @swagger
