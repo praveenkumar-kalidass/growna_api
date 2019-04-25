@@ -59,6 +59,11 @@ module.exports = {
       acl: constant.EVERYONE
     }, {
       id: uuidv4(),
+      method: 'PUT',
+      path: '/api/quotation',
+      acl: constant.EVERYONE
+    }, {
+      id: uuidv4(),
       method: 'GET',
       path: '/api/role',
       acl: constant.ADMIN

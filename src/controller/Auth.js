@@ -5,7 +5,7 @@
  */
 const express = require('express');
 const OAuth = require('./OAuth');
-const OAuthTokenService = require('../service/OAuthtoken');
+const OAuthTokenService = require('../service/OAuthToken');
 const UserService = require('../service/User');
 const oAuth = new OAuth();
 const oAuthTokenService = new OAuthTokenService();

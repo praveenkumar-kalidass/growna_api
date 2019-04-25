@@ -65,7 +65,13 @@ router.get('/:id', oAuth.authenticate, (request, response) => {
  *                type: string
  *              variant:
  *                type: string
+ *              engineCc:
+ *                type: number
  *              vehicleYear:
+ *                type: number
+ *              type:
+ *                type: string
+ *              insuredDeclaredValue:
  *                type: number
  *              userId:
  *                type: string
@@ -73,16 +79,15 @@ router.get('/:id', oAuth.authenticate, (request, response) => {
  *              tenantId:
  *                type: string
  *                format: uuid
- *              type:
- *                type: string
  *            required:
  *              - brand
  *              - model
  *              - variant
+ *              - engineCc
  *              - vehicleYear
+ *              - type
  *              - userId
  *              - tenantId
- *              - type
  *    responses:
  *      200:
  *        description: Returns quotation
@@ -93,6 +98,60 @@ router.post('/', oAuth.authenticate, (request, response) => {
   quotationService.saveQuotation(request.body, (saveErr, quotation) => {
     if (saveErr) {
       response.status(500).send(saveErr);
+    }
+    response.send(quotation);
+  });
+});
+
+/**
+ * @swagger
+ * /api/quotation:
+ *  put:
+ *    summary: Put updated quotation details
+ *    description: Save edited quotation details
+ *    tags:
+ *      - Quotation
+ *    security:
+ *      - bearerAuth: []
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              brand:
+ *                type: string
+ *              model:
+ *                type: string
+ *              variant:
+ *                type: string
+ *              engineCc:
+ *                type: number
+ *              vehicleYear:
+ *                type: number
+ *              type:
+ *                type: string
+ *              insuredDeclaredValue:
+ *                type: number
+ *              userId:
+ *                type: string
+ *                format: uuid
+ *              tenantId:
+ *                type: string
+ *                format: uuid
+ *            required:
+ *              - insuredDeclaredValue
+ *    responses:
+ *      200:
+ *        description: Returns updated quotation
+ *      500:
+ *        description: Server Error
+ */
+router.put('/', oAuth.authenticate, (request, response) => {
+  quotationService.editQuotation(request.body, (editErr, quotation) => {
+    if (editErr) {
+      response.status(500).send(editErr);
     }
     response.send(quotation);
   });

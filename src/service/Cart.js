@@ -14,13 +14,13 @@ const addressService = new AddressService();
 const vehicleDetailService = new VehicleDetailService();
 const pastPolicyService = new PastPolicyService();
 const companyService = new CompanyService();
+const planService = new PlanService();
 
 /**
  * CartService class
  *
  * @method {public} addCart
  * @method {private} loadCartDetails
- * @method {private} loadCartPlan
  * @method {public} getCartDetails
  */
 class CartService {
@@ -60,27 +60,6 @@ class CartService {
     });
   }
   /**
-   * Method to calculate plan for the selected quotation
-   *
-   * @param  {Object} quotation
-   * @param  {Object} company
-   * @param  {Function} loadPlanCB
-   */
-  static loadCartPlan(quotation, company, loadPlanCB) {
-    async.waterfall([
-      async.apply(PlanService.getPlanByQuotation, quotation),
-      (plan, passPlanCB) => (
-        passPlanCB(null, plan, [company])
-      ),
-      PlanService.calculatePlans
-    ], (waterfallErr, [result]) => {
-      if (waterfallErr) {
-        return loadPlanCB(waterfallErr);
-      }
-      return loadPlanCB(null, result);
-    });
-  }
-  /**
    * Method to get cart and its quotation by cart id
    *
    * @param  {Object} id
@@ -95,7 +74,7 @@ class CartService {
         cart = result;
         return passPlanCB(null, result.cartQuotation, result.insurer);
       },
-      CartService.loadCartPlan,
+      planService.loadCartPlan,
       (plan, passPlanCB) => (
         passPlanCB(null, {...cart, plan})
       )

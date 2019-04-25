@@ -19,6 +19,7 @@ const planDao = new PlanDao();
  * @method {private} getPlanAndCompanies
  * @method {private} calculatePlans
  * @method {public} getPlans
+ * @method {public} loadCartPlan
  */
 class PlanService {
   /**
@@ -70,16 +71,18 @@ class PlanService {
   /**
    * Method to calculate plans based on company details
    *
+   * @param  {Object} quotation
    * @param  {Object} plan
    * @param  {Array} companies
    * @param  {Function} calculateCB
    */
-  static calculatePlans(plan, companies, calculateCB) {
+  static calculatePlans(quotation, plan, companies, calculateCB) {
     async.map(companies, (company, asyncCB) => {
       company.dataValues = {
         ...company.dataValues,
         thirdPartyPremium: plan.thirdPartyPremium * company.thirdPartyPremium,
-        insuredDeclaredValue: plan.insuredDeclaredValue * company.insuredDeclaredValue
+        insuredDeclaredValue: (quotation.insuredDeclaredValue || plan.insuredDeclaredValue) *
+          company.insuredDeclaredValue
       };
       const tradeIDV = (company.insuredDeclaredValue * plan.twoRate) / 100;
       const premiumValue = tradeIDV - ((tradeIDV * company.discount) / 100);
@@ -109,7 +112,7 @@ class PlanService {
     async.waterfall([
       async.apply(PlanService.getPlanAndCompanies, data),
       (result, passDataCB) => (
-        passDataCB(null, result.plan, result.companies)
+        passDataCB(null, data, result.plan, result.companies)
       ),
       PlanService.calculatePlans
     ], (waterfallErr, result) => {
@@ -117,6 +120,27 @@ class PlanService {
         return getPlansCB(waterfallErr);
       }
       return getPlansCB(null, result);
+    });
+  }
+  /**
+   * Method to calculate plan for the selected quotation
+   *
+   * @param  {Object} quotation
+   * @param  {Object} company
+   * @param  {Function} loadPlanCB
+   */
+  loadCartPlan(quotation, company, loadPlanCB) {
+    async.waterfall([
+      async.apply(PlanService.getPlanByQuotation, quotation),
+      (plan, passPlanCB) => (
+        passPlanCB(null, quotation, plan, [company])
+      ),
+      PlanService.calculatePlans
+    ], (waterfallErr, [result]) => {
+      if (waterfallErr) {
+        return loadPlanCB(waterfallErr);
+      }
+      return loadPlanCB(null, result);
     });
   }
 }

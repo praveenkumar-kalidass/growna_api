@@ -10,6 +10,7 @@ const models = require('../models');
  *
  * @method {public} createQuotation
  * @method {public} findQuotationById
+ * @method {public} updateQuotation
  */
 class QuotationDao {
   /**
@@ -36,6 +37,24 @@ class QuotationDao {
       findCB(null, quotation)
     ), (findErr) => (
       findCB(findErr)
+    ));
+  }
+  /**
+   * Dao to update quotation
+   *
+   * @param  {Object} data
+   * @param  {Function} updateCB
+   */
+  updateQuotation(data, updateCB) {
+    models.Quotation.update(data, {
+      where: {
+        id: data.id
+      },
+      returning: true
+    }).then(([updated, [quotation]]) => (
+      updateCB(null, quotation)
+    ), (createErr) => (
+      updateCB(createErr)
     ));
   }
 }

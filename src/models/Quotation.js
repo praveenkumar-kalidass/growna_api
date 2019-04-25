@@ -34,6 +34,17 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
+    insuredDeclaredValue: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+      field: 'insured_declared_value',
+      defaultValue: 0
+    },
+    standardIdv: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+      field: 'standard_idv'
+    },
     userId: {
       type: DataTypes.UUID,
       allowNull: false,

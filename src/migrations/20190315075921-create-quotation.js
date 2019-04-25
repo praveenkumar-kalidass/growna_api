@@ -35,6 +35,17 @@ module.exports = {
           type: Sequelize.STRING,
           allowNull: false
         },
+        insuredDeclaredValue: {
+          type: Sequelize.FLOAT,
+          allowNull: false,
+          field: 'insured_declared_value',
+          defaultValue: 0
+        },
+        standardIdv: {
+          type: Sequelize.FLOAT,
+          allowNull: false,
+          field: 'standard_idv'
+        },
         userId: {
           type: Sequelize.UUID,
           field: 'user_id',

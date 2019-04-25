@@ -15,6 +15,7 @@ const planService = new PlanService();
  * @method {public} saveQuotation
  * @method {public} getPlansByQuotation
  * @method {public} getQuotation
+ * @method {public} editQuotation
  */
 class QuotationService {
   /**
@@ -24,9 +25,18 @@ class QuotationService {
    * @param  {Function} saveCB
    */
   saveQuotation(data, saveCB) {
-    quotationDao.createQuotation(data, (createErr, quotation) => {
-      if (createErr) {
-        return saveCB(createErr);
+    async.waterfall([
+      async.apply(PlanService.getPlanByQuotation, data),
+      (plan, mergeDataCB) => (
+        mergeDataCB(null, {
+          ...data,
+          standardIdv: plan.insuredDeclaredValue
+        })
+      ),
+      quotationDao.createQuotation
+    ], (waterfallErr, quotation) => {
+      if (waterfallErr) {
+        return saveCB(waterfallErr);
       }
       return saveCB(null, quotation);
     });
@@ -69,6 +79,32 @@ class QuotationService {
         return getCB(quotationErr);
       }
       return getCB(null, quotation);
+    });
+  }
+  /**
+   * Method to edit quotation details
+   *
+   * @param  {Object} data
+   * @param  {Function} saveCB
+   */
+  editQuotation(data, editCB) {
+    let result;
+    async.waterfall([
+      async.apply(quotationDao.updateQuotation, data),
+      (quotation, passDataCB) => {
+        result = quotation;
+        return passDataCB(null, quotation);
+      },
+      planService.getPlans
+    ], (waterfallErr, plans) => {
+      if (waterfallErr) {
+        return editCB(waterfallErr);
+      }
+      result.dataValues = {
+        ...result.dataValues,
+        plans
+      };
+      return editCB(null, result);
     });
   }
 }
