@@ -7,16 +7,46 @@ const companyService = new CompanyService();
 
 /**
  * @swagger
- * /api/company/{type}:
+ * /api/company/list:
+ *  get:
+ *    summary: Get company names list
+ *    description: Get List of companies
+ *    tags:
+ *      - Company
+ *    security:
+ *      - bearerAuth: []
+ *    responses:
+ *      200:
+ *        description: Returns Company names
+ *      500:
+ *        description: Server Error
+ */
+router.get('/list', oAuth.authenticate, (request, response) => {
+  companyService.getCompanyList((getErr, result) => {
+    if (getErr) {
+      response.status(500).send(getErr);
+    }
+    response.send(result);
+  });
+});
+
+/**
+ * @swagger
+ * /api/company/{key}/{value}:
  *  get:
  *    summary: Get company list
- *    description: Get List of companies by vehicle type
+ *    description: Get List of companies by query
  *    tags:
  *      - Company
  *    security:
  *      - bearerAuth: []
  *    parameters:
- *      - name: type
+ *      - name: key
+ *        in: path
+ *        schema:
+ *          type: string
+ *        required: true
+ *      - name: value
  *        in: path
  *        schema:
  *          type: string
@@ -27,15 +57,79 @@ const companyService = new CompanyService();
  *      500:
  *        description: Server Error
  */
-router.get('/:type', oAuth.authenticate, (request, response) => {
-  companyService.getAllCompanies(request.params.type,
-    ['id', 'name', 'imageId'],
+router.get('/:key/:value', oAuth.authenticate, (request, response) => {
+  companyService.getAllCompanies(request.params.key, request.params.value,
     (getErr, result) => {
       if (getErr) {
         response.status(500).send(getErr);
       }
       response.send(result);
     });
+});
+
+/**
+ * @swagger
+ * /api/company:
+ *  post:
+ *    summary: Create or Update company
+ *    description: Save a company to the database
+ *    tags:
+ *      - Company
+ *    security:
+ *      - bearerAuth: []
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              id:
+ *                type: string
+ *                format: uuid
+ *              name:
+ *                type: string
+ *              noClaimBonus:
+ *                type: number
+ *              thirdPartyPremium:
+ *                type: number
+ *              insuredDeclaredValue:
+ *                type: number
+ *              discount:
+ *                type: number
+ *              ownerDriver:
+ *                type: number
+ *              type:
+ *                type: string
+ *              imageId:
+ *                type: string
+ *                format: uuid
+ *              image:
+ *                type: string
+ *                format: binary
+ *            required:
+ *              - name
+ *              - noClaimBonus
+ *              - thirdPartyPremium
+ *              - insuredDeclaredValue
+ *              - discount
+ *              - ownerDriver
+ *              - type
+ *              - image
+ *    responses:
+ *      200:
+ *        description: Returns the Saved Company
+ *      500:
+ *        description: Server Error
+ */
+router.post('/', oAuth.authenticate, (request, response) => {
+  companyService.saveCompany(request.body, (request.files || {image: ""}).image,
+    (saveErr, result) => {
+    if (saveErr) {
+      response.status(500).send(saveErr);
+    }
+    response.send(result);
+  });
 });
 
 module.exports = router;

@@ -29,11 +29,11 @@ class ImageDao {
   /**
    * Create a new image with default path
    *
-   * @param  {String} type
+   * @param  {String} data
    * @param  {Function} createCB
    */
-  createImage(type, createCB) {
-    models.Image.create({type}).then((image) => (
+  createImage(data, createCB) {
+    models.Image.create(data).then((image) => (
       createCB(null, image)
     ), (createErr) => (
       createCB(createErr)

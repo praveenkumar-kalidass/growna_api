@@ -17,6 +17,10 @@ module.exports = {
       privilege_id: uuid.ADD_TENANT
     }, {
       id: uuidv4(),
+      role_id: uuid.GIS_SUPER_ADMIN,
+      privilege_id: uuid.COMPANY_LIST
+    }, {
+      id: uuidv4(),
       role_id: uuid.GIS_ADMIN,
       privilege_id: uuid.USER_PROFILE
     }, {

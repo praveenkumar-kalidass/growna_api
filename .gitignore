@@ -3,3 +3,6 @@ node_modules/
 
 public/images/user/*
 !public/images/user/!gitkeep
+
+public/images/company/*
+!public/images/company/!gitkeep

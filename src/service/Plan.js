@@ -44,7 +44,7 @@ class PlanService {
    * @param  {Function} getCB
    */
   static getCompanies(type, getCB) {
-    companyService.getAllCompanies(type, null, (getErr, companies) => {
+    companyService.getAllCompanies('type', type, (getErr, companies) => {
       if (getErr) {
         return getCB(getErr);
       }

@@ -4,8 +4,11 @@
  * @exports {Class} CompanyService
  */
 const async = require('async');
+const _ = require('lodash');
+const fs = require('fs');
 const ImageService = require('../service/Image');
 const CompanyDao = require('../dao/Company');
+const constant = require('../utils/constant');
 const companyDao = new CompanyDao();
 const imageService = new ImageService();
 
@@ -15,6 +18,10 @@ const imageService = new ImageService();
  * @method {private} loadCompanies
  * @method {public} getAllCompanies
  * @method {public} getCompanyById
+ * @method {public} createImageForCompany
+ * @method {public} updateCompanyImage
+ * @method {public} saveCompany
+ * @method {public} getCompanyList
  */
 class CompanyService {
   /**
@@ -42,13 +49,13 @@ class CompanyService {
   /**
    * Method to get all companies
    *
-   * @param  {String} type
-   * @param  {Array} attributes
+   * @param  {String} key
+   * @param  {String} value
    * @param  {Function} getCB
    */
-  getAllCompanies(type, attributes, getCB) {
+  getAllCompanies(key, value, getCB) {
     async.waterfall([
-      async.apply(companyDao.findAllCompanies, type, attributes),
+      async.apply(companyDao.findAllCompanies, key, value),
       CompanyService.loadCompanies
     ], (waterfallErr, result) => {
       if (waterfallErr) {
@@ -78,6 +85,91 @@ class CompanyService {
       }
       company.dataValues.companyImage = result;
       return getCompanyCB(null, company);
+    });
+  }
+  /**
+   * Method to create default image for company
+   *
+   * @param  {UUID} imageId
+   * @param  {Function} createImageCB
+   */
+  static createImageForCompany(imageId, createImageCB) {
+    if (imageId) {
+      return createImageCB(null, imageId);
+    }
+    imageService.createDefaultImage(constant.COMPANY, (createErr, image) => {
+      if (createErr) {
+        return createImageCB(createErr);
+      }
+      return createImageCB(null, image.id);
+    });
+  }
+  /**
+   * Method to update company detail with new image
+   *
+   * @param  {Object} company
+   * @param  {File} image
+   * @param  {Function} updateImageCB
+   */
+  static updateCompanyImage(company, image, updateImageCB) {
+    if (!image) {
+      return updateImageCB(null);
+    }
+    const dir = `public/images/company/${company.id}`;
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir);
+    }
+    async.waterfall([
+      async.apply(image.mv, `${dir}/${company.imageId}.${image.mimetype.replace('image/', '')}`),
+      (passPathCB) => (
+        passPathCB(null, company.imageId, `/images/company/${company.id}/${company.imageId}.${image.mimetype.replace('image/', '')}`)
+      ),
+      imageService.updateImagePath
+    ], (waterfallErr, result) => {
+      if (waterfallErr) {
+        return updateImageCB(waterfallErr);
+      }
+      return updateImageCB(null, result);
+    });
+  }
+  /**
+   * Method to create company and image
+   *
+   * @param  {Object} data
+   * @param  {File} image
+   * @param  {Function} saveCB
+   */
+  saveCompany(data, image, saveCB) {
+    let company;
+    async.waterfall([
+      async.apply(CompanyService.createImageForCompany, data.imageId),
+      (imageId, passIdCB) => (
+        passIdCB(null, {...data, imageId})
+      ),
+      companyDao.upsertCompany,
+      (result, passCB) => {
+        company = result;
+        passCB(null, company, image)
+      },
+      CompanyService.updateCompanyImage
+    ], (waterfallErr, result) => {
+      if (waterfallErr) {
+        return saveCB(waterfallErr);
+      }
+      return saveCB(null, company);
+    });
+  }
+  /**
+   * Method to get company name list
+   *
+   * @param  {Function} getListCB
+   */
+  getCompanyList(getListCB) {
+    companyDao.findCompanyNames((findErr, result) => {
+      if (findErr) {
+        return getListCB(findErr);
+      }
+      return getListCB(null, result);
     });
   }
 }

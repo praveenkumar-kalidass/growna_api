@@ -35,7 +35,7 @@ class ImageService {
    * @param  {Function} createCB
    */
   createDefaultImage(type, createCB) {
-    imageDao.createImage(type, (imageErr, image) => {
+    imageDao.createImage({type}, (imageErr, image) => {
       if (imageErr) {
         return createCB(imageErr);
       }

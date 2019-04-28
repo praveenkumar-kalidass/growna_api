@@ -29,6 +29,16 @@ module.exports = {
       acl: constant.EVERYONE
     }, {
       id: uuidv4(),
+      method: 'GET',
+      path: '/api/company/list',
+      acl: constant.ADMIN
+    }, {
+      id: uuidv4(),
+      method: 'POST',
+      path: '/api/company',
+      acl: constant.ADMIN
+    }, {
+      id: uuidv4(),
       method: 'POST',
       path: '/api/past-policy',
       acl: constant.EVERYONE
