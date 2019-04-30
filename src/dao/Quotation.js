@@ -51,7 +51,7 @@ class QuotationDao {
         id: data.id
       },
       returning: true
-    }).then(([updated, [quotation]]) => (
+    }).then(([updated, [quotation]]) => (  // eslint-disable-line no-unused-vars
       updateCB(null, quotation)
     ), (createErr) => (
       updateCB(createErr)

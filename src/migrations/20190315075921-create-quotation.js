@@ -31,6 +31,16 @@ module.exports = {
           allowNull: false,
           field: 'vehicle_year'
         },
+        registrationCode: {
+          type: Sequelize.STRING,
+          allowNull: false,
+          field: 'registration_code'
+        },
+        zoneType: {
+          type: Sequelize.STRING,
+          allowNull: false,
+          field: 'zone_type'
+        },
         type: {
           type: Sequelize.STRING,
           allowNull: false

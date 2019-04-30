@@ -30,6 +30,16 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       field: 'vehicle_year'
     },
+    registrationCode: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      field: 'registration_code'
+    },
+    zoneType: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      field: 'zone_type'
+    },
     type: {
       type: DataTypes.STRING,
       allowNull: false

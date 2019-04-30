@@ -19,9 +19,10 @@ class PlanDao {
    * @param  {Number} engineCc
    * @param  {Number} age
    * @param  {String} type
+   * @param  {String} zoneType
    * @param  {Function} findCB
    */
-  findPlan(engineCc, age, type, findCB) {
+  findPlan(engineCc, age, type, zoneType, findCB) {
     models.Plan.find({
       where: {
         minEngineCc: {
@@ -36,7 +37,8 @@ class PlanDao {
         maxAge: {
           [Op.gte]: age
         },
-        type
+        type,
+        zoneType
       }
     }).then((plan) => (
       findCB(null, plan)

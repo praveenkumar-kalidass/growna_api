@@ -4,7 +4,6 @@
  * @exports {Class} CompanyService
  */
 const async = require('async');
-const _ = require('lodash');
 const fs = require('fs');
 const ImageService = require('../service/Image');
 const CompanyDao = require('../dao/Company');
@@ -149,10 +148,10 @@ class CompanyService {
       companyDao.upsertCompany,
       (result, passCB) => {
         company = result;
-        passCB(null, company, image)
+        return passCB(null, company, image);
       },
       CompanyService.updateCompanyImage
-    ], (waterfallErr, result) => {
+    ], (waterfallErr) => {
       if (waterfallErr) {
         return saveCB(waterfallErr);
       }

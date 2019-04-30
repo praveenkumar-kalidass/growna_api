@@ -71,8 +71,10 @@ router.get('/:id', oAuth.authenticate, (request, response) => {
  *                type: number
  *              type:
  *                type: string
- *              insuredDeclaredValue:
- *                type: number
+ *              registrationCode:
+ *                type: string
+ *              zoneType:
+ *                type: string
  *              userId:
  *                type: string
  *                format: uuid
@@ -86,6 +88,8 @@ router.get('/:id', oAuth.authenticate, (request, response) => {
  *              - engineCc
  *              - vehicleYear
  *              - type
+ *              - registrationCode
+ *              - zoneType
  *              - userId
  *              - tenantId
  *    responses:
@@ -134,6 +138,10 @@ router.post('/', oAuth.authenticate, (request, response) => {
  *                type: string
  *              insuredDeclaredValue:
  *                type: number
+ *              registrationCode:
+ *                type: string
+ *              zoneType:
+ *                type: string
  *              userId:
  *                type: string
  *                format: uuid

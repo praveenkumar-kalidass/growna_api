@@ -30,7 +30,7 @@ class PlanService {
    */
   static getPlanByQuotation(quotation, getPlanCB) {
     const age = new Date().getFullYear() - quotation.vehicleYear;
-    planDao.findPlan(quotation.engineCc, age, quotation.type, (planErr, plan) => {
+    planDao.findPlan(quotation.engineCc, age, quotation.type, quotation.zoneType, (planErr, plan) => {
       if (planErr) {
         return getPlanCB(planErr);
       }

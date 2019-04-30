@@ -123,13 +123,13 @@ router.get('/:key/:value', oAuth.authenticate, (request, response) => {
  *        description: Server Error
  */
 router.post('/', oAuth.authenticate, (request, response) => {
-  companyService.saveCompany(request.body, (request.files || {image: ""}).image,
+  companyService.saveCompany(request.body, (request.files || {image: ''}).image,
     (saveErr, result) => {
-    if (saveErr) {
-      response.status(500).send(saveErr);
-    }
-    response.send(result);
-  });
+      if (saveErr) {
+        response.status(500).send(saveErr);
+      }
+      response.send(result);
+    });
 });
 
 module.exports = router;

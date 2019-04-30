@@ -152,6 +152,11 @@ module.exports = {
       method: 'POST',
       path: '/api/vehicle-owner',
       acl: constant.EVERYONE
+    }, {
+      id: uuidv4(),
+      method: 'GET',
+      path: '/api/vehicle-rta',
+      acl: constant.EVERYONE
     }], {});
   },
   down: (queryInterface) => {
