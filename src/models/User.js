@@ -106,6 +106,12 @@ module.exports = (sequelize, DataTypes) => {
       sourceKey: 'id',
       onDelete: 'SET NULL'
     });
+    User.hasMany(models.Invoice, {
+      as: 'userInvoice',
+      foreignKey: 'userId',
+      sourceKey: 'id',
+      onDelete: 'SET NULL'
+    });
   };
   return User;
 };

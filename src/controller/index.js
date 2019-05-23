@@ -19,6 +19,7 @@ const vehicleDetailController = require('./VehicleDetail');
 const pastPolicyController = require('./PastPolicy');
 const companyController = require('./Company');
 const vehicleRtaController = require('./VehicleRta');
+const invoiceController = require('./Invoice');
 const router = express.Router();
 
 /**
@@ -140,5 +141,13 @@ router.use('/company', companyController);
  * @param {Class} vehicleRtaController
  */
 router.use('/vehicle-rta', vehicleRtaController);
+
+/**
+ * Middleware - "/api/invoice/*"
+ *
+ * @param {String} route
+ * @param {Class} invoiceController
+ */
+router.use('/invoice', invoiceController);
 
 module.exports = router;

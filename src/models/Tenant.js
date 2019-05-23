@@ -50,6 +50,12 @@ module.exports = (sequelize, DataTypes) => {
       sourceKey: 'id',
       onDelete: 'SET NULL'
     });
+    Tenant.hasMany(models.Invoice, {
+      as: 'tenantInvoice',
+      foreignKey: 'userId',
+      sourceKey: 'id',
+      onDelete: 'SET NULL'
+    });
   };
   return Tenant;
 };

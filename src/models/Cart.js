@@ -72,7 +72,7 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'SET NULL'
     });
     Cart.belongsTo(models.Tenant, {
-      as: 'tenant',
+      as: 'tenantCart',
       foreignKey: 'tenantId',
       targetKey: 'id',
       onDelete: 'SET NULL'
@@ -97,6 +97,12 @@ module.exports = (sequelize, DataTypes) => {
     });
     Cart.hasOne(models.PastPolicy, {
       as: 'pastPolicy',
+      foreignKey: 'cartId',
+      sourceKey: 'id',
+      onDelete: 'SET NULL'
+    });
+    Cart.hasOne(models.Invoice, {
+      as: 'invoiceCart',
       foreignKey: 'cartId',
       sourceKey: 'id',
       onDelete: 'SET NULL'

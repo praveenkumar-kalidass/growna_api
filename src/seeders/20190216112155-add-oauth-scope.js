@@ -40,6 +40,11 @@ module.exports = {
     }, {
       id: uuidv4(),
       method: 'POST',
+      path: '/api/invoice',
+      acl: constant.EVERYONE
+    }, {
+      id: uuidv4(),
+      method: 'POST',
       path: '/api/past-policy',
       acl: constant.EVERYONE
     }, {
