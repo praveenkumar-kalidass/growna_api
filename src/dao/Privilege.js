@@ -11,35 +11,36 @@ const models = require('../models');
  * @method {public} findAllPrivileges
  * @method {public} findPrivilegeById
  */
-class PrivilegeDao {
-  /**
-   * Dao to get all privileges by scope
-   *
-   * @param  {String} scope
-   * @param  {Function} findCB
-   */
-  findAllPrivileges(scope, findCB) {
-    models.Privilege.findAll({
-      where: {scope}
-    }).then((privileges) => (
-      findCB(null, privileges)
-    ), (findErr) => (
-      findCB(findErr)
-    ));
-  }
-  /**
-   * Method to get privileges by roleId
-   *
-   * @param  {String} id
-   * @param  {Function} findCB
-   */
-  findPrivilegeById(id, findCB) {
-    models.Privilege.findById(id).then((privilege) => (
-      findCB(null, privilege)
-    ), (findErr) => (
-      findCB(findErr)
-    ));
-  }
-}
+let PrivilegeDao = {};
+
+/**
+ * Dao to get all privileges by scope
+ *
+ * @param  {String} scope
+ * @param  {Function} findCB
+ */
+PrivilegeDao.findAllPrivileges = (scope, findCB) => {
+  models.Privilege.findAll({
+    where: {scope}
+  }).then((privileges) => (
+    findCB(null, privileges)
+  ), (findErr) => (
+    findCB(findErr)
+  ));
+};
+
+/**
+ * Method to get privileges by roleId
+ *
+ * @param  {String} id
+ * @param  {Function} findCB
+ */
+PrivilegeDao.findPrivilegeById = (id, findCB) => {
+  models.Privilege.findById(id).then((privilege) => (
+    findCB(null, privilege)
+  ), (findErr) => (
+    findCB(findErr)
+  ));
+};
 
 module.exports = PrivilegeDao;

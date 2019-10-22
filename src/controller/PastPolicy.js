@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const PastPolicyService = require('../service/PastPolicy');
-const OAuth = require('./OAuth');
-const oAuth = new OAuth();
-const pastPolicyService = new PastPolicyService();
+const pastPolicyService = require('../service/PastPolicy');
+const oAuth = require('./OAuth');
 
 /**
  * @swagger

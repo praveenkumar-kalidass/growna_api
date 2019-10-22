@@ -1,10 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const CartService = require('../service/Cart');
-const OAuth = require('./OAuth');
-const oAuth = new OAuth();
-const cartService = new CartService();
-
+const cartService = require('../service/Cart');
+const oAuth = require('./OAuth');
 
 /**
  * @swagger

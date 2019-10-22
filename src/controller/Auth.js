@@ -4,12 +4,9 @@
  * @exports {express} router
  */
 const express = require('express');
-const OAuth = require('./OAuth');
-const OAuthTokenService = require('../service/OAuthToken');
-const UserService = require('../service/User');
-const oAuth = new OAuth();
-const oAuthTokenService = new OAuthTokenService();
-const userService = new UserService();
+const oAuth = require('./OAuth');
+const oAuthTokenService = require('../service/OAuthToken');
+const userService = require('../service/User');
 const router = express.Router();
 
 /**

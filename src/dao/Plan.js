@@ -12,40 +12,40 @@ const Op = Sequelize.Op;
  *
  * @method {public} findPlan
  */
-class PlanDao {
-  /**
-   * Dao to find plan based on specifications
-   *
-   * @param  {Number} engineCc
-   * @param  {Number} age
-   * @param  {String} type
-   * @param  {String} zoneType
-   * @param  {Function} findCB
-   */
-  findPlan(engineCc, age, type, zoneType, findCB) {
-    models.Plan.find({
-      where: {
-        minEngineCc: {
-          [Op.lt]: engineCc
-        },
-        maxEngineCc: {
-          [Op.gte]: engineCc
-        },
-        minAge: {
-          [Op.lt]: age
-        },
-        maxAge: {
-          [Op.gte]: age
-        },
-        type,
-        zoneType
-      }
-    }).then((plan) => (
-      findCB(null, plan)
-    ), (findErr) => (
-      findCB(findErr)
-    ));
-  }
-}
+let PlanDao = {};
+
+/**
+ * Dao to find plan based on specifications
+ *
+ * @param  {Number} engineCc
+ * @param  {Number} age
+ * @param  {String} type
+ * @param  {String} zoneType
+ * @param  {Function} findCB
+ */
+PlanDao.findPlan = (engineCc, age, type, zoneType, findCB) => {
+  models.Plan.find({
+    where: {
+      minEngineCc: {
+        [Op.lt]: engineCc
+      },
+      maxEngineCc: {
+        [Op.gte]: engineCc
+      },
+      minAge: {
+        [Op.lt]: age
+      },
+      maxAge: {
+        [Op.gte]: age
+      },
+      type,
+      zoneType
+    }
+  }).then((plan) => (
+    findCB(null, plan)
+  ), (findErr) => (
+    findCB(findErr)
+  ));
+};
 
 module.exports = PlanDao;

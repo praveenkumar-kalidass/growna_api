@@ -5,10 +5,8 @@
  */
 const express = require('express');
 const router = express.Router();
-const QuotationService = require('../service/Quotation');
-const OAuth = require('./OAuth');
-const quotationService = new QuotationService();
-const oAuth = new OAuth();
+const quotationService = require('../service/Quotation');
+const oAuth = require('./OAuth');
 
 /**
  * @swagger

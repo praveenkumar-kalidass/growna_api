@@ -5,10 +5,8 @@
  */
 const express = require('express');
 const router = express.Router();
-const TenantService = require('../service/Tenant');
-const OAuth = require('./OAuth');
-const oAuth = new OAuth();
-const tenantService = new TenantService();
+const tenantService = require('../service/Tenant');
+const oAuth = require('./OAuth');
 
 /**
  * @swagger

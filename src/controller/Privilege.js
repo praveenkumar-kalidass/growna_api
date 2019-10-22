@@ -5,10 +5,8 @@
  */
 const express = require('express');
 const router = express.Router();
-const PrivilegeService = require('../service/Privilege');
-const OAuth = require('./OAuth');
-const oAuth = new OAuth();
-const privilegeService = new PrivilegeService();
+const privilegeService = require('../service/Privilege');
+const oAuth = require('./OAuth');
 
 /**
  * @swagger

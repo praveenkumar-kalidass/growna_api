@@ -5,10 +5,8 @@
  */
 const express = require('express');
 const router = express.Router();
-const RoleService = require('../service/Role');
-const OAuth = require('./OAuth');
-const oAuth = new OAuth();
-const roleService = new RoleService();
+const roleService = require('../service/Role');
+const oAuth = require('./OAuth');
 
 /**
  * @swagger

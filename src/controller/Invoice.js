@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const InvoiceService = require('../service/Invoice');
-const OAuth = require('./OAuth');
-const oAuth = new OAuth();
-const invoiceService = new InvoiceService();
+const invoiceService = require('../service/Invoice');
+const oAuth = require('./OAuth');
 
 /**
  * @swagger

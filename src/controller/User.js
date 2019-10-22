@@ -5,10 +5,8 @@
  */
 const express = require('express');
 const router = express.Router();
-const UserService = require('../service/User');
-const OAuth = require('./OAuth');
-const oAuth = new OAuth();
-const userService = new UserService();
+const userService = require('../service/User');
+const oAuth = require('./OAuth');
 
 /**
  * @swagger

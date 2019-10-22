@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const AddressService = require('../service/Address');
-const OAuth = require('./OAuth');
-const oAuth = new OAuth();
-const addressService = new AddressService();
+const addressService = require('../service/Address');
+const oAuth = require('./OAuth');
 
 /**
  * @swagger

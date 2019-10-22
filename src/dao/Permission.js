@@ -10,27 +10,34 @@ const models = require('../models');
  *
  * @method {public} addPermission
  */
-class PermissionDao {
-  /**
-   * Dao to add permission for role
-   *
-   * @param {Object} permission
-   * @param {Function} addCB
-   */
-  addPermission(permission, addCB) {
-    models.Permission.create(permission).then((result) => (
-      addCB(null, result)
-    ), (findErr) => (
-      addCB(findErr)
-    ));
-  }
-  findByRole(roleId, findCB) {
-    models.Permission.findAll({where: {roleId}}).then((result) => (
-      findCB(null, result)
-    ), (findErr) => (
-      findCB(findErr)
-    ));
-  }
-}
+let PermissionDao = {};
+
+/**
+ * Dao to add permission for role
+ *
+ * @param {Object} permission
+ * @param {Function} addCB
+ */
+PermissionDao.addPermission = (permission, addCB) => {
+  models.Permission.create(permission).then((result) => (
+    addCB(null, result)
+  ), (findErr) => (
+    addCB(findErr)
+  ));
+};
+
+/**
+ * Dao to find role by id
+ * 
+ * @param {UUID} roleId
+ * @param {Function} findCB
+ */
+PermissionDao.findByRole = (roleId, findCB) => {
+  models.Permission.findAll({where: {roleId}}).then((result) => (
+    findCB(null, result)
+  ), (findErr) => (
+    findCB(findErr)
+  ));
+};
 
 module.exports = PermissionDao;

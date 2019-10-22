@@ -13,27 +13,27 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "async": "^2.6.1",
+    "async": "^2.6.3",
     "cookie-parser": "~1.4.3",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "~4.16.0",
-    "express-fileupload": "^1.1.3-alpha.2",
+    "express-fileupload": "^1.1.5",
     "http-errors": "~1.6.2",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.15",
     "morgan": "~1.9.0",
     "oauth2-server": "^3.0.1",
     "password-hash": "^1.2.2",
-    "pg": "^7.5.0",
-    "pug": "2.0.0-beta11",
-    "sequelize": "^4.39.0",
-    "swagger-jsdoc": "^3.2.6",
-    "swagger-ui-express": "^4.0.2",
-    "uuid": "^3.3.2"
+    "pg": "^7.12.1",
+    "pug": "^2.0.4",
+    "sequelize": "^4.44.3",
+    "swagger-jsdoc": "^3.4.0",
+    "swagger-ui-express": "^4.1.2",
+    "uuid": "^3.3.3"
   },
   "devDependencies": {
     "eslint": "^5.12.0",
-    "nodemon": "^1.18.6",
-    "sequelize-cli": "^4.1.1"
+    "nodemon": "^1.19.4",
+    "sequelize-cli": "^5.5.1"
   }
 }

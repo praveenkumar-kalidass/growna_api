@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const VehicleDetailService = require('../service/VehicleDetail');
-const OAuth = require('./OAuth');
-const oAuth = new OAuth();
-const vehicleDetailService = new VehicleDetailService();
+const vehicleDetailService = require('../service/VehicleDetail');
+const oAuth = require('./OAuth');
 
 /**
  * @swagger

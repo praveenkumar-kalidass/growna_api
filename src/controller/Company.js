@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const CompanyService = require('../service/Company');
-const OAuth = require('./OAuth');
-const oAuth = new OAuth();
-const companyService = new CompanyService();
+const companyService = require('../service/Company');
+const oAuth = require('./OAuth');
 
 /**
  * @swagger
