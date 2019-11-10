@@ -87,7 +87,7 @@ UserService.signupUser = (user, signupCB) => {
     ...user,
     roleId: uuid.GIS_USER,
     createdBy: id,
-    parentId: uuid.GIS_ADMIN,
+    parentId: uuid.DEMO_ADMIN,
     tenantId: uuid.GIS_TENANT
   };
   UserService.addUser(user, (addErr, result) => {
