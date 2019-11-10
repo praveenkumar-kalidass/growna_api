@@ -5,6 +5,7 @@
  */
 const async = require('async');
 const _ = require('lodash');
+const constant = require('../utils/constant');
 const tenantDao = require('../dao/Tenant');
 const roleService = require('../service/Role');
 const userService = require('../service/User');
@@ -40,7 +41,9 @@ TenantService.registerTenant = (data, registerCB) => {
     },
     userService.addUser,
     (user, passPermissionCB) => {
-      const permissions = _.map(data.permissions, (privilegeId) => ({
+      const permissions = _.map(
+        _.union(data.permissions, constant.DEFAULT_PRIVILEGES),
+        (privilegeId) => ({
         roleId: user.roleId,
         privilegeId
       }));
